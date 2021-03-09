@@ -41,7 +41,6 @@ class User implements UserInterface
      * @Groups({"users_read", "workouts_read"})
      * @Assert\NotBlank(message="L'email doit être renseigné !")
      * @Assert\Email(message="L'adresse doit être valide")
-     * @Assert\Unique(message="Cette adresse email existe déjà !")
      */
     private $email;
 
