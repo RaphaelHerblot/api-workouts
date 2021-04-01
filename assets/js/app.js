@@ -32,6 +32,7 @@ const App = () => {
                             <Route path="/login" component={Login}/>
                             <Route path="/register" component={Register} />
                             <PrivateRoute path="/create" component={WorkoutCard} />
+                            <PrivateRoute path="/workout/:id" component={CreateWorkout} />
                             <Route path="/" component={HomePage} />
                         </Switch>
                     </div>

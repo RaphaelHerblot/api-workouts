@@ -3,17 +3,21 @@ import React, { useState, useEffect } from 'react';
 import LevelsAPI from "../../services/levelsAPI";
 import GoalsAPI from "../../services/goalsAPI";
 import TrainingPlacesAPI from "../../services/trainingPlacesAPI";
+import Field from '../../components/Form/Field';
+import axios from 'axios';
 
 const Register = (props) => {
     const[credentials, setCredentials] = useState({
-        firstname: "",
-        lastname: "",
-        username: "",
+        firstName: "",
+        lastName: "",
+        email: "",
         password: "",
         level: "",
         goal: "",
         trainingPlace: ""
     });
+
+    const [error, setError] = useState("");
     const [levels, setLevels] = useState([]);
     const [goals, setGoals] = useState([]);
     const [trainingPlaces, setTrainingPlaces] = useState([]);
@@ -32,16 +36,28 @@ const Register = (props) => {
         }
     }
 
-    const handleChange = (event) => {
-        const value = event.currentTarget.value;
-        const name = event.currentTarget.name;
-
+    const handleChange = ({ currentTarget }) => {
+        const { name, value } = currentTarget;
         setCredentials({...credentials, [name]: value})
     };
 
-    const handleSubmit = event => {
+    const handleSubmit = async event => {
         event.preventDefault();
         console.log(credentials);
+
+        try {
+            const response = await axios.post(
+                "http://localhost:8000/api/users",
+                {...credentials,
+                    level: `/api/levels/${credentials.level}`,
+                    goal: `/api/goals/${credentials.goal}`,
+                    trainingPlace: `/api/training_places/${credentials.trainingPlace}`
+                }
+            );
+            console.log(response.data);
+        } catch(error) {
+            console.log(error.response);
+        }
     }
 
     useEffect(() => {
@@ -53,59 +69,41 @@ const Register = (props) => {
             <h1>Inscription</h1>
 
             <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="firstname">Prénom</label>
-                    <input 
-                        value={credentials.firstname} 
-                        onChange={handleChange} 
-                        type="text" 
-                        placeholder="Prénom" 
-                        id="firstname" 
-                        name="firstname" 
-                        className="form-control"
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="lastname">Nom de famille</label>
-                    <input 
-                        value={credentials.lastname} 
-                        onChange={handleChange} 
-                        type="text" 
-                        placeholder="Nom de famille" 
-                        id="lastname" 
-                        name="lastname" 
-                        className="form-control"
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="username">Adresse mail</label>
-                    <input 
-                        value={credentials.username} 
-                        onChange={handleChange} 
-                        type="email" 
-                        placeholder="Adresse email de connexion" 
-                        id="username" 
-                        name="username" 
-                        className="form-control"
-                    />
-                </div>
-                <div className="form-check">
-                    <input 
-                        value={credentials.password} 
-                        onChange={handleChange} 
-                        type="password" 
-                        placeholder="Mot de passe" 
-                        id="password" 
-                        className="form-control"
-                        className="form-check-input"
-                    />
-                    <label htmlFor="password">Mot de passe</label>
-                </div>
+                <Field 
+                    label="Prénom" 
+                    name="firstName" 
+                    value={credentials.firstname} 
+                    onChange={handleChange} 
+                    error={error}
+                />
+                <Field 
+                    label="Nom de famille" 
+                    name="lastName" 
+                    value={credentials.lastname} 
+                    onChange={handleChange} 
+                    error={error}
+                />
+                <Field 
+                    label="Adresse mail"
+                    type="email"
+                    name="email" 
+                    value={credentials.email} 
+                    onChange={handleChange} 
+                    error={error}
+                />
+                <Field 
+                    label="Mot de passe"
+                    type="password"
+                    name="password" 
+                    value={credentials.password} 
+                    onChange={handleChange} 
+                    error={error}
+                />
                 <label>Votre niveau</label>
-                {levels.map(level => 
+                {levels.map(level =>
                     <div className="form-check" key={level.id}>
                         <input 
-                            value={credentials.level} 
+                            value={level.id}
                             onChange={handleChange}
                             type="radio" 
                             id={"level_" + level.id}
@@ -119,7 +117,7 @@ const Register = (props) => {
                 {goals.map(goal => 
                     <div className="form-check" key={goal.id}>
                         <input 
-                            value={credentials.goal} 
+                            value={goal.id} 
                             onChange={handleChange} 
                             type="radio" 
                             id={"goal_" + goal.id}
@@ -133,7 +131,7 @@ const Register = (props) => {
                 {trainingPlaces.map(trainingPlace => 
                     <div className="form-check" key={trainingPlace.id}>
                         <input 
-                            value={credentials.trainingPlace} 
+                            value={trainingPlace.id}
                             onChange={handleChange} 
                             type="radio" 
                             id={"trainingPlace_" + trainingPlace.id}

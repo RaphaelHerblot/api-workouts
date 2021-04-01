@@ -6,7 +6,6 @@ const CreateWorkout = (props) => {
     return ( 
         <div>
             <h1>Create Workout</h1>
-            <WorkoutCard />
         </div>
     );
 }

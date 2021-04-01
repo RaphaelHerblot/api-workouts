@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import WorkoutsAPI from "../../../services/workoutsAPI";
 import Pagination from '../../Pagination/Pagination';
+import { Link } from "react-router-dom";
 
 
 const WorkoutCard = props => {
@@ -60,8 +61,18 @@ const WorkoutCard = props => {
 
     return (
         <div>
+            <div className="d-flex justify-content-between align-items-center">
+                <h1>Créer votre workout</h1>
+                <Link to="/workout/create" className="btn btn-primary">Créer</Link>
+            </div>
             <div className="form-group">
-                <input type="text" onChange={handleSearch} value={search} className="form-control" placeholder="Rechercher ..."/>
+                <input 
+                    type="text" 
+                    onChange={handleSearch} 
+                    value={search} 
+                    className="form-control" 
+                    placeholder="Rechercher ..."
+                />
             </div>            
 
             {paginatedWorkouts.map(workout => 
