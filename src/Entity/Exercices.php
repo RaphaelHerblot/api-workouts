@@ -59,7 +59,7 @@ class Exercices
      * @ORM\Column(type="string", length=255)
      * @Groups({"exercices_read"})
      */
-    private $thumbnail;
+    private $thumbnail = "";
 
     /**
      * @ORM\ManyToMany(targetEntity=Workouts::class, mappedBy="exercices")

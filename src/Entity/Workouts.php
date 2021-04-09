@@ -141,9 +141,22 @@ class Workouts
      */
     private $amountFavorites = 0;
 
+    /**
+     * @Groups({"workouts_read", "users_read", "workouts_subresource"})
+     * @Assert\NotBlank(message="Le nombre de répétition doit être renseigné")
+     * @ORM\Column(type="array")
+     */
+    private $nbRepetition = [];
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="likedWorkouts")
+     */
+    private $likedUsers;
+
     public function __construct()
     {
-        $this->listExercices = new ArrayCollection();
+        $this->exercices = new ArrayCollection();
+        $this->likedUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -260,9 +273,9 @@ class Workouts
     }
 
     /**
-     * @return Collection|Exercices[]
+     * @return Collection|Exercices[]|null
      */
-    public function getExercices(): Collection
+    public function getExercices(): ?Collection
     {
         return $this->exercices;
     }
@@ -315,6 +328,45 @@ class Workouts
     public function setAmountFavorites(int $amountFavorites): self
     {
         $this->amountFavorites = $amountFavorites;
+
+        return $this;
+    }
+
+    public function getNbRepetition(): ?array
+    {
+        return $this->nbRepetition;
+    }
+
+    public function setNbRepetition(array $nbRepetition): self
+    {
+        $this->nbRepetition = $nbRepetition;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getLikedUsers(): Collection
+    {
+        return $this->likedUsers;
+    }
+
+    public function addLikedUser(User $likedUser): self
+    {
+        if (!$this->likedUsers->contains($likedUser)) {
+            $this->likedUsers[] = $likedUser;
+            $likedUser->addLikedWorkout($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLikedUser(User $likedUser): self
+    {
+        if ($this->likedUsers->removeElement($likedUser)) {
+            $likedUser->removeLikedWorkout($this);
+        }
 
         return $this;
     }

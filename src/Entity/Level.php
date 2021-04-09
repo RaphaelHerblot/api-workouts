@@ -27,7 +27,7 @@ class Level
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"level_read"}) 
+     * @Groups({"level_read", "workouts_read"}) 
      */
     private $id;
 

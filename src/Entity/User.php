@@ -103,9 +103,15 @@ class User implements UserInterface
      */
     private $workouts;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Workouts::class, inversedBy="likedUsers")
+     */
+    private $likedWorkouts;
+
     public function __construct()
     {
         $this->workouts = new ArrayCollection();
+        $this->likedWorkouts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -275,6 +281,30 @@ class User implements UserInterface
                 $workout->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Workouts[]
+     */
+    public function getLikedWorkouts(): Collection
+    {
+        return $this->likedWorkouts;
+    }
+
+    public function addLikedWorkout(Workouts $likedWorkout): self
+    {
+        if (!$this->likedWorkouts->contains($likedWorkout)) {
+            $this->likedWorkouts[] = $likedWorkout;
+        }
+
+        return $this;
+    }
+
+    public function removeLikedWorkout(Workouts $likedWorkout): self
+    {
+        $this->likedWorkouts->removeElement($likedWorkout);
 
         return $this;
     }

@@ -27,7 +27,7 @@ class TrainingPlaces
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"training_place_read"}) 
+     * @Groups({"training_place_read", "workouts_read"}) 
      */
     private $id;
 

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import WorkoutsAPI from "../../../services/workoutsAPI";
 import Pagination from '../../Pagination/Pagination';
+import WorkoutPreview from './WorkoutPreview';
 import { Link } from "react-router-dom";
 
 
-const WorkoutCard = props => {
+const WorkoutsList = props => {
     const [workouts, setWorkouts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState('');
@@ -63,7 +64,7 @@ const WorkoutCard = props => {
         <div>
             <div className="d-flex justify-content-between align-items-center">
                 <h1>Créer votre workout</h1>
-                <Link to="/workout/create" className="btn btn-primary">Créer</Link>
+                <Link to="/create" className="btn btn-primary">Créer</Link>
             </div>
             <div className="form-group">
                 <input 
@@ -76,38 +77,9 @@ const WorkoutCard = props => {
             </div>            
 
             {paginatedWorkouts.map(workout => 
-                <div className="workoutCard" key={workout.id}>
-                    <div>
-                        <div>{workout.amountLikes}</div>
-                        <div>{workout.amountFavorites}</div>
-                    </div>
-                    <h2>{workout.title}</h2>
-                    <div>
-                        <div>{workout.level.title}</div>
-                        <div>{workout.goal.title}</div>
-                        <div>{workout.trainingPlace.place}</div>
-                    </div>
-                    <div>{workout.description}</div>
-                    <div>
-                        <div>{workout.averageTime}</div>
-                        <div>{workout.series}</div>
-                    </div>
-                    <div>
-                        <ul>
-                            {workout.exercices.map(exercice =>
-                                <li key={exercice.id}>
-                                    <div><img src={require(`/assets/images/exercices/${exercice.id}.svg`)}></img></div>
-                                    <div>{exercice.title}</div>
-                                </li>
-                            )}
-                        </ul>
-                    </div>
-                    <div>
-                        <button type="button" onClick={() => handleDelete(workout.id)}>
-                            Supprimer
-                        </button>
-                    </div>
-                </div>
+                <Link key={workout.id} to={"/workout/" + workout.id}>
+                    <WorkoutPreview workout={workout} />
+                </Link>
             )}
             
             {itemsPerPage < filteredWorkouts.length} <Pagination 
@@ -120,4 +92,4 @@ const WorkoutCard = props => {
     );
 }
 
-export default WorkoutCard;
+export default WorkoutsList;

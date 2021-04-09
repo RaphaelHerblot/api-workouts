@@ -27,7 +27,7 @@ class Goal
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"goal_read"})
+     * @Groups({"goal_read", "workouts_read"})
      */
     private $id;
 

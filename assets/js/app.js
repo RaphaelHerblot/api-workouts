@@ -6,19 +6,24 @@ import '../styles/app.scss';
 import '../bootstrap';
 
 import HomePage from "./pages/HomePage/HomePage";
-import CreateWorkout from './pages/CreateWorkout/CreateWorkout';
+import CreateWorkout from './pages/CreateWorkout';
 import Login from './pages/Login/Login';
 import Register from './pages/Login/Register';
 import FooterNavBar from "./components/FooterNavBar/FooterNavBar";
 import AuthAPI from './services/authAPI';
-import WorkoutCard from './components/Workouts/WorkoutCard/WorkoutCard';
 import AuthContext from './contexts/AuthContext';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import WorkoutsList from './components/Workouts/WorkoutsList';
+import UpdateWorkout from './pages/UpdateWorkout';
+import ShowWorkout from './pages/ShowWorkout';
+import Profil from './pages/Profil';
 
 AuthAPI.setup();
 
 const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(AuthAPI.isAuthenticated());
+
+    AuthAPI.getUserInfo();
 
     return (
         <AuthContext.Provider value={{
@@ -31,9 +36,11 @@ const App = () => {
                         <Switch>
                             <Route path="/login" component={Login}/>
                             <Route path="/register" component={Register} />
-                            <PrivateRoute path="/create" component={WorkoutCard} />
-                            <PrivateRoute path="/workout/:id" component={CreateWorkout} />
-                            <Route path="/" component={HomePage} />
+                            <PrivateRoute path="/create" component={CreateWorkout} />
+                            <PrivateRoute path="/workout/:id" component={ShowWorkout} />
+                            <PrivateRoute path="/update/:id" component={UpdateWorkout} />
+                            <PrivateRoute path="/profil" component={Profil} />
+                            <Route path="/" component={WorkoutsList} />
                         </Switch>
                     </div>
                     <FooterNavBar />

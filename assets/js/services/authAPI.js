@@ -51,9 +51,15 @@ function isAuthenticated() {
     return false;
 }
 
+function getUserInfo() {
+    const token = window.localStorage.getItem("authToken");
+    console.log("HELLLLLLO JWT : ", jwtDecode(token));
+}
+
 export default {
     authentification,
     logout,
     setup,
-    isAuthenticated
+    isAuthenticated,
+    getUserInfo
 }

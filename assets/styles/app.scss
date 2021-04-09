@@ -1,34 +1,35 @@
 body {
-    background-color: lightgray;
-    color: #000;
-    font-family: Tahoma, sans-serif;
+  background-color: lightgray;
+  color: #000;
+  font-family: Tahoma, sans-serif;
+  padding-bottom: 70px;
 
-    nav {
-        ul {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #303030;
-            padding: 5px 30px;
-            list-style: none;
-            margin: 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            padding: 15px 20px;
+  nav {
+    ul {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #303030;
+      padding: 5px 30px;
+      list-style: none;
+      margin: 0;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      padding: 15px 20px;
 
-            li {
-                a {
-                    color: #fff;
-                }
-            }
+      li {
+        a {
+          color: #fff;
         }
+      }
     }
+  }
 
-    .workoutCard {
-        background-color: #161616;
-        padding: 20px;
-        margin: 20px 0;
-    }
+  .workoutCard {
+    background-color: #161616;
+    padding: 20px;
+    margin: 20px 0;
+  }
 }
