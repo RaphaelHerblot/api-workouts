@@ -105,6 +105,7 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToMany(targetEntity=Workouts::class, inversedBy="likedUsers")
+     * @Groups({"users_read"})
      */
     private $likedWorkouts;
 

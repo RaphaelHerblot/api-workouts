@@ -27,13 +27,13 @@ class Goal
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"goal_read", "workouts_read"})
+     * @Groups({"goal_read", "workouts_read", "users_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"goal_read", "workouts_read", "workouts_subresource"}) 
+     * @Groups({"goal_read", "workouts_read", "workouts_subresource", "users_read"}) 
      */
     private $title;
 

@@ -27,13 +27,13 @@ class Level
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"level_read", "workouts_read"}) 
+     * @Groups({"level_read", "workouts_read", "users_read"}) 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"level_read", "workouts_read", "workouts_subresource"}) 
+     * @Groups({"level_read", "workouts_read", "workouts_subresource", "users_read"}) 
      */
     private $title;
 

@@ -27,13 +27,13 @@ class TrainingPlaces
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"training_place_read", "workouts_read"}) 
+     * @Groups({"training_place_read", "workouts_read", "users_read"}) 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"training_place_read", "workouts_read", "workouts_subresource"}) 
+     * @Groups({"training_place_read", "workouts_read", "workouts_subresource", "users_read"}) 
      */
     private $place;
 

@@ -51,9 +51,11 @@ function isAuthenticated() {
     return false;
 }
 
-function getUserInfo() {
-    const token = window.localStorage.getItem("authToken");
-    console.log("HELLLLLLO JWT : ", jwtDecode(token));
+function findConnectedUser() {
+    const token = jwtDecode(window.localStorage.getItem("authToken"));
+    console.log("HELLLLLLO JWT : ", token.id );
+    return axios
+        .get("http://localhost:8000/api/users/"+ token.id)
 }
 
 export default {
@@ -61,5 +63,5 @@ export default {
     logout,
     setup,
     isAuthenticated,
-    getUserInfo
+    findConnectedUser
 }

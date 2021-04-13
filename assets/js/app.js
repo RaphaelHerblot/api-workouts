@@ -17,13 +17,12 @@ import WorkoutsList from './components/Workouts/WorkoutsList';
 import UpdateWorkout from './pages/UpdateWorkout';
 import ShowWorkout from './pages/ShowWorkout';
 import Profil from './pages/Profil';
+import UpdateProfil from './components/Profil/ProfilUpdate'
 
 AuthAPI.setup();
 
 const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(AuthAPI.isAuthenticated());
-
-    AuthAPI.getUserInfo();
 
     return (
         <AuthContext.Provider value={{

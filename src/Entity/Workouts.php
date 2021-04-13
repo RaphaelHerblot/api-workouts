@@ -149,6 +149,7 @@ class Workouts
     private $nbRepetition = [];
 
     /**
+     * @Groups({"workouts_read"})
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="likedWorkouts")
      */
     private $likedUsers;
