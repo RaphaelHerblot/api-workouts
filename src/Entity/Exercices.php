@@ -4,11 +4,13 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ExercicesRepository;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ORM\Entity(repositoryClass=ExercicesRepository::class)
@@ -20,6 +22,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      "groups"={"exercices_read"}
  *  }
  * )
+ * @ApiFilter(SearchFilter::class, properties={"type"})
  */
 class Exercices
 {

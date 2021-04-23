@@ -8,6 +8,7 @@ import ExercicesAPI from "../../../../services/exercicesAPI";
 import Field from '../../../Form/Field';
 import Select from '../../../Form/SelectExercise';
 import ExerciseForm from '../../../Exercises/ExerciseForm';
+import RestTime from '../../../Exercises/RestTime'
 import axios from 'axios';
 
 const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
@@ -29,8 +30,11 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
     const [goals, setGoals] = useState([]);
     const [trainingPlaces, setTrainingPlaces] = useState([]);
     const [exercices, setExercices] = useState([]);
+    const [stretches, setStretches] = useState([]);
     const [chosenExercise, setChosenExercise] = useState([]);
+    const [rest, setRest] = useState([]);
     const [firstSetupExercices, setFirstSetupExercices] = useState(false);
+    const temporaryRest = rest;
     
     useEffect(() => {
         fetchWorkoutsData();
@@ -100,17 +104,26 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
         addExerciceToWorkout();
     }, [chosenExercise]);
 
+    // useEffect(() => {
+    //     console.log("BJR JENNIE");
+    //     addRestToWorkout();
+    // }, [needRest]);
+
     const fetchWorkoutsData = async () => {
         try {
             const dataLevels = await LevelsAPI.findAll();
             const dataGoals = await GoalsAPI.findAll();
             const dataTrainingPlaces = await TrainingPlacesAPI.findAll();
-            const dataExercices = await ExercicesAPI.findAll();
+            const dataExercices = await ExercicesAPI.findAllMusculations();
+            const dataStretches = await ExercicesAPI.findAllStretches();
+            const dataRest = await ExercicesAPI.findOne("36");
             setLevels(dataLevels);
             setGoals(dataGoals);
             setTrainingPlaces(dataTrainingPlaces);
             setFirstSetupExercices(true);
             setExercices(dataExercices);
+            setStretches(dataStretches);
+            setRest(dataRest.data);
         } catch(error) {
             console.log(error.response)
         }
@@ -131,8 +144,25 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
     }
     
     const deleteExercise = (event) => {
+        console.log(event.target);
+        console.log(exercices)
         setExercices(exercices);
         (event.target.parentElement.parentElement.parentElement).remove();
+    }
+
+    const deleteStretch = (event) => {
+        setStretches(stretches);
+        (event.target.parentElement.parentElement.parentElement).remove();
+    }
+
+    const deleteRest = (event) => {
+        setChosenExercise([]);
+        (event.target.parentElement.parentElement.parentElement).remove();
+    }
+
+    const addRest = () => {
+        setChosenExercise(rest);
+        console.log("RESSSSSSSST : ", rest);
     }
 
     const addExerciceToWorkout = () => {
@@ -145,9 +175,15 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
             exerciceContainer.setAttribute("class", `container-div`);
             listExercicesContainer.appendChild(exerciceContainer);
 
-            ReactDOM.render(<ExerciseForm chosenExercise={chosenExercise} deleteExercise={deleteExercise} />, exerciceContainer);
-
-            setExercices(exercices.filter(exercice => exercice.id !== chosenExercise.id));
+            if(chosenExercise.type === "Musculation") {
+                ReactDOM.render(<ExerciseForm chosenExercise={chosenExercise} deleteExercise={deleteExercise} />, exerciceContainer);
+                setExercices(exercices.filter(exercice => exercice.id !== chosenExercise.id));
+            } else if(chosenExercise.type === "Stretch") {
+                ReactDOM.render(<ExerciseForm chosenExercise={chosenExercise} deleteExercise={deleteStretch} />, exerciceContainer);
+                setStretches(stretches.filter(stretch => stretch.id !== chosenExercise.id))
+            } else {
+                ReactDOM.render(<RestTime chosenRest={chosenExercise} deleteExercise={deleteRest} />, exerciceContainer);
+            }
         }
     }
 
@@ -285,11 +321,18 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
                 )} 
                 <label>Les exercices</label>
                 <Select name="selectExercices" id="selectExercices" onClickFunction={fetchOneExercice} options={exercices}/>
+                <Select name="selectStretches" id="selectExercices" onClickFunction={fetchOneExercice} options={stretches}/>
+                <div>
+                    <button type="button" onClick={addRest}>Ajouter une pause !</button>
+                </div>
                 <div className="listExercices">
                     {workoutIsUpdated 
-                        ? workout.exercices.map((exercices, index) => 
-                            <div key={exercices.id} id={"content_" + exercices.id} className="container-div">
-                                <ExerciseForm chosenExercise={exercices} nbRepetition={workout.nbRepetition[index]} onChange={handleChange} deleteExercise={deleteExercise} />
+                        ? workout.exercices.map((exercice, index) => 
+                            <div key={exercice.id} id={"content_" + exercice.id} className="container-div">
+                                {exercice.type === "Musculation" 
+                                    ? <ExerciseForm chosenExercise={exercice} nbRepetition={workout.nbRepetition[index]} onChange={handleChange} deleteExercise={deleteExercise} />                                
+                                    : <ExerciseForm chosenExercise={exercice} nbRepetition={workout.nbRepetition[index]} onChange={handleChange} deleteExercise={deleteStretch} />                                
+                                }
                             </div>
                         )
                         : null
