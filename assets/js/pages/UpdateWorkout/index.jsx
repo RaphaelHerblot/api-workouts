@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import WorkoutForm from '../../components/Workouts/WorkoutShow/WorkoutForm';
 import WorkoutsAPI from "../../services/workoutsAPI";
 
-const UpdateWorkout = ({ match }) => {
+const UpdateWorkout = ({ match, setPageTitle }) => {
     const [workout, setWorkout] = useState([]);
     const [workoutLoaded, setWorkoutLoaded] = useState(false);
 
@@ -20,6 +20,7 @@ const UpdateWorkout = ({ match }) => {
     }
 
     useEffect(() => {
+        setPageTitle("Mise à jour de la séance")
         fetchWorkout(match.params.id);
     }, [])
 

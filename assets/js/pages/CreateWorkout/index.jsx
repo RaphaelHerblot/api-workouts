@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import WorkoutForm from '../../components/Workouts/WorkoutShow/WorkoutForm';
 
-const CreateWorkout = (props) => {
+const CreateWorkout = ({ setPageTitle }) => {
+    useEffect(() => {
+        setPageTitle("Création de ta séance de sport");
+    }, [])
+
     return ( 
         <div>
-            <h1>Créé ta séance de sport</h1>
             <WorkoutForm workoutIsUpdated={false} />
         </div>
     );

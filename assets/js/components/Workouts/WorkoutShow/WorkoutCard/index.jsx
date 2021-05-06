@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import WorkoutsAPI from "../../../../services/workoutsAPI";
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import ExerciseCard from '../../../Exercises/ExerciseCard';
 
 
 const WorkoutCard = ({ workout, authenticatedUser }) => {
@@ -76,7 +77,7 @@ const WorkoutCard = ({ workout, authenticatedUser }) => {
     }
 
     return (
-        <div>
+        <div className="workoutCard">
             <div>
                 <Link to={"/update/" + workout.id}>
                     <button type="button">Modifier</button>
@@ -86,29 +87,28 @@ const WorkoutCard = ({ workout, authenticatedUser }) => {
             <div>
                 <button type="button" onClick={handleDeleteWorkout}>Supprimer</button>
             </div>
-            <div className="workoutCard" key={workout.id}>
+            <div key={workout.id}>
                 <div>
                     <div>{workout.amountLikes}</div>
                     <div>{workout.amountFavorites}</div>
                 </div>
                 <h2>{workout.title}</h2>
-                <div>
+                <p className="workout-description">{workout.description}</p>
+                <div className="workout-characteristic">
                     <div>{workout.level.title}</div>
                     <div>{workout.goal.title}</div>
                     <div>{workout.trainingPlace.place}</div>
                 </div>
-                <div>{workout.description}</div>
-                <div>
+                <div className="workout-informations">
+                    <div>{workout.equipements}</div>
                     <div>{workout.averageTime}</div>
-                    <div>{workout.series}</div>
                 </div>
-                <div>
+                <div className="workout-exercices">
+                    <h3>Exercices</h3>
+                    <h4>{workout.series} séries</h4>
                     <ul>
-                        {workout.exercices.map(exercice =>
-                            <li key={exercice.id}>
-                                <div><img src={require(`/assets/images/exercices/${exercice.id}.svg`)}></img></div>
-                                <div>{exercice.title}</div>
-                            </li>
+                        {workout.exercices.map((exercice, index) =>
+                            <ExerciseCard key={exercice.id} exercice={exercice} nbRepetition={workout.nbRepetition[index]} />
                         )}
                     </ul>
                 </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ProfilUpdate from '../../components/Profil/ProfilUpdate';
 import AuthAPI from "../../services/authAPI";
 
-const Profil = (props) => {
+const Profil = ({ setPageTitle }) => {
     const [authenticatedUser, setAuthenticatedUser] = useState([]);
     const [userLoaded, setUserLoaded] = useState(false);
     const [updatingUser, setUpdatingUser] = useState(false);
@@ -18,6 +18,7 @@ const Profil = (props) => {
     }
 
     useEffect(() => {
+        setPageTitle("Profil");
         fetchUser();
     }, [])
 

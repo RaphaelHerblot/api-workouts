@@ -3,13 +3,13 @@ import WorkoutCard from '../../components/Workouts/WorkoutShow/WorkoutCard';
 import WorkoutsAPI from "../../services/workoutsAPI";
 import AuthAPI from "../../services/authAPI";
 
-const ShowUpdate = ( props ) => {
+const ShowUpdate = ({ match, setPageTitle }) => {
     const [workout, setWorkout] = useState([]);
     const [workoutLoaded, setWorkoutLoaded] = useState(false);
     const [authenticatedUser, setAuthenticatedUser] = useState([]);
     const [userLoaded, setUserLoaded] = useState(false);
 
-    console.log("IDDDDDDD :", props.match.params.id); 
+    console.log("IDDDDDDD :", match.params.id); 
 
     // Get the workout by id
     const fetchWorkout = async (idWorkout) => {
@@ -33,10 +33,9 @@ const ShowUpdate = ( props ) => {
     }
 
     useEffect(() => {
-        fetchWorkout(props.match.params.id);
+        setPageTitle("Détail de la séance")
+        fetchWorkout(match.params.id);
         fetchUser();
-        console.log(workout);
-        console.log(props);
     }, [])
 
     useEffect(() => {
@@ -45,7 +44,6 @@ const ShowUpdate = ( props ) => {
 
     return ( 
         <div>
-            <h1>Séance</h1>
             {workoutLoaded && userLoaded ? <WorkoutCard workout={workout} authenticatedUser={authenticatedUser} /> : null}
         </div>
     );

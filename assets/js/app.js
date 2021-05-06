@@ -6,7 +6,6 @@ import '../styles/app.scss';
 import '../bootstrap';
 
 import HomePage from "./pages/HomePage/HomePage";
-import CreateWorkout from './pages/CreateWorkout';
 import Login from './pages/Login/Login';
 import Register from './pages/Login/Register';
 import FooterNavBar from "./components/FooterNavBar/FooterNavBar";
@@ -14,15 +13,15 @@ import AuthAPI from './services/authAPI';
 import AuthContext from './contexts/AuthContext';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import WorkoutsList from './components/Workouts/WorkoutsList';
-import UpdateWorkout from './pages/UpdateWorkout';
-import ShowWorkout from './pages/ShowWorkout';
 import Profil from './pages/Profil';
 import UpdateProfil from './components/Profil/ProfilUpdate'
+import Header from './components/Header';
 
 AuthAPI.setup();
 
 const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(AuthAPI.isAuthenticated());
+    const [pageTitle, setPageTitle] = useState("Accueil");
 
     return (
         <AuthContext.Provider value={{
@@ -31,14 +30,15 @@ const App = () => {
         }}>
             <HashRouter>
                 <div>
-                    <div>
+                    <Header pageTitle={pageTitle}/>
+                    <div className="main-content">
                         <Switch>
                             <Route path="/login" component={Login}/>
                             <Route path="/register" component={Register} />
-                            <PrivateRoute path="/create" component={CreateWorkout} />
-                            <PrivateRoute path="/workout/:id" component={ShowWorkout} />
-                            <PrivateRoute path="/update/:id" component={UpdateWorkout} />
-                            <PrivateRoute path="/profil" component={Profil} />
+                            <PrivateRoute path="/create" component="Create" setPageTitle={setPageTitle} />
+                            <PrivateRoute path="/workout/:id" component="Show" setPageTitle={setPageTitle} />
+                            <PrivateRoute path="/update/:id" component="Update" setPageTitle={setPageTitle} />
+                            <PrivateRoute path="/profil" component="Profile" setPageTitle={setPageTitle} />
                             <Route path="/" component={WorkoutsList} />
                         </Switch>
                     </div>

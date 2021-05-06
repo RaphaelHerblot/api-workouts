@@ -17,23 +17,38 @@ const FooterNavBar = ({ history }) => {
         <nav className="footer-navbar">
             <ul>
                 <li>
-                    <NavLink to="/">Home</NavLink>
+                    <NavLink to="/">
+                        <img src={require("/assets/images/icons/home.svg")} className="icons-footer" />
+                        <span>Accueil</span>
+                    </NavLink>
                 </li>
-                {!isAuthenticated && (
                 <li>
-                    <NavLink to="/login">Login</NavLink>
+                    <NavLink to="/login">
+                        <img src={require("/assets/images/icons/loupe.svg")} className="icons-footer" />
+                        <span>Découvrir</span>
+                    </NavLink>
                 </li>
-                )}  
                 <li>
-                    <NavLink to="/create">Créer</NavLink>
+                    <NavLink to="/create" className="icon-create">
+                        <img src={require("/assets/images/icons/add.svg")} className="icons-footer" />
+                    </NavLink>
                 </li>
-                {isAuthenticated && (
+                {/* {isAuthenticated && (
                     <li>
                         <a onClick={handleLogout}>Deconnexion</a>
                     </li>
-                )}
+                )} */}
                 <li>
-                    <NavLink to="/profil">Profil</NavLink>
+                    <NavLink to="/profil">
+                        <img src={require("/assets/images/icons/calendar.svg")} className="icons-footer" />
+                        <span>Agenda</span>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to="/profil">
+                        <img src={require("/assets/images/icons/profile.svg")} className="icons-footer" />
+                        <span>Profil</span>
+                    </NavLink>
                 </li>
             </ul>
         </nav>
