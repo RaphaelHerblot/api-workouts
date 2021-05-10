@@ -5,7 +5,7 @@ import WorkoutPreview from './WorkoutPreview';
 import { Link } from "react-router-dom";
 
 
-const WorkoutsList = props => {
+const WorkoutsList = ({ setPageTitle }) => {
     const [workouts, setWorkouts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState('');
@@ -22,6 +22,7 @@ const WorkoutsList = props => {
 
     // Getting all workouts when component loads
     useEffect(() => {
+        setPageTitle("Accueil")
         fetchWorkouts();
     }, [])
 

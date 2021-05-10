@@ -1,11 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import ProfilUpdate from '../../components/Profil/ProfilUpdate';
 import AuthAPI from "../../services/authAPI";
+import AuthContext from "../../contexts/AuthContext";
 
-const Profil = ({ setPageTitle }) => {
+const Profil = ({ setPageTitle, history }) => {
     const [authenticatedUser, setAuthenticatedUser] = useState([]);
     const [userLoaded, setUserLoaded] = useState(false);
     const [updatingUser, setUpdatingUser] = useState(false);
+    const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+
+    const handleLogout = () => {
+        AuthAPI.logout();
+        setIsAuthenticated(false);
+        history.push("/login");
+    }
 
     const fetchUser = async () => {
         try {
@@ -38,6 +46,7 @@ const Profil = ({ setPageTitle }) => {
                         <div>{authenticatedUser.goal.title}</div>
                         <div>{authenticatedUser.trainingPlace.place}</div>
                         <button type="button" onClick={updateProfil}>Modifier</button>
+                        <button type="button" onClick={handleLogout}>Deconnexion</button>
                     </div> 
                 : <ProfilUpdate authenticatedUser={authenticatedUser} updatingUser={updatingUser} />) 
             : null )}

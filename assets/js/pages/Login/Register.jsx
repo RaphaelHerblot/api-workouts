@@ -65,24 +65,27 @@ const Register = (props) => {
     }, [])
 
     return ( 
-        <>
-            <h1>Inscription</h1>
-
+        <div className="registerForm">
             <form onSubmit={handleSubmit}>
-                <Field 
-                    label="Prénom" 
-                    name="firstName" 
-                    value={credentials.firstname} 
-                    onChange={handleChange} 
-                    error={error}
-                />
-                <Field 
-                    label="Nom de famille" 
-                    name="lastName" 
-                    value={credentials.lastname} 
-                    onChange={handleChange} 
-                    error={error}
-                />
+                <h2>Informations Personnelles</h2>
+
+                <div className="register-name">
+                    <Field 
+                        label="Prénom" 
+                        name="firstName" 
+                        value={credentials.firstname} 
+                        onChange={handleChange} 
+                        error={error}
+                    />
+                    <Field 
+                        label="Nom de famille" 
+                        name="lastName" 
+                        value={credentials.lastname} 
+                        onChange={handleChange} 
+                        error={error}
+                    />
+                </div> 
+
                 <Field 
                     label="Adresse mail"
                     type="email"
@@ -99,21 +102,11 @@ const Register = (props) => {
                     onChange={handleChange} 
                     error={error}
                 />
-                <label>Votre niveau</label>
-                {levels.map(level =>
-                    <div className="form-check" key={level.id}>
-                        <input 
-                            value={level.id}
-                            onChange={handleChange}
-                            type="radio" 
-                            id={"level_" + level.id}
-                            className="form-check-input"
-                            name="level"
-                        />
-                        <label htmlFor="level">{level.title}</label>
-                    </div>
-                )}
-                <label>Votre but</label>
+
+                <h2>Choisissons votre plan !</h2>
+                <p>Ces informations pourront être changer une fois sur votre profil</p>
+
+                <h3>Mon but est de</h3>
                 {goals.map(goal => 
                     <div className="form-check" key={goal.id}>
                         <input 
@@ -124,10 +117,10 @@ const Register = (props) => {
                             className="form-check-input"
                             name="goal"
                         />
-                        <label htmlFor="goal" className="form-check-label">{goal.title}</label>
+                        <label htmlFor={"goal_" + goal.id} className="form-check-label">{goal.title}</label>
                     </div>
                 )}
-                <label>Votre endroit d'entraînement principal</label>
+                <h3>Je vais m'entraîner principalement à</h3>
                 {trainingPlaces.map(trainingPlace => 
                     <div className="form-check" key={trainingPlace.id}>
                         <input 
@@ -138,14 +131,33 @@ const Register = (props) => {
                             className="form-check-input"
                             name="trainingPlace"
                         />
-                        <label htmlFor="trainingPlace">{trainingPlace.place}</label>
+                        <label htmlFor={"trainingPlace_" + trainingPlace.id}>{trainingPlace.place}</label>
+                    </div>
+                )}
+                <h3>Mon niveau est</h3>
+                {levels.map(level =>
+                    <div className="form-check" key={level.id}>
+                        <input 
+                            value={level.id}
+                            onChange={handleChange}
+                            type="radio" 
+                            id={"level_" + level.id}
+                            className="form-check-input"
+                            name="level"
+                        />
+                        <label htmlFor={"level_" + level.id}>{level.title}</label>
                     </div>
                 )}
                 <div className="form-group">
-                    <button type="submit" className="btn btn-success">Inscription</button>
+                    <button type="submit" className="btn btn-success">
+                        Inscription
+                        <div className="icon-button">
+                            <img src={require("/assets/images/icons/straight-right-arrow.svg")} />
+                        </div>
+                    </button>
                 </div>
             </form>
-        </>
+        </div>
     );
 }
  

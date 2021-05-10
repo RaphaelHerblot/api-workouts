@@ -19,6 +19,11 @@ const Login = ({ history }) => {
         setCredentials({...credentials, [name]: value})
     };
 
+    const goToRegister = () => {
+        history.replace("/register");
+
+    }
+
     // Handleling submit
     const handleSubmit = async event => {
         event.preventDefault();
@@ -36,16 +41,14 @@ const Login = ({ history }) => {
     }
 
     return ( 
-        <>
-            <h1>Connexion</h1>
-
+        <div className="loginForm">
             <form onSubmit={handleSubmit}>
+                <h2>Connexion</h2>
                 <Field 
                     label="Adresse mail" 
                     name="username" 
                     value={credentials.username} 
                     onChange={handleChange} 
-                    placeholder="Adresse mail de connexion" 
                     error={error} 
                 />
 
@@ -59,10 +62,16 @@ const Login = ({ history }) => {
                 />
     
                 <div className="form-group">
-                    <button type="submit" className="btn btn-success">Connexion</button>
+                    <button type="submit" className="btn btn-success">
+                        Connexion
+                        <div className="icon-button">
+                            <img src={require("/assets/images/icons/straight-right-arrow.svg")} />
+                        </div>
+                    </button>
                 </div>
             </form>
-        </>
+            <p className="register-link">Pas encore de compte ? <span onClick={goToRegister}>Inscription</span></p>
+        </div>
     );
 }
  

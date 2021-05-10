@@ -30,7 +30,7 @@ const App = () => {
         }}>
             <HashRouter>
                 <div>
-                    <Header pageTitle={pageTitle}/>
+                    {isAuthenticated ? <Header pageTitle={pageTitle}/> : "" }
                     <div className="main-content">
                         <Switch>
                             <Route path="/login" component={Login}/>
@@ -39,10 +39,11 @@ const App = () => {
                             <PrivateRoute path="/workout/:id" component="Show" setPageTitle={setPageTitle} />
                             <PrivateRoute path="/update/:id" component="Update" setPageTitle={setPageTitle} />
                             <PrivateRoute path="/profil" component="Profile" setPageTitle={setPageTitle} />
-                            <Route path="/" component={WorkoutsList} />
+                            <PrivateRoute path="/" component="WorkoutsList" setPageTitle={setPageTitle} />
                         </Switch>
                     </div>
-                    <FooterNavBar />
+                    {isAuthenticated ?  <FooterNavBar /> : "" }
+                   
                 </div>
             </HashRouter>
         </AuthContext.Provider>
