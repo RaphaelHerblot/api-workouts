@@ -5,8 +5,8 @@ import { HashRouter, Switch, Route } from "react-router-dom";
 import '../styles/app.scss';
 import '../bootstrap';
 
-import Login from './pages/Login/Login';
-import Register from './pages/Login/Register';
+import Login from './pages/Login';
+import Register from './pages/Register';
 import FooterNavBar from "./components/FooterNavBar";
 import AuthAPI from './services/authAPI';
 import AuthContext from './contexts/AuthContext';
@@ -36,9 +36,9 @@ const App = () => {
                             <PrivateRoute path="/workout/:id" component="Show" setPageTitle={setPageTitle} />
                             <PrivateRoute path="/update/:id" component="Update" setPageTitle={setPageTitle} />
                             <PrivateRoute path="/profil" component="Profile" setPageTitle={setPageTitle} />
-                            <PrivateRoute path="/calendar" component="Profile" setPageTitle={setPageTitle} />
-                            <PrivateRoute path="/home" component="WorkoutsList" setPageTitle={setPageTitle} />
-                            <PrivateRoute path="/" component="WorkoutsList" setPageTitle={setPageTitle} />
+                            <PrivateRoute path="/calendar" component="Calendar" setPageTitle={setPageTitle} />
+                            <PrivateRoute path="/home" component="Home" setPageTitle={setPageTitle} />
+                            <PrivateRoute path="/" component="Home" setPageTitle={setPageTitle} />
                         </Switch>
                     </div>
                     {isAuthenticated ?  <FooterNavBar /> : "" }

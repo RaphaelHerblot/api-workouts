@@ -33,7 +33,7 @@ const Login = ({ history }) => {
            await AuthAPI.authentification(credentials);
            setError("");
            setIsAuthenticated(true);
-           history.replace("/create");
+           history.replace("/");
         } catch(error) {
             console.log(error.response);
             setError("Aucun compte ne possède cette adresse email ou alors aucune information ne correspond")

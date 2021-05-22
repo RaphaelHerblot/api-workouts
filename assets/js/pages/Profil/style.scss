@@ -3,6 +3,13 @@
 .profile-container {
   margin-top: 12px;
 
+  .profile-loaders {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
   .centered-container {
     display: flex;
     flex-direction: column;
@@ -60,6 +67,16 @@
         font-weight: 700;
       }
     }
+
+    .logout-container {
+      text-align: center;
+      margin-top: 40px;
+
+      button {
+        border-color: $red-theme;
+        color: $red-theme;
+      }
+    }
   }
 
   .button-workouts {
@@ -113,6 +130,20 @@
       &.active {
         background-color: $theme-color;
         border-color: $theme-color;
+      }
+    }
+  }
+}
+
+body {
+  .main-content {
+    .profile-container {
+      div {
+        .updateForm {
+          form {
+            padding-top: 52px;
+          }
+        }
       }
     }
   }

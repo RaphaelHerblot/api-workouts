@@ -15,11 +15,15 @@
       transform: translate(-50%, -50%);
     }
 
-    img[src*="add-orange"] {
+    img[src*="add-orange"],
+    img[src*="new"],
+    img[src*="loupe-orange"],
+    img[src*="calendar-orange2"] {
       padding-bottom: 4px;
     }
-    img[src*="loupe-orange"] {
-      padding-bottom: 4px;
+
+    img[src*="calendar-orange2"] {
+      width: 25px;
     }
   }
 
@@ -27,7 +31,7 @@
     margin: 0;
     font-style: italic;
     font-weight: 700;
-    font-size: 28px;
+    font-size: 25px;
     border-bottom: 4px solid $theme-color;
   }
 }

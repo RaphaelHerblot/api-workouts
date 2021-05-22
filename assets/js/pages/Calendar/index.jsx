@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import TitleWorkit from '../../components/TitleWorkit';
 
-const CreateWorkout = ({ setPageTitle }) => {
+const Calendar = ({ setPageTitle }) => {
     useEffect(() => {
         setPageTitle("Agenda");
     }, [])
@@ -14,4 +14,4 @@ const CreateWorkout = ({ setPageTitle }) => {
     );
 }
  
-export default CreateWorkout;
+export default Calendar;

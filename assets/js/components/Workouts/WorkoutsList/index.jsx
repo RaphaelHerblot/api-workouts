@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import WorkoutsAPI from "../../../services/workoutsAPI";
-import Pagination from '../../Pagination';
 import WorkoutPreview from './WorkoutPreview';
 import { Link } from "react-router-dom";
 import TitleWorkit from '../../TitleWorkit';
+import WorkoutPreviewLoader from '../../Loader/WorkoutPreviewLoader';
 
-
-const WorkoutsList = ({ setPageTitle }) => {
+const WorkoutsList = () => {
     const [newWorkouts, setNewWorkouts] = useState([]);
     const [mostFavWorkouts, setMostFavWorkouts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     // Get all workouts
     const fetchWorkouts = async () => {
@@ -17,6 +17,7 @@ const WorkoutsList = ({ setPageTitle }) => {
             const dataFav = await WorkoutsAPI.findAllByMostFav();
             setNewWorkouts(dataNew);
             setMostFavWorkouts(dataFav);
+            setIsLoading(false);
         } catch(error) {
             console.log(error.response)
         }
@@ -24,7 +25,6 @@ const WorkoutsList = ({ setPageTitle }) => {
 
     // Getting all workouts when component loads
     useEffect(() => {
-        setPageTitle("Accueil")
         fetchWorkouts();
     }, [])
 
@@ -38,38 +38,52 @@ const WorkoutsList = ({ setPageTitle }) => {
 
     return (
         <div className="workout-list">
-            <div className="d-flex justify-content-between align-items-center">
-                <TitleWorkit title="Les séances à la une" icon="heart" />
-            </div>
-            <div>
-                {mostFavWorkouts.map((workout, index) => 
-                    <div key={workout.id}>
-                        {index < 2 
-                            ?
-                            <Link to={"/workout/" + workout.id}>
-                                <WorkoutPreview workout={workout} />
-                            </Link>
-                            : ''
-                        }
+            <TitleWorkit title="Les séances à la une" icon="heart" />
+            {isLoading 
+                ? 
+                    <div>
+                        <WorkoutPreviewLoader />
+                        <WorkoutPreviewLoader />
                     </div>
-                )}      
-            </div>
+                : 
+                    <div>
+                        {mostFavWorkouts.map((workout, index) => 
+                            <div key={workout.id}>
+                                {index < 2 
+                                    ?
+                                    <Link to={"/workout/" + workout.id}>
+                                        <WorkoutPreview workout={workout} />
+                                    </Link>
+                                    : ''
+                                }
+                            </div>
+                        )}      
+                    </div>
+            }
 
             <TitleWorkit title="Les nouvelles séances" icon="new" />
 
-            <div>
-                {newWorkouts.map((workout, index) => 
-                    <div key={workout.id}>
-                        {index < 2 
-                            ?
-                            <Link to={"/workout/" + workout.id}>
-                                <WorkoutPreview workout={workout} />
-                            </Link>
-                            : ''
-                        }
+            {isLoading 
+                ? 
+                    <div>
+                        <WorkoutPreviewLoader />
+                        <WorkoutPreviewLoader />
                     </div>
-                )}      
-            </div>            
+                : 
+                    <div>
+                        {newWorkouts.map((workout, index) => 
+                            <div key={workout.id}>
+                                {index < 2 
+                                    ?
+                                    <Link to={"/workout/" + workout.id}>
+                                        <WorkoutPreview workout={workout} />
+                                    </Link>
+                                    : ''
+                                }
+                            </div>
+                        )}      
+                    </div>    
+            }        
         </div>
     );
 }

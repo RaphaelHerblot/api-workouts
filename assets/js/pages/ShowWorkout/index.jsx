@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import WorkoutCard from '../../components/Workouts/WorkoutShow/WorkoutCard';
 import WorkoutsAPI from "../../services/workoutsAPI";
 import AuthAPI from "../../services/authAPI";
+import ThreeDotsLoader from '../../components/Loader/ThreeDotsLoader';
 
 const ShowUpdate = ({ match, setPageTitle }) => {
     const [workout, setWorkout] = useState([]);
@@ -44,7 +45,13 @@ const ShowUpdate = ({ match, setPageTitle }) => {
 
     return ( 
         <div>
-            {workoutLoaded && userLoaded ? <WorkoutCard workout={workout} authenticatedUser={authenticatedUser} /> : null}
+            {workoutLoaded && userLoaded 
+                ? <WorkoutCard workout={workout} authenticatedUser={authenticatedUser} /> 
+                :        
+                    <div className="workout-loading">
+                        <ThreeDotsLoader />
+                    </div>
+            }
         </div>
     );
 }

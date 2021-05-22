@@ -77,7 +77,7 @@ const ProfilUpdate = ({ authenticatedUser, updatingUser }) => {
     }, [])
 
     return (
-        <div>
+        <div className="updateForm">
             <form onSubmit={handleSubmit}>
                 <Field 
                     label="Prénom" 
@@ -147,7 +147,7 @@ const ProfilUpdate = ({ authenticatedUser, updatingUser }) => {
                     </div>
                 )}
                 <div className="form-group">
-                    <button type="submit" className="btn btn-success">Enregistrer</button>
+                    <button type="submit" className="btn btn-success">Modifier</button>
                 </div>
             </form>
         </div>

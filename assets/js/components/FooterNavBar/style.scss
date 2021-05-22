@@ -27,6 +27,7 @@ nav {
         color: #fff;
         font-size: 12px;
         transition: all 0.2s ease-out;
+        font-weight: 600;
 
         &.icon-create {
           background-color: #fff;
@@ -41,14 +42,33 @@ nav {
           }
         }
 
-        img {
-          width: 25px;
-          height: 25px;
+        svg {
+          width: 23px;
+          height: 23px;
+          fill: #fff;
         }
 
         &.active {
           color: $theme-color;
+
+          svg {
+            fill: $theme-color;
+
+            path {
+              fill: $theme-color;
+            }
+          }
+
+          &.icon-create {
+            background-color: $theme-color;
+            border-left: 4px solid #fff;
+            border-right: 4px solid #fff;
+          }
         }
+      }
+
+      span {
+        font-size: 11px;
       }
     }
   }

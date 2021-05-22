@@ -6,6 +6,8 @@ import AuthAPI from "../../services/authAPI";
 import AuthContext from "../../contexts/AuthContext";
 
 import './style.scss';
+import ProfileLoader from '../../components/Loader/ProfileLoader';
+import ThreeDotsLoader from '../../components/Loader/ThreeDotsLoader';
 
 
 const Profil = ({ setPageTitle, history }) => {
@@ -32,6 +34,74 @@ const Profil = ({ setPageTitle, history }) => {
         }
     }
 
+    const profileRendering = () => {
+        if(updatingUser) {
+            return <ProfilUpdate authenticatedUser={authenticatedUser} updatingUser={updatingUser} />
+        } else {
+            return (
+                <div>
+                    <div className="profile-workouts">
+                        <h2>Mes séances</h2>
+                        <div className="button-workouts">
+                            <button type="button" className="button-my-workouts" onClick={myWorkouts}>
+                                <span>Créées</span>
+                                <span>{authenticatedUser.workouts.length}</span>
+                            </button>
+                            <button type="button" className="button-favorite-workouts" onClick={myFavoriteWorkouts}>
+                                <span>Favorites</span>
+                                <span>{authenticatedUser.likedWorkouts.length}</span>
+                            </button>
+                        </div>
+                        <div>
+                            {displayMyWorkouts 
+                                ? 
+                                authenticatedUser.workouts.map(workout => 
+                                    <div key={workout.id}>
+                                        <Link to={"/workout/" + workout.id}>
+                                            <WorkoutPreview workout={workout} />
+                                        </Link>
+                                    </div>
+                                )
+                                : ''
+                            }    
+                        </div>
+                        <div>
+                            {displayFavoriteWorkouts 
+                                ? 
+                                authenticatedUser.likedWorkouts.map(workout => 
+                                    <div key={workout.id}>
+                                        <Link to={"/workout/" + workout.id}>
+                                            <WorkoutPreview workout={workout} />
+                                        </Link>
+                                    </div>
+                                )
+                                : ''
+                            }    
+                        </div>
+
+                    </div>
+                    <div className="profil-informations">
+                        <div>
+                            <h2>Mon niveau</h2>
+                            <p>{authenticatedUser.level.title}</p>
+                        </div>
+                        <div>
+                            <h2>Mon objectif</h2>
+                            <p>{authenticatedUser.goal.title}</p>
+                        </div>
+                        <div>
+                            <h2>Mon lieu d'entraînement</h2>
+                            <p>{authenticatedUser.trainingPlace.place}</p>
+                        </div>
+                        <div className="logout-container">
+                            <button type="button" onClick={handleLogout}>Déconnexion</button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+    }
+
     useEffect(() => {
         setPageTitle("Profil");
         fetchUser();
@@ -41,8 +111,16 @@ const Profil = ({ setPageTitle, history }) => {
         console.log("Authenticate User : ", authenticatedUser)
     }, [authenticatedUser])
 
+    useEffect(() => {
+        console.log("Authenticate User : ", authenticatedUser)
+    }, [authenticatedUser])
+
     const updateProfil = () => {
-        setUpdatingUser(true);
+        if(updatingUser === false) {
+            setUpdatingUser(true);
+        }  else {
+            setUpdatingUser(false);
+        }
     }
 
     const myWorkouts = ( event ) => {
@@ -75,7 +153,30 @@ const Profil = ({ setPageTitle, history }) => {
 
     return ( 
         <div className="profile-container">
-            <div className="centered-container">
+          
+            {!userLoaded  
+                ? 
+                    <div className="profile-loaders">
+                        <ProfileLoader />
+                        <ThreeDotsLoader />
+                    </div>
+                : 
+                    <div>
+                        <div className="centered-container">
+                            <div className="icon-profile">
+                                <img className="icon-hexagone" src={require(`/assets/images/icons/hexagone.svg`)} />
+                                <img className="icon-profile-orange" src={require(`/assets/images/icons/profile-orange.svg`)} />
+                            </div>
+                            <h3>{authenticatedUser.firstName} {authenticatedUser.lastName}</h3>
+                            <h5>{authenticatedUser.email}</h5>
+                            <button type="button" className="button-update" onClick={updateProfil}>Modifier</button>
+                        </div>
+                        {profileRendering()}
+                    </div>
+                
+            }
+            
+            {/* <div className="centered-container">
                 <div className="icon-profile">
                     <img className="icon-hexagone" src={require(`/assets/images/icons/hexagone.svg`)} />
                     <img className="icon-profile-orange" src={require(`/assets/images/icons/profile-orange.svg`)} />
@@ -140,13 +241,13 @@ const Profil = ({ setPageTitle, history }) => {
                                 <h2>Mon lieu d'entraînement</h2>
                                 <p>{authenticatedUser.trainingPlace.place}</p>
                             </div>
-                            <div>
-                                <button type="button" onClick={handleLogout}>Deconnexion</button>
+                            <div className="logout-container">
+                                <button type="button" onClick={handleLogout}>Déconnexion</button>
                             </div>
                         </div>
                     </div>
                 : <ProfilUpdate authenticatedUser={authenticatedUser} updatingUser={updatingUser} />) 
-            : null )}
+            : null )} */}
         </div>
     );
 }

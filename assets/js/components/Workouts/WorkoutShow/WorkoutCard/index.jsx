@@ -3,6 +3,7 @@ import WorkoutsAPI from "../../../../services/workoutsAPI";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import ExerciseCard from '../../../Exercises/ExerciseCard';
+import './style.scss';
 
 
 const WorkoutCard = ({ workout, authenticatedUser }) => {
@@ -14,6 +15,7 @@ const WorkoutCard = ({ workout, authenticatedUser }) => {
  
     useEffect(() => {
         checkAlreadyLiked();
+        console.log ("Workout : ", workout);
     }, [])
 
     // Deleting a workout
@@ -78,30 +80,37 @@ const WorkoutCard = ({ workout, authenticatedUser }) => {
 
     return (
         <div className="workoutCard">
-            <div>
-                <Link to={"/update/" + workout.id}>
-                    <button type="button">Modifier</button>
-                </Link>
-                <button type="button" onClick={alreadyLiked ? handleUnlikeWorkout : handleLikeWorkout }>{alreadyLiked ? "Unlike" : "Like" }</button>
-            </div>
-            <div>
-                <button type="button" onClick={handleDeleteWorkout}>Supprimer</button>
-            </div>
             <div key={workout.id}>
-                <div>
-                    <div>{workout.amountLikes}</div>
-                    <div>{workout.amountFavorites}</div>
+                <div className="workout-likes-container">
+                    <p><b>{workout.likedUsers.length}</b></p>
+                    {alreadyLiked 
+                        ?  <img src={require('/assets/images/icons/heart-red.svg')} />
+                        :  <img src={require('/assets/images/icons/heart-empty.svg')} />
+                    }
+                    <button type="button" onClick={alreadyLiked ? handleUnlikeWorkout : handleLikeWorkout }>
+                        {alreadyLiked ? "Je n'aime plus" : "J'aime !" }
+                    </button>
                 </div>
-                <h2>{workout.title}</h2>
-                <p className="workout-description">{workout.description}</p>
+                <div className="workout-title">
+                    <div>
+                        <h2>{workout.title}</h2>
+                        <p className="workout-description">{workout.description}</p>
+                    </div>
+                </div>
                 <div className="workout-characteristic">
                     <div>{workout.level.title}</div>
                     <div>{workout.goal.title}</div>
                     <div>{workout.trainingPlace.place}</div>
                 </div>
                 <div className="workout-informations">
-                    <div>{workout.equipements}</div>
-                    <div>{workout.averageTime}</div>
+                    <div>
+                        <img src={require('/assets/images/icons/dumbbell.svg')} />
+                        {workout.equipements}
+                    </div>
+                    <div>
+                        <img src={require('/assets/images/icons/hourglass.svg')} />
+                        {workout.averageTime} minutes
+                    </div>
                 </div>
                 <div className="workout-exercices">
                     <h3>Exercices</h3>
@@ -112,11 +121,21 @@ const WorkoutCard = ({ workout, authenticatedUser }) => {
                         )}
                     </ul>
                 </div>
-                <div>
-                    <button type="button" onClick={() => handleDelete(workout.id)}>
-                        Supprimer
-                    </button>
-                </div>
+
+                    {authenticatedUser.id === workout.author.id 
+                        ?   
+                            <div className="button-container"> 
+                                <Link to={"/update/" + workout.id}>
+                                    <button type="button">Modifier</button>
+                                </Link>
+                                <div className="delete-container">
+                                    <button type="button" onClick={() => handleDeleteWorkout(workout.id)}>
+                                        Supprimer
+                                    </button>
+                                </div>
+                            </div>
+                        : ''
+                    }
             </div>
         </div>
     );
