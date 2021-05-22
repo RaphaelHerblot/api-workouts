@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import WorkoutsAPI from "../../../services/workoutsAPI";
-import Pagination from '../../Pagination/Pagination';
+import Pagination from '../../Pagination';
 import WorkoutPreview from './WorkoutPreview';
 import { Link } from "react-router-dom";
+import TitleWorkit from '../../TitleWorkit';
 
 
 const WorkoutsList = ({ setPageTitle }) => {
-    const [workouts, setWorkouts] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [search, setSearch] = useState('');
+    const [newWorkouts, setNewWorkouts] = useState([]);
+    const [mostFavWorkouts, setMostFavWorkouts] = useState([]);
 
     // Get all workouts
     const fetchWorkouts = async () => {
         try {
-            const data = await WorkoutsAPI.findAll();
-            setWorkouts(data);
+            const dataNew = await WorkoutsAPI.findAllByIdDesc();
+            const dataFav = await WorkoutsAPI.findAllByMostFav();
+            setNewWorkouts(dataNew);
+            setMostFavWorkouts(dataFav);
         } catch(error) {
             console.log(error.response)
         }
@@ -26,69 +28,48 @@ const WorkoutsList = ({ setPageTitle }) => {
         fetchWorkouts();
     }, [])
 
-    // Deleting a workout
-    const handleDelete = async id => {
-        const originalWorkouts = [...workouts];
+    useEffect(() => {
+        console.log("newWorkouts : ", mostFavWorkouts)
+    }, [mostFavWorkouts])
 
-        setWorkouts(workouts.filter(workout => workout.id !== id));
-        
-        try {
-            await WorkoutsAPI.delete(id)
-        } catch(error) {
-            setWorkouts(originalWorkouts);
-        }
-    }
-
-    // Searching a workout
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
-    }
-
-    const handleSearch = ({currentTarget}) => {
-        setSearch(currentTarget.value);
-        setCurrentPage(1);
-    }
-
-    const itemsPerPage = 2;
-
-    // Filtering workouts by search terms
-    const filteredWorkouts = workouts.filter(
-        workout => 
-            workout.title.toLowerCase().includes(search.toLowerCase()) ||
-            workout.description.toLowerCase().includes(search.toLowerCase())
-    );
-
-    // Data pagination
-    const paginatedWorkouts = Pagination.getData(filteredWorkouts, currentPage, itemsPerPage);
+    useEffect(() => {
+        console.log("newWorkouts : ", newWorkouts)
+    }, [newWorkouts])
 
     return (
-        <div>
+        <div className="workout-list">
             <div className="d-flex justify-content-between align-items-center">
-                <h1>Créer votre workout</h1>
-                <Link to="/create" className="btn btn-primary">Créer</Link>
+                <TitleWorkit title="Les séances à la une" icon="heart" />
             </div>
-            <div className="form-group">
-                <input 
-                    type="text" 
-                    onChange={handleSearch} 
-                    value={search} 
-                    className="form-control" 
-                    placeholder="Rechercher ..."
-                />
-            </div>            
+            <div>
+                {mostFavWorkouts.map((workout, index) => 
+                    <div key={workout.id}>
+                        {index < 2 
+                            ?
+                            <Link to={"/workout/" + workout.id}>
+                                <WorkoutPreview workout={workout} />
+                            </Link>
+                            : ''
+                        }
+                    </div>
+                )}      
+            </div>
 
-            {paginatedWorkouts.map(workout => 
-                <Link key={workout.id} to={"/workout/" + workout.id}>
-                    <WorkoutPreview workout={workout} />
-                </Link>
-            )}
-            
-            {itemsPerPage < filteredWorkouts.length} <Pagination 
-                currentPage={currentPage} 
-                itemsPerPage={itemsPerPage} 
-                length={filteredWorkouts.length} 
-                onPageChanged={handlePageChange} 
-            />
+            <TitleWorkit title="Les nouvelles séances" icon="new" />
+
+            <div>
+                {newWorkouts.map((workout, index) => 
+                    <div key={workout.id}>
+                        {index < 2 
+                            ?
+                            <Link to={"/workout/" + workout.id}>
+                                <WorkoutPreview workout={workout} />
+                            </Link>
+                            : ''
+                        }
+                    </div>
+                )}      
+            </div>            
         </div>
     );
 }

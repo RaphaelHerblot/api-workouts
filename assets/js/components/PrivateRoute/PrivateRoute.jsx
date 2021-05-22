@@ -7,6 +7,7 @@ import CreateWorkout from '../../pages/CreateWorkout';
 import UpdateWorkout from '../../pages/UpdateWorkout';
 import ShowWorkout from '../../pages/ShowWorkout';
 import WorkoutsList from '../Workouts/WorkoutsList';
+import Search from '../../pages/Search';
 
 const PrivateRoute = ({ path, component, setPageTitle }) => {
     const { isAuthenticated } = useContext(AuthContext);
@@ -22,6 +23,8 @@ const PrivateRoute = ({ path, component, setPageTitle }) => {
             return <UpdateWorkout {...props} setPageTitle={setPageTitle} />
         } else if (component == "WorkoutsList") {
             return <WorkoutsList {...props} setPageTitle={setPageTitle} />
+        } else if (component == "Search") {
+            return <Search {...props} setPageTitle={setPageTitle} />
         }
         // if(component == "Profile" ) {
         //     return (

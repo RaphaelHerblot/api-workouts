@@ -1,0 +1,33 @@
+@import "../../../styles/variable.scss";
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $black-theme;
+  color: #fff;
+  padding: 18px;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+
+  > div {
+    &.header-icon {
+      position: absolute;
+      top: 50%;
+      left: 7%;
+      transform: translate(-50%, -50%);
+    }
+
+    h2 {
+      font-size: 16px;
+    }
+
+    a {
+      img {
+        width: 28px;
+        height: 28px;
+      }
+    }
+  }
+}

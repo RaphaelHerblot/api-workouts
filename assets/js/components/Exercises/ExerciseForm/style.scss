@@ -1,0 +1,84 @@
+@import "../../../../styles/variable.scss";
+
+.exerciseForm {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+
+  .creationImage {
+    width: 135px;
+  }
+
+  label {
+    color: $theme-color;
+    font-weight: 700;
+    font-size: 18px;
+    justify-content: space-between;
+  }
+
+  input {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 40px;
+    outline: none;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 400;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #fff;
+
+    &:focus ~ label,
+    &:valid ~ label {
+      margin-top: -30px;
+      -webkit-transform: scale(0.8);
+      -moz-transform: scale(0.8);
+      -o-transform: scale(0.8);
+      transform: scale(0.8);
+      color: #ffffff;
+    }
+
+    &:focus ~ .border-field::after,
+    &:focus ~ .border-field::before {
+      width: 50%;
+    }
+  }
+
+  .exercise-informations {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 40%;
+
+    input[type="number"] {
+      text-align: center;
+    }
+  }
+
+  .button-container-exercices {
+    position: relative;
+    width: 50px;
+
+    .exercise-button {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      right: 0%;
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+
+      button {
+        background-color: $red-theme;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 6px;
+
+        img {
+          width: 13px;
+          padding-top: 2px;
+        }
+      }
+    }
+  }
+}

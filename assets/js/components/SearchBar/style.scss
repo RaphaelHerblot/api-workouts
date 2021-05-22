@@ -1,0 +1,124 @@
+@import "../../../styles/variable.scss";
+
+.search-bar {
+  position: relative;
+  border-radius: 0 0 6px 6px;
+
+  .search-box {
+    position: relative;
+    display: flex;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+
+    .search-input {
+      width: 100%;
+      font-family: "Montserrat", sans-serif;
+      font-size: 16px;
+      padding: 17px 15px 17px 45px;
+      background-color: #efefef;
+      color: #6c6c6c;
+      border-radius: 50px;
+      border: none;
+      transition: all 0.4s;
+
+      &:focus {
+        border: none;
+        outline: none;
+        box-shadow: 0 1px 12px $theme-color;
+        -moz-box-shadow: 0 1px 12px $theme-color;
+        -webkit-box-shadow: 0 1px 12px $theme-color;
+      }
+    }
+
+    .search-btn {
+      position: absolute;
+      background-color: transparent;
+      font-size: 18px;
+      padding: 6px 9px;
+      margin-left: -45px;
+      border: none;
+      color: #6c6c6c;
+      transition: all 0.4s;
+      z-index: 10;
+      top: 50%;
+      left: 70px;
+      transform: translate(-50%, -50%);
+
+      img {
+        width: 19px;
+        vertical-align: middle;
+      }
+
+      &:hover {
+        transform: scale(1.2);
+        cursor: pointer;
+        color: black;
+      }
+
+      &:focus {
+        outline: none;
+        color: black;
+      }
+    }
+  }
+
+  ul {
+    position: absolute;
+    top: 35px;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    width: 100%;
+    z-index: 12;
+    padding: 10px 15px;
+    background-color: #eaeaeb;
+    border-radius: 12px;
+    color: $black-theme;
+    font-weight: 700;
+    overflow-y: auto;
+    max-height: 320px;
+
+    li {
+      padding: 10px 5px;
+      width: 100%;
+      background-color: #eaeaeb;
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      font-size: 17px;
+
+      &:not(:last-child) {
+        border-bottom: 1px solid $black-theme;
+      }
+
+      > span {
+        pointer-events: none;
+      }
+
+      img {
+        width: 140px;
+        margin-right: 20px;
+      }
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+
+  &.search-bar-workouts {
+    margin-top: 30px;
+    .search-box {
+      .search-input {
+        border: 1px solid $black-theme;
+
+        &:focus {
+          border: 1px solid $black-theme;
+        }
+      }
+    }
+  }
+}

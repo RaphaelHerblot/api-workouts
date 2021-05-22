@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { NavLink, withRouter } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
+import './style.scss';
 
 const Header = ({ pageTitle }) => {
 

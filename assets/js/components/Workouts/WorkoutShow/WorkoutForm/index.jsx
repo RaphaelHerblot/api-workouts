@@ -6,10 +6,14 @@ import GoalsAPI from "../../../../services/goalsAPI";
 import TrainingPlacesAPI from "../../../../services/trainingPlacesAPI";
 import ExercicesAPI from "../../../../services/exercicesAPI";
 import Field from '../../../Form/Field';
+import FieldTextarea from '../../../Form/FieldTextarea';
 import Select from '../../../Form/SelectExercise';
 import ExerciseForm from '../../../Exercises/ExerciseForm';
 import RestTime from '../../../Exercises/RestTime'
 import axios from 'axios';
+
+import './style.scss';
+import SearchBar from '../../../SearchBar/SearchBarExercises';
 
 const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
     const[workout, setWorkout] = useState({
@@ -33,6 +37,9 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
     const [stretches, setStretches] = useState([]);
     const [chosenExercise, setChosenExercise] = useState([]);
     const [rest, setRest] = useState([]);
+    const [modTypeExercise, setModTypeExercise] = useState("exercises");
+    const [modSearchExercise, setModSearchExercise] = useState("search");
+    const [exercisesToSearch, setExercisesToSearch] = useState([])
     const [firstSetupExercices, setFirstSetupExercices] = useState(false);
     const temporaryRest = rest;
     
@@ -104,11 +111,6 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
         addExerciceToWorkout();
     }, [chosenExercise]);
 
-    // useEffect(() => {
-    //     console.log("BJR JENNIE");
-    //     addRestToWorkout();
-    // }, [needRest]);
-
     const fetchWorkoutsData = async () => {
         try {
             const dataLevels = await LevelsAPI.findAll();
@@ -130,6 +132,7 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
     }
 
     const fetchOneExercice = async (event) => {
+        console.log("BJR LOLILOLILOL", event.target)
         try {
             const dataExercice = await ExercicesAPI.findOne(event.target.value);
             setChosenExercise(dataExercice.data);
@@ -142,22 +145,54 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
         const { name, value } = currentTarget;
         setWorkout({...workout, [name]: value})
     }
+
+    const handleTypeMod = (event) => {
+        if(modTypeExercise === "exercises") {
+            setModTypeExercise("stretching");
+        } else {
+            setModTypeExercise("exercises");
+        }
+                    
+        if(event.target.classList[0] === "button-type-stretching") {
+            event.target.classList.toggle("active");
+            event.target.previousSibling.classList.toggle("active");
+        } else if (event.target.classList[0] === "button-type-exercise") {
+            event.target.classList.toggle("active");
+            event.target.nextSibling.classList.toggle("active");
+        }
+    }
+
+    const handleSearchMod = (event) => {
+        if(modSearchExercise === "search") {
+            setModSearchExercise("list");
+        } else {
+            setModSearchExercise("search");
+        }
+                    
+        if(event.target.classList[0] === "button-list") {
+            event.target.classList.toggle("active");
+            event.target.previousSibling.classList.toggle("active");
+        } else if (event.target.classList[0] === "button-search") {
+            event.target.classList.toggle("active");
+            event.target.nextSibling.classList.toggle("active");
+        }
+    }
     
     const deleteExercise = (event) => {
         console.log(event.target);
         console.log(exercices)
         setExercices(exercices);
-        (event.target.parentElement.parentElement.parentElement).remove();
+        (event.target.parentElement.parentElement.parentElement.parentElement.parentElement).remove();
     }
 
     const deleteStretch = (event) => {
         setStretches(stretches);
-        (event.target.parentElement.parentElement.parentElement).remove();
+        (event.target.parentElement.parentElement.parentElement.parentElement.parentElement).remove();
     }
 
     const deleteRest = (event) => {
         setChosenExercise([]);
-        (event.target.parentElement.parentElement.parentElement).remove();
+        (event.target.parentElement.parentElement.parentElement.parentElement).remove();
     }
 
     const addRest = () => {
@@ -177,11 +212,12 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
 
             if(chosenExercise.type === "Musculation") {
                 ReactDOM.render(<ExerciseForm chosenExercise={chosenExercise} deleteExercise={deleteExercise} />, exerciceContainer);
-                setExercices(exercices.filter(exercice => exercice.id !== chosenExercise.id));
+                // setExercices(exercices.filter(exercice => exercice.id !== chosenExercise.id));
             } else if(chosenExercise.type === "Stretch") {
                 ReactDOM.render(<ExerciseForm chosenExercise={chosenExercise} deleteExercise={deleteStretch} />, exerciceContainer);
-                setStretches(stretches.filter(stretch => stretch.id !== chosenExercise.id))
+                // setStretches(stretches.filter(stretch => stretch.id !== chosenExercise.id))
             } else {
+                console.log("RESST TIME");
                 ReactDOM.render(<RestTime chosenRest={chosenExercise} deleteExercise={deleteRest} />, exerciceContainer);
             }
         }
@@ -235,7 +271,7 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
     }
 
     return ( 
-        <>
+        <div className="workoutForm">
             <form onSubmit={handleSubmit}>
                 <Field 
                     label="Nom du workout" 
@@ -244,7 +280,7 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
                     onChange={handleChange} 
                     error={error}
                 />
-                <Field 
+                <FieldTextarea 
                     label="Description du workout" 
                     name="description" 
                     value={workout.description} 
@@ -274,7 +310,7 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
                     onChange={handleChange} 
                     error={error} 
                 />
-                <label>Votre niveau</label>
+                <h3>Le niveau recommandé est</h3>
                 {levels.map(level =>
                     <div className="form-check" key={level.id}>
                         <input 
@@ -286,10 +322,10 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
                             name="level"
                             {...(workoutIsUpdated ? (level.id === workoutData.level.id ? {defaultChecked: true} : null ) : null)}
                         />
-                        <label htmlFor="level">{level.title}</label>
+                        <label htmlFor={"level_" + level.id}>{level.title}</label>
                     </div>
                 )}
-                <label>Votre but</label>
+                <h3>Le but de la séance est de</h3>
                 {goals.map(goal => 
                     <div className="form-check" key={goal.id}>
                         <input 
@@ -301,10 +337,10 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
                             name="goal"
                             {...(workoutIsUpdated ? (goal.id === workoutData.goal.id ? {defaultChecked: true} : null ) : null)}
                         />
-                        <label htmlFor="goal" className="form-check-label">{goal.title}</label>
+                        <label htmlFor={"goal_" + goal.id} className="form-check-label">{goal.title}</label>
                     </div>
                 )}
-                <label>Votre endroit d'entraînement principal</label>
+                <h3>La séance doit s'effectuer à</h3>
                 {trainingPlaces.map(trainingPlace => 
                     <div className="form-check" key={trainingPlace.id}>
                         <input 
@@ -316,33 +352,72 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
                             name="trainingPlace"
                             {...(workoutIsUpdated ? (trainingPlace.id === workoutData.trainingPlace.id ? {defaultChecked: true} : null ) : null)}
                         />
-                        <label htmlFor="trainingPlace">{trainingPlace.place}</label>
+                        <label htmlFor={"trainingPlace_" + trainingPlace.id}>{trainingPlace.place}</label>
                     </div>
                 )} 
-                <label>Les exercices</label>
-                <Select name="selectExercices" id="selectExercices" onClickFunction={fetchOneExercice} options={exercices}/>
-                <Select name="selectStretches" id="selectExercices" onClickFunction={fetchOneExercice} options={stretches}/>
-                <div>
-                    <button type="button" onClick={addRest}>Ajouter une pause !</button>
-                </div>
-                <div className="listExercices">
-                    {workoutIsUpdated 
-                        ? workout.exercices.map((exercice, index) => 
-                            <div key={exercice.id} id={"content_" + exercice.id} className="container-div">
-                                {exercice.type === "Musculation" 
-                                    ? <ExerciseForm chosenExercise={exercice} nbRepetition={workout.nbRepetition[index]} onChange={handleChange} deleteExercise={deleteExercise} />                                
-                                    : <ExerciseForm chosenExercise={exercice} nbRepetition={workout.nbRepetition[index]} onChange={handleChange} deleteExercise={deleteStretch} />                                
+                <h2>Exercices</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit , sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                {exercices.length > 0 
+                    ? 
+                        <div>
+                            <div className="button-container">
+                                <div className="button-type-exercises">
+                                    <button type="button" className="button-type-exercise active" onClick={handleTypeMod}>
+                                        Exercices
+                                    </button>
+                                    <button type="button" className="button-type-stretching" onClick={handleTypeMod}>
+                                        Étirements
+                                    </button>
+                                </div>
+                                <div className="button-find-exercises">
+                                    <button type="button" className="button-search active" onClick={handleSearchMod}>
+                                        Rechercher
+                                    </button>
+                                    <button type="button" className="button-list" onClick={handleSearchMod}>
+                                        Liste
+                                    </button>
+                                </div>
+                            </div>
+                            {modSearchExercise === "search" 
+                                ? 
+                                    ( modTypeExercise === "exercises" 
+                                        ? <SearchBar exercises={exercices} onClickFunction={fetchOneExercice} placeholder="Recherchez un exercice" />
+                                        : <SearchBar exercises={stretches} onClickFunction={fetchOneExercice} placeholder="Recherchez un étirement" />
+                                    )
+                                : 
+                                    ( modTypeExercise === "exercises" 
+                                        ? <Select name="selectExercices" id="selectExercices" onClickFunction={fetchOneExercice} options={exercices} placeholder="Choisissez vos exercices"/>
+                                        : <Select name="selectStretches" id="selectExercices" onClickFunction={fetchOneExercice} options={stretches} placeholder="Choisissez vos étirements" />
+                                    )
+                 
+                            }                        
+                            <div className="button-rest-container">
+                                <button type="button" className="button-rest" onClick={addRest}>
+                                    <img src={require("/assets/images/icons/rest1.svg")} />
+                                    Ajouter une pause    
+                                </button>
+                            </div>
+                            <div className="listExercices">
+                                {workoutIsUpdated 
+                                    ? workout.exercices.map((exercice, index) => 
+                                        <div key={exercice.id} id={"content_" + exercice.id} className="container-div">
+                                            {exercice.type === "Musculation" 
+                                                ? <ExerciseForm chosenExercise={exercice} nbRepetition={workout.nbRepetition[index]} onChange={handleChange} deleteExercise={deleteExercise} />                                
+                                                : <ExerciseForm chosenExercise={exercice} nbRepetition={workout.nbRepetition[index]} onChange={handleChange} deleteExercise={deleteStretch} />                                
+                                            }
+                                        </div>
+                                    )
+                                    : null
                                 }
                             </div>
-                        )
-                        : null
-                    }
-                </div>
-                <div className="form-group">
-                    <button type="submit" className="btn btn-success">{workoutIsUpdated ? "Modifier" : "Création"}</button>
-                </div>
+                            <div className="form-group">
+                                <button type="submit" className="btn btn-success">{workoutIsUpdated ? "Modifier" : "Création"}</button>
+                            </div>
+                        </div>
+                    : ''
+                }
             </form>
-        </>
+        </div>
     );
 }
  

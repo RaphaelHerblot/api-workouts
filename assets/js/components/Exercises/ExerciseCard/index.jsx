@@ -1,11 +1,19 @@
 import React from 'react';
+import './style.scss';
 
 const ExerciseCard = ({ exercice, nbRepetition }) => {
 
     return (
         <li>
-            <div><img src={require(`/assets/images/exercices/${exercice.id}.svg`)}></img></div>
-            <div><span>x{nbRepetition} </span>{exercice.title}</div>
+            <div><img src={require(`/assets/images/exercices/${exercice.id}.svg`)} className="exercise-image"/></div>
+            { exercice.type === 'Rest'
+                ?   
+                    <div>
+                        <img src={require("/assets/images/icons/rest2-black.svg")} className="icon-rest" />
+                        {exercice.title} <span>{nbRepetition}s</span>
+                    </div>
+                : <div>x{nbRepetition} <span>{exercice.title}</span></div>
+            }
         </li>
     );
 }

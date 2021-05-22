@@ -16,8 +16,32 @@ function deleteWorkout(id) {
     .delete("http://localhost:8000/api/workouts/"+ id)
 }
 
+function findAllByIdDesc() {
+    return axios
+    .get("http://localhost:8000/api/workouts?order[id]=desc")
+    .then(response => response.data['hydra:member'])
+}
+
+function findAllByMostFav() {
+    return axios
+    .get("http://localhost:8000/api/workouts?order[likedUsers]=desc",{
+        params: {
+            _limit: 2
+        }
+    })
+    .then(response => response.data['hydra:member'])
+}
+
+function findAllById(id) {
+    return axios
+    .get("http://localhost:8000/api/workouts?id="+ id)
+    .then(response => response.data['hydra:member'])
+}
+
 export default {
     findAll,
     findOne,
-    delete: deleteWorkout
+    delete: deleteWorkout,
+    findAllByIdDesc,
+    findAllByMostFav
 }

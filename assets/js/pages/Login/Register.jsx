@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import LevelsAPI from "../../services/levelsAPI";
 import GoalsAPI from "../../services/goalsAPI";
@@ -157,6 +158,7 @@ const Register = (props) => {
                     </button>
                 </div>
             </form>
+            <p className="login-link">Déjà inscrit ? <Link to="/login">Connexion</Link></p>
         </div>
     );
 }

@@ -1,0 +1,103 @@
+@import "../../../../../styles/variable.scss";
+
+.workoutForm {
+  form {
+    padding-top: 30px;
+
+    .label-textarea {
+      color: #ffffffd4;
+    }
+
+    textarea {
+      background-color: $black-theme;
+      border-radius: 8px;
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      color: #ffffffd4;
+    }
+
+    select {
+      padding: 17px 20px;
+      border-radius: 50px;
+      width: 100%;
+    }
+
+    .button-container {
+      margin-bottom: 20px;
+    }
+
+    .button-find-exercises,
+    .button-type-exercises,
+    .button-rest-container {
+      display: flex;
+      justify-content: center;
+
+      button {
+        border: 1px solid $background-color;
+        padding: 10px 30px;
+        border-radius: 9px;
+        font-size: 17px;
+        cursor: pointer;
+        transition: all 0.3s ease-out;
+        font-weight: 700;
+
+        &.button-update {
+          color: $black-theme;
+
+          &:hover {
+            border: 1px solid $theme-color;
+            color: $theme-color;
+          }
+        }
+
+        &.button-search,
+        &.button-list,
+        &.button-type-exercise,
+        &.button-type-stretching {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background-color: $black-theme;
+          color: #fff;
+          margin: 3px;
+          width: 100%;
+
+          span {
+            pointer-events: none;
+
+            &:first-child {
+              margin-bottom: 5px;
+            }
+
+            &:last-child {
+              font-size: 14px;
+              font-weight: 300;
+            }
+          }
+
+          &.active {
+            background-color: $theme-color;
+            border-color: $theme-color;
+          }
+        }
+      }
+    }
+
+    .button-rest-container {
+      margin-top: 25px;
+
+      button {
+        display: flex;
+        align-items: center;
+        padding: 8px 20px;
+
+        img {
+          width: 35px;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}

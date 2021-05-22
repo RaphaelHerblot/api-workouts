@@ -6,8 +6,8 @@ const Field = ({ name, label, value, onChange, placeholder = "", type = "text", 
         <input 
             value={value} 
             onChange={onChange} 
-            type={type}
             placeholder={placeholder}
+            type={type}
             id={name}
             name={name}
             className={"form-control" + (error && " is-invalid")}

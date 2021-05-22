@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './style.scss';
+
 const Pagination = ({ currentPage, itemsPerPage, length, onPageChanged }) => {
     const pagesCount = Math.ceil(length / itemsPerPage);
     const pages = [];
@@ -11,7 +13,9 @@ const Pagination = ({ currentPage, itemsPerPage, length, onPageChanged }) => {
     return ( 
         <ul className="pagination pagination-sm">
             <li className={"page-item" + (currentPage === 1 && " disabled")}>
-                <button className="page-link" onClick={() => onPageChanged(currentPage-1)}>&laquo;</button>
+                <button className="page-link arrow-left" onClick={() => onPageChanged(currentPage-1)}>
+                    <img src={require("/assets/images/icons/arrow-right.svg")} />
+                </button>
             </li>
             {pages.map(page =>                
                 <li key={page} className={"page-item" + (currentPage === page && " active")}>
@@ -21,7 +25,9 @@ const Pagination = ({ currentPage, itemsPerPage, length, onPageChanged }) => {
                 </li>
             )}
             <li className={"page-item" + (currentPage === pagesCount && " disabled")}>
-                <button className="page-link"  onClick={() => onPageChanged(currentPage+1)}>&raquo;</button>
+                <button className="page-link arrow-right"  onClick={() => onPageChanged(currentPage+1)}>
+                    <img src={require("/assets/images/icons/arrow-left.svg")} />
+                </button>
             </li>
         </ul>
     );

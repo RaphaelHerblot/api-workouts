@@ -30,13 +30,13 @@ class Exercices
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"exercices_read", "workouts_read"})
+     * @Groups({"exercices_read", "workouts_read", "users_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"exercices_read", "workouts_read", "workouts_get_subresource"})
+     * @Groups({"exercices_read", "workouts_read", "workouts_get_subresource", "users_read"})
      */
     private $title;
 
@@ -54,7 +54,7 @@ class Exercices
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"exercices_read", "workouts_read"})
+     * @Groups({"exercices_read", "workouts_read", "users_read"})
      */
     private $type;
 

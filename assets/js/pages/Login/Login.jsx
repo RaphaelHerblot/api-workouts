@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 import AuthAPI from '../../services/authAPI';
 import AuthContext from '../../contexts/AuthContext';
 import Field from '../../components/Form/Field';
@@ -21,7 +22,6 @@ const Login = ({ history }) => {
 
     const goToRegister = () => {
         history.replace("/register");
-
     }
 
     // Handleling submit
@@ -70,7 +70,7 @@ const Login = ({ history }) => {
                     </button>
                 </div>
             </form>
-            <p className="register-link">Pas encore de compte ? <span onClick={goToRegister}>Inscription</span></p>
+            <p className="register-link">Pas encore de compte ? <Link to="/register">Inscription</Link></p>
         </div>
     );
 }
