@@ -35,9 +35,9 @@
 
       button {
         border: 1px solid $background-color;
-        padding: 10px 30px;
+        padding: 10px;
         border-radius: 9px;
-        font-size: 17px;
+        font-size: 16px;
         cursor: pointer;
         transition: all 0.3s ease-out;
         font-weight: 700;
@@ -97,6 +97,15 @@
           width: 35px;
           margin-right: 10px;
         }
+      }
+    }
+
+    .listExercices {
+      .exercise-container {
+        border: 1px solid $theme-color;
+        margin: 10px 0;
+        padding: 0 10px;
+        border-radius: 10px;
       }
     }
   }

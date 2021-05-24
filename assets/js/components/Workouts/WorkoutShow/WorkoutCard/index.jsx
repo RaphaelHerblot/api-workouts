@@ -6,7 +6,7 @@ import ExerciseCard from '../../../Exercises/ExerciseCard';
 import './style.scss';
 
 
-const WorkoutCard = ({ workout, authenticatedUser }) => {
+const WorkoutCard = ({ workout, authenticatedUser, history }) => {
     const[likedWorkouts, setLikedWorkouts] = useState([]);
     const[alreadyLiked, setAlreadyLiked] = useState(false);
 
@@ -22,6 +22,7 @@ const WorkoutCard = ({ workout, authenticatedUser }) => {
     const handleDeleteWorkout = async id => {
         try {
             await WorkoutsAPI.delete(id)
+            history.push("/");
         } catch(error) {
             setWorkouts(originalWorkouts);
         }
@@ -116,8 +117,9 @@ const WorkoutCard = ({ workout, authenticatedUser }) => {
                     <h3>Exercices</h3>
                     <h4>{workout.series} séries</h4>
                     <ul>
-                        {workout.exercices.map((exercice, index) =>
-                            <ExerciseCard key={exercice.id} exercice={exercice} nbRepetition={workout.nbRepetition[index]} />
+                        {workout.nbRepetition.map((number) =>
+                            <ExerciseCard key={workout.exercices[number.index].id} exercice={workout.exercices[number.index]} nbRepetition={number.repetition} />
+                            // <ExerciseCard key={exercice.id} exercice={exercice} nbRepetition={workout.nbRepetition[index].repetition} />
                         )}
                     </ul>
                 </div>

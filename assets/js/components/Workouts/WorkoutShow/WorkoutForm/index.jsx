@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from "react-dom";
-
+import { useHistory } from 'react-router-dom'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import LevelsAPI from "../../../../services/levelsAPI";
 import GoalsAPI from "../../../../services/goalsAPI";
 import TrainingPlacesAPI from "../../../../services/trainingPlacesAPI";
@@ -42,11 +43,16 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
     const [exercisesToSearch, setExercisesToSearch] = useState([])
     const [firstSetupExercices, setFirstSetupExercices] = useState(false);
     const temporaryRest = rest;
-    
+    const [newExerciseContent, setNewExerciseContent] = useState("");
+    const [listExercises, setListExercises] = useState([])
+    const [count, setCount] = useState(0);
+    const [isResting, setIsResting] = useState(false);
+    let history = useHistory();
+
     useEffect(() => {
         fetchWorkoutsData();
         console.log("WorkoutData : ", workoutData);
-
+        console.log("History : ", history)
         if(workoutIsUpdated) {
             const existingWorkout = {
                 id: workoutData.id,
@@ -74,30 +80,26 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
             //     }
             //  }
             console.log("existingWorkout : ", existingWorkout)
+            const tempExercises = [];
+
+            for (var i = 0; i < existingWorkout.nbRepetition.length ; i++) {
+                tempExercises.push(existingWorkout.exercices[existingWorkout.nbRepetition[i].index]);
+                if(tempExercises[i].type === "Rest") {
+                    setIsResting(true);
+                }
+            }
+
+            for (var i = 0; i < existingWorkout.exercices ; i++) {
+            }
+    
+            // const tempExercises = [...existingWorkout.exercices];
+            console.log("Temp Exo : ", tempExercises);
+            setListExercises(tempExercises);
         }
     }, [])
 
     useEffect(() => {
         console.log("Workout : ", workout);
-        // if(workoutIsUpdated) {
-        //     for (var i = 0; i < workout.exercices.length; i++) {
-        //         console.log("BJRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR : ", exercices);
-        //         console.log(exercices.filter(exercice => exercice.id !== workout.exercices[i].id));
-        //         console.log("LOOOOOOOOOOOLILOOOOOOOOOOOOOOOOOOOOOOOOOOL : ", exercices)
-        //     }
-
-        //     // for (var i = 0; i < exercices.length; i++) {
-        //     //     for (var j = 0; j < workout.exercices.length; j++) {
-        //     //         console.log("lolilol : ", exercices[i].id);
-        //     //         console.log("yoyoyoyo : ", workout.exercices[j].id);
-        //     //         if(exercices[i].id === workout.exercices[j].id) {
-        //     //             console.log("ntmfdp");
-        //     //             setExercices(exercices.splice(i, 1));
-        //     //         }
-        //     //     }
-        //     //  }
-        //      setFirstSetupExercices(false);
-        // }
     }, [workout])
 
     useEffect(() => {
@@ -107,9 +109,21 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
     }, [exercices])
 
     useEffect(() => {
-        console.log("BJR SANA");
-        addExerciceToWorkout();
+        console.log("BJR SANA : ", chosenExercise);
+        if(chosenExercise) {
+            addExerciceToWorkout3();
+        }
     }, [chosenExercise]);
+
+    useEffect(() => {
+       console.log("Count : ", count);
+       
+    }, [count]);
+
+    useEffect(() => {
+        console.log("List Exercises : ", listExercises);
+        
+     }, [listExercises]);
 
     const fetchWorkoutsData = async () => {
         try {
@@ -178,63 +192,94 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
         }
     }
     
-    const deleteExercise = (event) => {
-        console.log(event.target);
+    const deleteExercise = (event, index) => {
+        console.log("Target : ", event.target);
+        console.log("Index : ", index);
         console.log(exercices)
-        setExercices(exercices);
-        (event.target.parentElement.parentElement.parentElement.parentElement.parentElement).remove();
+        const newExercisesList = [...listExercises];
+        
+        newExercisesList.splice(index, 1);
+        setListExercises(newExercisesList);
+        (event.target.parentElement.parentElement.parentElement).remove();
     }
 
-    const deleteStretch = (event) => {
-        setStretches(stretches);
-        (event.target.parentElement.parentElement.parentElement.parentElement.parentElement).remove();
-    }
-
-    const deleteRest = (event) => {
-        setChosenExercise([]);
-        (event.target.parentElement.parentElement.parentElement.parentElement).remove();
+    const deleteRest = (event, index) => {
+        const newExercisesList = [...listExercises]; 
+        newExercisesList.splice(index, 1);
+        setListExercises(newExercisesList);
+        (event.target.parentElement.parentElement.parentElement).remove();
+        setIsResting(false);
     }
 
     const addRest = () => {
         setChosenExercise(rest);
         console.log("RESSSSSSSST : ", rest);
+        setIsResting(true);
     }
 
-    const addExerciceToWorkout = () => {
+    const addExerciceToWorkout3 = () => {
         console.log("Exercice choisi : ", chosenExercise);
         if(chosenExercise && Object.keys(chosenExercise).length > 0 && chosenExercise.constructor === Object) {
-            var listExercicesContainer = document.querySelector(".listExercices");
-
-            var exerciceContainer = document.createElement("div");
-            exerciceContainer.setAttribute("id", `content_${chosenExercise.id}`);
-            exerciceContainer.setAttribute("class", `container-div`);
-            listExercicesContainer.appendChild(exerciceContainer);
-
-            if(chosenExercise.type === "Musculation") {
-                ReactDOM.render(<ExerciseForm chosenExercise={chosenExercise} deleteExercise={deleteExercise} />, exerciceContainer);
-                // setExercices(exercices.filter(exercice => exercice.id !== chosenExercise.id));
-            } else if(chosenExercise.type === "Stretch") {
-                ReactDOM.render(<ExerciseForm chosenExercise={chosenExercise} deleteExercise={deleteStretch} />, exerciceContainer);
-                // setStretches(stretches.filter(stretch => stretch.id !== chosenExercise.id))
-            } else {
-                console.log("RESST TIME");
-                ReactDOM.render(<RestTime chosenRest={chosenExercise} deleteExercise={deleteRest} />, exerciceContainer);
-            }
+            const tempListExercises = [...listExercises];
+            tempListExercises.push(
+                chosenExercise
+            );
+            setCount(count+1);
+            setListExercises(tempListExercises)
+            setChosenExercise([]);
         }
     }
+
+    const compareValue = ( a, b ) => {
+        if ( a.value < b.value ){
+          return -1;
+        }
+        if ( a.value > b.value ){
+          return 1;
+        }
+        return 0;
+    }
+
+    const compareOrder = ( a, b ) => {
+        if ( a.order < b.order ){
+          return -1;
+        }
+        if ( a.order > b.order ){
+          return 1;
+        }
+        return 0;
+    }
+      
 
     const handleSubmit = async event => {
         event.preventDefault();
 
         var listExercices = document.querySelectorAll('input[type=hidden]');
         var listRepetitions = document.querySelectorAll('.exercise-number');
+        var orderExercises = [];
+        var indexingOrder = [];
         workout.exercices = [];
         workout.nbRepetition = [];
+
+        for (var i = 0; i < listExercices.length ; i++) {
+            orderExercises.push({value: listExercices[i].value, repetition: listRepetitions[i].value, order: i});
+        }
+
+        orderExercises.sort(compareValue);
+        for (var i = 0; i < listExercices.length ; i++) {
+            indexingOrder.push({value: orderExercises[i].value, repetition: orderExercises[i].repetition, order: orderExercises[i].order, index: i});
+        }
+
+        indexingOrder.sort(compareOrder);
 
         for (var i = 0; i < listExercices.length; i++) {
             console.log("ListExercices : ", listExercices[i].value);
             workout.exercices.push(listExercices[i].value);
-            workout.nbRepetition.push(listRepetitions[i].value);
+            workout.nbRepetition.push({
+                repetition: indexingOrder[i].repetition,
+                order: indexingOrder[i].order,
+                index: indexingOrder[i].index
+            });
         }
 
         workout.averageTime = parseInt(workout.averageTime);
@@ -254,6 +299,7 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
                     }
                 )
                 console.log(response.data);
+                history.push(`/workout/${workoutData.id}`);
             } else {
                 const response = await axios.post(
                     "http://localhost:8000/api/workouts",
@@ -264,10 +310,28 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
                     }
                 );
             }
+
     
         } catch(error) {
             console.log(error.response);
         }
+    }
+
+    const handleOnDragEnd = (result) => {
+        if (!result.destination) {
+            return;
+        }
+        console.log("Result : ", result.destination.index);
+        console.log("Result : ", result.destination.index);
+        // console.log("List exo : ", listExercises);
+        const items = Array.from(listExercises);
+        // console.log("Item list : ", items)
+        const [reorderedItem] = items.splice(result.source.index, 1);
+        // console.log("ReorderedItem : ", [reorderedItem])
+        items.splice(result.destination.index, 0, reorderedItem);
+        // console.log("Item splice : ", items);
+
+        setListExercises(items);
     }
 
     return ( 
@@ -392,15 +456,20 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
                  
                             }                        
                             <div className="button-rest-container">
-                                <button type="button" className="button-rest" onClick={addRest}>
-                                    <img src={require("/assets/images/icons/rest1.svg")} />
-                                    Ajouter une pause    
-                                </button>
+                                {isResting 
+                                    ? ""
+                                    : 
+                                    <button type="button" className="button-rest" onClick={addRest}>
+                                        <img src={require("/assets/images/icons/rest1.svg")} />
+                                        Ajouter une pause    
+                                    </button>
+                                }
                             </div>
-                            <div className="listExercices">
+                           
+                            {/* <div className="listExercices" {...provided.droppableProps} ref={provided.innerRef}>
                                 {workoutIsUpdated 
                                     ? workout.exercices.map((exercice, index) => 
-                                        <div key={exercice.id} id={"content_" + exercice.id} className="container-div">
+                                        <div key={exercice.id} id={"content_" + exercice.id} className="exercise-container">
                                             {exercice.type === "Musculation" 
                                                 ? <ExerciseForm chosenExercise={exercice} nbRepetition={workout.nbRepetition[index]} onChange={handleChange} deleteExercise={deleteExercise} />                                
                                                 : <ExerciseForm chosenExercise={exercice} nbRepetition={workout.nbRepetition[index]} onChange={handleChange} deleteExercise={deleteStretch} />                                
@@ -409,7 +478,78 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
                                     )
                                     : null
                                 }
-                            </div>
+                            </div> */}
+       
+
+                            <DragDropContext onDragEnd={handleOnDragEnd}>
+                                <Droppable droppableId="listExercices">
+                                    {(provided) => (
+                                        <div className="listExercices" {...provided.droppableProps} ref={provided.innerRef}>
+                                            {workoutIsUpdated 
+                                                ? 
+                                                // workout.nbRepetition.map((exercise, index) =>  
+                                                //     <Draggable key={workout.exercices[exercise.index].id + "_" + count + "_" + index} draggableId={workout.exercices[exercise.index].id + "_" + count + "_" + index} index={index}>
+                                                //         {(provided) => (
+                                                //             <div 
+                                                //                 id={"content_" + workout.exercices[exercise.index].id} 
+                                                //                 className="exercise-container"
+                                                //                 ref={provided.innerRef} 
+                                                //                 {...provided.draggableProps} 
+                                                //                 {...provided.dragHandleProps}
+                                                //             >
+                                                //                 {workout.exercices[exercise.index].id.type === "Rest" 
+                                                //                     ? <RestTime chosenRest={workout.exercices[exercise.index]} nbRepetition={workout.nbRepetition[index].repetition} onChange={handleChange} deleteExercise={deleteRest} index={index} />                                
+                                                //                     : <ExerciseForm chosenExercise={workout.exercices[exercise.index]} nbRepetition={workout.nbRepetition[index].repetition} onChange={handleChange} deleteExercise={deleteExercise} index={index} />                                
+                                                //                 }
+                                                //             </div>
+                                                //         )}
+                                                //     </Draggable>
+                                                // )
+                                                listExercises.map((exercise, index) =>  
+                                                    <Draggable key={exercise.id + "_" + count + "_" + index} draggableId={exercise.id + "_" + count + "_" + index} index={index}>
+                                                        {(provided) => (
+                                                            <div 
+                                                                id={"content_" + exercise.id} 
+                                                                className="exercise-container"
+                                                                ref={provided.innerRef} 
+                                                                {...provided.draggableProps} 
+                                                                {...provided.dragHandleProps}
+                                                            >
+                                                                {exercise.type === "Rest" 
+                                                                    ? <RestTime chosenRest={exercise} nbRepetition={workout.nbRepetition[index] ? workout.nbRepetition[index].repetition : null } onChange={handleChange} deleteExercise={deleteRest} index={index} />                                
+                                                                    : <ExerciseForm chosenExercise={exercise} nbRepetition={workout.nbRepetition[index] ? workout.nbRepetition[index].repetition : null } onChange={handleChange} deleteExercise={deleteExercise} index={index} />                                
+                                                                }
+                                                            </div>
+                                                        )}
+                                                    </Draggable>
+                                                )
+                                                : 
+                                                listExercises.map((exercise, index) =>  
+                                                    <Draggable key={exercise.id + "_" + count + "_" + index} draggableId={exercise.id + "_" + count + "_" + index} index={index}>
+                                                        {(provided) => (
+                                                            <div 
+                                                                id={"content_" + exercise.id} 
+                                                                className="exercise-container"
+                                                                ref={provided.innerRef} 
+                                                                {...provided.draggableProps} 
+                                                                {...provided.dragHandleProps}
+                                                            >
+                                                                {exercise.type === "Rest" 
+                                                                    ? <RestTime chosenRest={exercise} nbRepetition={workout.nbRepetition[index]} onChange={handleChange} deleteExercise={deleteRest} index={index} />                                
+                                                                    : <ExerciseForm chosenExercise={exercise} nbRepetition={workout.nbRepetition[index]} onChange={handleChange} deleteExercise={deleteExercise} index={index} />                                
+                                                                }
+                                                                {/* <ExerciseForm chosenExercise={exercise} deleteExercise={deleteExercise} /> */}
+                                                            </div>
+                                                        )}
+                                                    </Draggable>
+                                                )
+                                            }
+                                            {provided.placeholder}
+                                        </div>
+                                    )}
+                                </Droppable>
+                            </DragDropContext> 
+                        
                             <div className="form-group">
                                 <button type="submit" className="btn btn-success">{workoutIsUpdated ? "Modifier" : "Création"}</button>
                             </div>

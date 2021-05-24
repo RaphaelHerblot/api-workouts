@@ -2,7 +2,7 @@ import React from 'react';
 
 import './style.scss';
 
-const RestTime = ({ chosenRest, deleteExercise, nbRepetition, onChange }) => {
+const RestTime = ({ chosenRest, deleteExercise, nbRepetition, onChange, index }) => {
     return (
         <div className="restForm">
             <img src={require("/assets/images/icons/rest2.svg")} />
@@ -12,7 +12,9 @@ const RestTime = ({ chosenRest, deleteExercise, nbRepetition, onChange }) => {
             </div>
             <div className="button-container-rest">
                 <div className="rest-button">
-                    <button type="button" id={"delete_" + chosenRest.id} onClick={() => deleteExercise(event)} className="btn btn-danger deleteExercise">X</button>
+                    <button type="button" id={"delete_" + chosenRest.id} onClick={(event) => deleteExercise(event, index)} className="btn btn-danger deleteExercise">
+                        <img src={require("/assets/images/icons/cross.svg")} className="icons-footer" />
+                    </button>
                 </div>
             </div>
         </div>

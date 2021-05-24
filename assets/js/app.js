@@ -29,14 +29,15 @@ const App = () => {
                     {isAuthenticated ? <Header pageTitle={pageTitle}/> : "" }
                     <div className="main-content">
                         <Switch>
-                            <Route path="/login" component={Login}/>
-                            <Route path="/register" component={Register} />
+                            {!isAuthenticated ? <Route path="/login" component={Login}/> : ''}
+                            {!isAuthenticated ? <Route path="/register" component={Register} /> : ''}
                             <PrivateRoute path="/search" component="Search" setPageTitle={setPageTitle} />
                             <PrivateRoute path="/create" component="Create" setPageTitle={setPageTitle} />
                             <PrivateRoute path="/workout/:id" component="Show" setPageTitle={setPageTitle} />
                             <PrivateRoute path="/update/:id" component="Update" setPageTitle={setPageTitle} />
                             <PrivateRoute path="/profil" component="Profile" setPageTitle={setPageTitle} />
                             <PrivateRoute path="/calendar" component="Calendar" setPageTitle={setPageTitle} />
+                            <PrivateRoute path="/workingout/:id" component="Start" setPageTitle={setPageTitle} />
                             <PrivateRoute path="/home" component="Home" setPageTitle={setPageTitle} />
                             <PrivateRoute path="/" component="Home" setPageTitle={setPageTitle} />
                         </Switch>

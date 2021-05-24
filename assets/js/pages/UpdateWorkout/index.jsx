@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import TitleWorkit from '../../components/TitleWorkit';
 import WorkoutForm from '../../components/Workouts/WorkoutShow/WorkoutForm';
 import WorkoutsAPI from "../../services/workoutsAPI";
 
@@ -26,7 +27,7 @@ const UpdateWorkout = ({ match, setPageTitle }) => {
 
     return ( 
         <div>
-            <h1>Modifier votre séance de sport</h1>
+            <TitleWorkit title="Modifie ta séance" icon="workout-run" />
             {workoutLoaded ? <WorkoutForm workoutData={workout} workoutIsUpdated={true} /> : null}
         </div>
     );
