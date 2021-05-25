@@ -6,6 +6,7 @@ import GoalsAPI from "../../services/goalsAPI";
 import TrainingPlacesAPI from "../../services/trainingPlacesAPI";
 import Field from '../../components/Form/Field';
 import axios from 'axios';
+import { USERS_API } from "../../config";
 
 const Register = ({ history }) => {
     const[credentials, setCredentials] = useState({
@@ -48,7 +49,7 @@ const Register = ({ history }) => {
 
         try {
             const response = await axios.post(
-                "http://localhost:8000/api/users",
+                USERS_API,
                 {...credentials,
                     level: `/api/levels/${credentials.level}`,
                     goal: `/api/goals/${credentials.goal}`,

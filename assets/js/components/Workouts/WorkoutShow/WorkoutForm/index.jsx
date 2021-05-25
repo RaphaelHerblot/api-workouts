@@ -12,6 +12,7 @@ import Select from '../../../Form/SelectExercise';
 import ExerciseForm from '../../../Exercises/ExerciseForm';
 import RestTime from '../../../Exercises/RestTime'
 import axios from 'axios';
+import { WORKOUTS_API } from "../../../../config";
 
 import './style.scss';
 import SearchBar from '../../../SearchBar/SearchBarExercises';
@@ -259,7 +260,7 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
             if(workoutIsUpdated) {
                 console.log("YOOOOOO UPDATE");
                 const response = await axios.put(
-                    "http://localhost:8000/api/workouts/" + workout.id,
+                    WORKOUTS_API + "/" + workout.id,
                     {...workout,
                         level: `/api/levels/${workout.level}`,
                         goal: `/api/goals/${workout.goal}`,
@@ -270,7 +271,7 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
                 history.push(`/workout/${workoutData.id}`);
             } else {
                 const response = await axios.post(
-                    "http://localhost:8000/api/workouts",
+                    WORKOUTS_API,
                     {...workout,
                         level: `/api/levels/${workout.level}`,
                         goal: `/api/goals/${workout.goal}`,

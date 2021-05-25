@@ -5,6 +5,7 @@ import GoalsAPI from "../../../services/goalsAPI";
 import TrainingPlacesAPI from "../../../services/trainingPlacesAPI";
 import Field from '../../Form/Field';
 import axios from 'axios';
+import { USERS_API } from "../../../config";
 
 const ProfilUpdate = ({ authenticatedUser, updateProfil }) => {
     const[credentials, setCredentials] = useState({
@@ -45,7 +46,7 @@ const ProfilUpdate = ({ authenticatedUser, updateProfil }) => {
 
         try {
             const response = await axios.put(
-                "http://localhost:8000/api/users/" + credentials.id,
+                USERS_API + "/" + credentials.id,
                 {...credentials,
                     level: `/api/levels/${credentials.level}`,
                     goal: `/api/goals/${credentials.goal}`,

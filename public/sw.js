@@ -37,12 +37,17 @@ async function cacheFirst(req) {
 
 self.addEventListener('fetch', event => {
     const req = event.request;
-    if (/.*(json)$/.test(req.url)) {
+    if(!(req.url.indexOf('http') === 0)){
+        
+    }
+    else if (/.*(json)$/.test(req.url)) {
         event.respondWith(networkFirst(req));
     } else {
         event.respondWith(cacheFirst(req));
     }
 });
+
+
 
 async function networkFirst(req) {
     const cache = await caches.open(cacheName);

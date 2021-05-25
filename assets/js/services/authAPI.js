@@ -1,14 +1,14 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
+import { USERS_API, LOGIN_API } from "../config";
 
 function authentification(credentials) {
     return axios
-        .post("http://localhost:8000/api/login_check", credentials)
+        .post(LOGIN_API, credentials)
         .then(response => response.data.token)
         .then(token => {
             window.localStorage.setItem("authToken", token);
             axios.defaults.headers["Authorization"] = "Bearer " + token;
-
             return true;
         })
 }
@@ -53,9 +53,8 @@ function isAuthenticated() {
 
 function findConnectedUser() {
     const token = jwtDecode(window.localStorage.getItem("authToken"));
-    console.log("HELLLLLLO JWT : ", token.id );
     return axios
-        .get("http://localhost:8000/api/users/"+ token.id)
+        .get(USERS_API + "/" + token.id)
 }
 
 export default {
