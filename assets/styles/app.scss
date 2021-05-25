@@ -74,6 +74,10 @@ body {
             }
           }
 
+          .invalid-feedback {
+            color: $red-theme;
+          }
+
           .border-field {
             position: absolute;
             height: 1px;
