@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ProgressionTime from '../../ProgressionTime';
 import './style.scss';
 
-const CurrentExercise = ({ exercise, currentTime, handleNextStep, time, percentTime }) => {
+const CurrentExercise = ({ exercise, currentTime, handleNextStep, time, percentTime, firstTime }) => {
     console.log("currentTime : ", currentTime);
 
     return ( 
@@ -15,11 +15,11 @@ const CurrentExercise = ({ exercise, currentTime, handleNextStep, time, percentT
                     <h3>{currentTime}<span>{exercise.type === "Musculation" ? "x" : "s" }</span></h3>
                     <p>{exercise.title}</p>
                 </div>
-                {exercise.type !== "Musculation" 
-                ? <ProgressionTime percentTime={percentTime} />
+            </div>
+            {exercise.type !== "Musculation" 
+                ? <ProgressionTime percentTime={percentTime} firstTime={firstTime} />
                 : "" 
             }
-            </div>
             <div className="arrow-icon" onClick={handleNextStep}>
                 <span className="left-bar"></span>
                 <span className="right-bar"></span>

@@ -8,7 +8,7 @@ function findAll() {
 
 function findAllMusculations() {
     return axios
-    .get("http://localhost:8000/api/exercices", {
+    .get("http://localhost:8000/api/exercices?order[title]=asc", {
         params: {
             type: "Musculation"
         }
@@ -18,7 +18,7 @@ function findAllMusculations() {
 
 function findAllStretches() {
     return axios
-    .get("http://localhost:8000/api/exercices", {
+    .get("http://localhost:8000/api/exercices?order[title]=asc", {
         params: {
             type: "Stretch"
         }

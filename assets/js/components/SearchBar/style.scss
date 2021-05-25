@@ -15,7 +15,7 @@
     .search-input {
       width: 100%;
       font-family: "Montserrat", sans-serif;
-      font-size: 14px;
+      font-size: 16px;
       padding: 17px 15px 17px 45px;
       background-color: #efefef;
       color: #6c6c6c;
@@ -73,17 +73,17 @@
     width: 100%;
     z-index: 12;
     padding: 10px 15px;
-    background-color: #eaeaeb;
+    background-color: #efefef;
     border-radius: 12px;
     color: $black-theme;
     font-weight: 700;
     overflow-y: auto;
-    max-height: 320px;
+    max-height: 205px;
 
     li {
       padding: 10px 5px;
       width: 100%;
-      background-color: #eaeaeb;
+      background-color: #efefef;
       cursor: pointer;
       text-align: left;
       display: flex;
@@ -120,6 +120,11 @@
           border: 1px solid $black-theme;
         }
       }
+    }
+
+    ul {
+      border: 1px solid $black-theme;
+      border-top: 0;
     }
   }
 }

@@ -10,6 +10,8 @@ header {
   position: fixed;
   width: 100%;
   z-index: 1000;
+  -webkit-box-shadow: 0px 0px 7px 5px rgba(247, 247, 247, 0.1);
+  box-shadow: 0px 0px 7px 5px rgba(247, 247, 247, 0.1);
 
   > div {
     &.header-icon {
@@ -25,8 +27,9 @@ header {
 
     a {
       img {
-        width: 28px;
-        height: 28px;
+        width: 42px;
+        height: 42px;
+        padding-top: 5px;
       }
     }
   }

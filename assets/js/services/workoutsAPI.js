@@ -32,9 +32,9 @@ function findAllByMostFav() {
     .then(response => response.data['hydra:member'])
 }
 
-function findAllById(id) {
+function findPerfectForUser(levelId, goalId, trainingPlaceId) {
     return axios
-    .get("http://localhost:8000/api/workouts?id="+ id)
+    .get("http://localhost:8000/api/workouts?level=" + levelId + "&goal=" + goalId + "&trainingPlace=" + trainingPlaceId)
     .then(response => response.data['hydra:member'])
 }
 
@@ -43,5 +43,6 @@ export default {
     findOne,
     delete: deleteWorkout,
     findAllByIdDesc,
-    findAllByMostFav
+    findAllByMostFav,
+    findPerfectForUser
 }

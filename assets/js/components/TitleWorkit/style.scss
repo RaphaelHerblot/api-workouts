@@ -19,12 +19,17 @@
     img[src*="new"],
     img[src*="loupe-orange"],
     img[src*="calendar-orange2"],
-    img[src*="workout-run"] {
-      padding-bottom: 4px;
+    img[src*="workout-run"],
+    img[src*="star"] {
+      padding-bottom: 6px;
     }
 
     img[src*="calendar-orange2"] {
       width: 25px;
+    }
+
+    img[src*="star"] {
+      width: 28px;
     }
   }
 

@@ -14,7 +14,6 @@ const WorkingOut = ({ workout }) => {
     const [progression, setProgression] = useState(0);
     const [percentProgression, setPercentProgression] = useState(0);
     const [percentTime, setPercentTime] = useState(( 100 / workout.nbRepetition[step].repetition ));
-    const [isLastStep, setIsLastStep] = useState(false);
     const numberOfSteps = workout.exercices.length
     const numberOfSeries = workout.series;
     const numberTotalOfExercises = numberOfSteps*numberOfSeries;
@@ -76,7 +75,7 @@ const WorkingOut = ({ workout }) => {
             {!isWorkoutFinished 
                 ? 
                 <div>
-                    <CurrentExercise handleNextStep={handleNextStep} exercise={workout.exercices[workout.nbRepetition[step].index]} currentTime={currentTime} percentTime={percentTime} />
+                    <CurrentExercise handleNextStep={handleNextStep} exercise={workout.exercices[workout.nbRepetition[step].index]} currentTime={currentTime} percentTime={percentTime} firstTime={100 / workout.nbRepetition[step].repetition} />
                     <div className="next-exercise">
                         <p className="next-text">Suivant</p>
                         <ExerciseCard exercice={workout.exercices[workout.nbRepetition[nextIndex].index]} nbRepetition={workout.nbRepetition[nextIndex].repetition} />

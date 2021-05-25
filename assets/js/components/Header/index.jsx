@@ -11,7 +11,7 @@ const Header = ({ pageTitle }) => {
         <header className="header">
             <div className="header-icon">
                 <NavLink to="/">
-                    <img src={require("/assets/images/icons/weight.svg")} className="icons-footer" />
+                    <img src={require("/assets/images/icons/logo-workit.svg")} className="icons-footer" />
                 </NavLink>
             </div>
             <div>

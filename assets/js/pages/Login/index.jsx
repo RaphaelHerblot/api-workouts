@@ -20,10 +20,6 @@ const Login = ({ history }) => {
         setCredentials({...credentials, [name]: value})
     };
 
-    const goToRegister = () => {
-        history.replace("/register");
-    }
-
     // Handleling submit
     const handleSubmit = async event => {
         event.preventDefault();

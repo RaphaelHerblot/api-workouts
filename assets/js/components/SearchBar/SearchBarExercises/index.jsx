@@ -24,11 +24,11 @@ const SearchBarExercises = ({ exercises, onClickFunction, placeholder }) => {
         }
     }
 
-    const handleBlur = () => {
-        if(showProposedExercises === true) {
-            setShowProposedExercises(false);
-        }
-    }
+    // const handleBlur = () => {
+    //     if(showProposedExercises === true) {
+    //         setShowProposedExercises(false);
+    //     }
+    // }
 
     useEffect(() => {
         console.log("YOOOOOOO : ", proposedExercises);
@@ -36,9 +36,7 @@ const SearchBarExercises = ({ exercises, onClickFunction, placeholder }) => {
 
     return ( 
         <div 
-        className="search-bar" 
-        onBlur={handleBlur}
-
+            className="search-bar" 
         >
             <div className="search-box">
                 <button className="search-btn">
