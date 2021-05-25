@@ -2,11 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 
 import '../style.scss';
 
-const SearchBarExercises = ({ exercises, onClickFunction, placeholder }) => {
+const SearchBarExercises = ({ exercises, onClickFunction, placeholder, proposedExercises, setProposedExercises }) => {
     const [showProposedExercises, setShowProposedExercises] = useState(false);
     const [searchBarValue, setSearchBarValue] = useState("");
-    const [proposedExercises, setProposedExercises] = useState([]);
+    // const [proposedExercises, setProposedExercises] = useState([]);
 
+    useEffect(() => {
+        console.log("SEARCH BAR RENDER")
+        console.log(exercises)
+    }, []);
+    
     useEffect(() => {
         setProposedExercises(
           exercises.filter((exercise) => exercise.title.toLowerCase().includes(searchBarValue.toLowerCase()))
@@ -24,19 +29,16 @@ const SearchBarExercises = ({ exercises, onClickFunction, placeholder }) => {
         }
     }
 
-    // const handleBlur = () => {
-    //     if(showProposedExercises === true) {
-    //         setShowProposedExercises(false);
-    //     }
-    // }
-
-    useEffect(() => {
-        console.log("YOOOOOOO : ", proposedExercises);
-    }, [proposedExercises])
+    const handleBlur = () => {
+        if(showProposedExercises === true) {
+            setShowProposedExercises(false);
+        }
+    }
 
     return ( 
         <div 
             className="search-bar" 
+            onBlur={handleBlur}
         >
             <div className="search-box">
                 <button className="search-btn">

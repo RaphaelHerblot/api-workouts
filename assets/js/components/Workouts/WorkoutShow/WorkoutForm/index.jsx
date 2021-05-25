@@ -40,19 +40,15 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
     const [rest, setRest] = useState([]);
     const [modTypeExercise, setModTypeExercise] = useState("exercises");
     const [modSearchExercise, setModSearchExercise] = useState("search");
-    const [exercisesToSearch, setExercisesToSearch] = useState([])
-    const [firstSetupExercices, setFirstSetupExercices] = useState(false);
-    const temporaryRest = rest;
-    const [newExerciseContent, setNewExerciseContent] = useState("");
     const [listExercises, setListExercises] = useState([])
     const [count, setCount] = useState(0);
     const [isResting, setIsResting] = useState(false);
+    const [proposedExercises, setProposedExercises] = useState([]);
     let history = useHistory();
 
     useEffect(() => {
         fetchWorkoutsData();
-        console.log("WorkoutData : ", workoutData);
-        console.log("History : ", history)
+
         if(workoutIsUpdated) {
             const existingWorkout = {
                 id: workoutData.id,
@@ -69,17 +65,7 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
             }
         
             setWorkout(existingWorkout);
-            console.log("existingExercices : ", exercices)
 
-            // for (var i = 0; i < exercices.length; i++) {
-            //     console.log(exercices[i].id);
-            //     console.log(workout.exercices[i].id);
-            //     if(exercices[i].id === workout.exercices[i].id) {
-            //         console.log("ntmfdp");
-            //         setExercices(exercices.splice(i, 1));
-            //     }
-            //  }
-            console.log("existingWorkout : ", existingWorkout)
             const tempExercises = [];
 
             for (var i = 0; i < existingWorkout.nbRepetition.length ; i++) {
@@ -91,39 +77,20 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
 
             for (var i = 0; i < existingWorkout.exercices ; i++) {
             }
-    
-            // const tempExercises = [...existingWorkout.exercices];
-            console.log("Temp Exo : ", tempExercises);
             setListExercises(tempExercises);
         }
     }, [])
 
     useEffect(() => {
-        console.log("Workout : ", workout);
-    }, [workout])
-
-    useEffect(() => {
-        console.log("EXOOOOOOOOO : ", exercices);
-        console.log("Workout goal : ", workout.goal);
-        console.log("Workout goal id : ", goals);
-    }, [exercices])
-
-    useEffect(() => {
-        console.log("BJR SANA : ", chosenExercise);
         if(chosenExercise) {
             addExerciceToWorkout3();
         }
     }, [chosenExercise]);
 
     useEffect(() => {
-       console.log("Count : ", count);
-       
-    }, [count]);
-
-    useEffect(() => {
-        console.log("List Exercises : ", listExercises);
-        
-     }, [listExercises]);
+        console.log("CHANGINNNNNNNNNNNNNNG");
+        console.log(modSearchExercise)
+    }, [modTypeExercise]);
 
     const fetchWorkoutsData = async () => {
         try {
@@ -136,17 +103,16 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
             setLevels(dataLevels);
             setGoals(dataGoals);
             setTrainingPlaces(dataTrainingPlaces);
-            setFirstSetupExercices(true);
             setExercices(dataExercices);
             setStretches(dataStretches);
             setRest(dataRest.data);
+            setExercisesToSearch(dataExercices);
         } catch(error) {
             console.log(error.response)
         }
     }
 
     const fetchOneExercice = async (event) => {
-        console.log("BJR LOLILOLILOL", event.target)
         try {
             const dataExercice = await ExercicesAPI.findOne(event.target.value);
             setChosenExercise(dataExercice.data);
@@ -163,8 +129,10 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
     const handleTypeMod = (event) => {
         if(modTypeExercise === "exercises") {
             setModTypeExercise("stretching");
+            setProposedExercises(stretches);
         } else {
             setModTypeExercise("exercises");
+            setProposedExercises(exercices);
         }
                     
         if(event.target.classList[0] === "button-type-stretching") {
@@ -445,8 +413,8 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
                             {modSearchExercise === "search" 
                                 ? 
                                     ( modTypeExercise === "exercises" 
-                                        ? <SearchBar exercises={exercices} onClickFunction={fetchOneExercice} placeholder="Recherchez un exercice" />
-                                        : <SearchBar exercises={stretches} onClickFunction={fetchOneExercice} placeholder="Recherchez un étirement" />
+                                        ? <SearchBar exercises={exercices} onClickFunction={fetchOneExercice} placeholder="Recherchez un exercice" proposedExercises={proposedExercises} setProposedExercises={setProposedExercises} />
+                                        : <SearchBar exercises={stretches} onClickFunction={fetchOneExercice} placeholder="Recherchez un étirement" proposedExercises={proposedExercises} setProposedExercises={setProposedExercises} />
                                     )
                                 : 
                                     ( modTypeExercise === "exercises" 

@@ -8,7 +8,7 @@ const ExerciseForm = ({ chosenExercise, deleteExercise, nbRepetition, onChange, 
         <div className="exercise-informations">
             <label>{chosenExercise.title}</label>
             <input name="exercises" className={chosenExercise.id + " exercise-identity"} value={"/api/exercices/" + chosenExercise.id} type="hidden"/>
-            <input className="exercise-number" required="required" placeholder={chosenExercise.type === "Musculation" ? "Nombre de répétition" : "Secondes" } defaultValue={nbRepetition} name="nbRepetition" type="number" min="1" max="99"/>
+            <input className="exercise-number" required="required" placeholder={chosenExercise.type === "Musculation" ? "Répétitions" : "Secondes" } defaultValue={nbRepetition} name="nbRepetition" type="number" min="1" max="99"/>
         </div>
         <div className="button-container-exercices">
             <div className="exercise-button">
