@@ -36,7 +36,7 @@ const Profil = ({ setPageTitle, history }) => {
 
     const profileRendering = () => {
         if(updatingUser) {
-            return <ProfilUpdate authenticatedUser={authenticatedUser} updatingUser={updatingUser} />
+            return <ProfilUpdate authenticatedUser={authenticatedUser} updateProfil={updateProfil} />
         } else {
             return (
                 <div>
@@ -120,6 +120,8 @@ const Profil = ({ setPageTitle, history }) => {
             setUpdatingUser(true);
         }  else {
             setUpdatingUser(false);
+            setUserLoaded(false);
+            fetchUser();
         }
     }
 
@@ -175,79 +177,6 @@ const Profil = ({ setPageTitle, history }) => {
                     </div>
                 
             }
-            
-            {/* <div className="centered-container">
-                <div className="icon-profile">
-                    <img className="icon-hexagone" src={require(`/assets/images/icons/hexagone.svg`)} />
-                    <img className="icon-profile-orange" src={require(`/assets/images/icons/profile-orange.svg`)} />
-                </div>
-                <h3>{authenticatedUser.firstName} {authenticatedUser.lastName}</h3>
-                <h5>{authenticatedUser.email}</h5>
-                <button type="button" className="button-update" onClick={updateProfil}>Modifier</button>
-            </div>
-            {(userLoaded ? 
-                (!updatingUser ? 
-                    <div>
-                        <div className="profile-workouts">
-                            <h2>Mes séances</h2>
-                            <div className="button-workouts">
-                                <button type="button" className="button-my-workouts" onClick={myWorkouts}>
-                                    <span>Créées</span>
-                                    <span>{authenticatedUser.workouts.length}</span>
-                                </button>
-                                <button type="button" className="button-favorite-workouts" onClick={myFavoriteWorkouts}>
-                                    <span>Favorites</span>
-                                    <span>{authenticatedUser.likedWorkouts.length}</span>
-                                </button>
-                            </div>
-                            <div>
-                                {displayMyWorkouts 
-                                    ? 
-                                    authenticatedUser.workouts.map(workout => 
-                                        <div key={workout.id}>
-                                            <Link to={"/workout/" + workout.id}>
-                                                <WorkoutPreview workout={workout} />
-                                            </Link>
-                                        </div>
-                                    )
-                                    : ''
-                                }    
-                            </div>
-                            <div>
-                                {displayFavoriteWorkouts 
-                                    ? 
-                                    authenticatedUser.likedWorkouts.map(workout => 
-                                        <div key={workout.id}>
-                                            <Link to={"/workout/" + workout.id}>
-                                                <WorkoutPreview workout={workout} />
-                                            </Link>
-                                        </div>
-                                    )
-                                    : ''
-                                }    
-                            </div>
-
-                        </div>
-                        <div className="profil-informations">
-                            <div>
-                                <h2>Mon niveau</h2>
-                                <p>{authenticatedUser.level.title}</p>
-                            </div>
-                            <div>
-                                <h2>Mon objectif</h2>
-                                <p>{authenticatedUser.goal.title}</p>
-                            </div>
-                            <div>
-                                <h2>Mon lieu d'entraînement</h2>
-                                <p>{authenticatedUser.trainingPlace.place}</p>
-                            </div>
-                            <div className="logout-container">
-                                <button type="button" onClick={handleLogout}>Déconnexion</button>
-                            </div>
-                        </div>
-                    </div>
-                : <ProfilUpdate authenticatedUser={authenticatedUser} updatingUser={updatingUser} />) 
-            : null )} */}
         </div>
     );
 }

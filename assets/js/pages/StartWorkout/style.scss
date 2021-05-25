@@ -1,0 +1,6 @@
+@import "../../../styles/variable.scss";
+
+.working-out-container {
+  height: calc(100vh - 150px);
+  transition: all 0.2s ease-out;
+}

@@ -1,0 +1,25 @@
+@import "../../../styles/variable.scss";
+
+.counter-start {
+  position: relative;
+  color: $black-theme;
+  height: 100%;
+
+  h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 80px;
+    height: 100%;
+    margin: 0;
+  }
+
+  h2 {
+    position: absolute;
+    left: 50%;
+    top: 13%;
+    transform: translate(-50%, -50%);
+    transition: all 0.2s ease-out;
+    font-size: 34px;
+  }
+}

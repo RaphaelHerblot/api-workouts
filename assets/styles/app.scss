@@ -1,5 +1,9 @@
 @import "../styles/variable.scss";
 
+* {
+  font-family: Franklin Gothic !important;
+}
+
 body {
   background-color: $background-color;
   color: #000;

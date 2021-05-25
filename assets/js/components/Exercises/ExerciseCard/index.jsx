@@ -2,11 +2,11 @@ import React from 'react';
 import './style.scss';
 
 const ExerciseCard = ({ exercice, nbRepetition }) => {
-
+    
     return (
-        <li>
+        <li className="exercise-card">
             <div><img src={require(`/assets/images/exercices/${exercice.id}.svg`)} className="exercise-image"/></div>
-            { exercice.type === 'Rest'
+            { exercice.type !== 'Musculation'
                 ?   
                     <div>
                         <img src={require("/assets/images/icons/rest2-black.svg")} className="icon-rest" />

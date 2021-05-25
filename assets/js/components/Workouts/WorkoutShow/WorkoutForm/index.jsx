@@ -465,46 +465,13 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
                                     </button>
                                 }
                             </div>
-                           
-                            {/* <div className="listExercices" {...provided.droppableProps} ref={provided.innerRef}>
-                                {workoutIsUpdated 
-                                    ? workout.exercices.map((exercice, index) => 
-                                        <div key={exercice.id} id={"content_" + exercice.id} className="exercise-container">
-                                            {exercice.type === "Musculation" 
-                                                ? <ExerciseForm chosenExercise={exercice} nbRepetition={workout.nbRepetition[index]} onChange={handleChange} deleteExercise={deleteExercise} />                                
-                                                : <ExerciseForm chosenExercise={exercice} nbRepetition={workout.nbRepetition[index]} onChange={handleChange} deleteExercise={deleteStretch} />                                
-                                            }
-                                        </div>
-                                    )
-                                    : null
-                                }
-                            </div> */}
-       
-
+                
                             <DragDropContext onDragEnd={handleOnDragEnd}>
                                 <Droppable droppableId="listExercices">
                                     {(provided) => (
                                         <div className="listExercices" {...provided.droppableProps} ref={provided.innerRef}>
                                             {workoutIsUpdated 
                                                 ? 
-                                                // workout.nbRepetition.map((exercise, index) =>  
-                                                //     <Draggable key={workout.exercices[exercise.index].id + "_" + count + "_" + index} draggableId={workout.exercices[exercise.index].id + "_" + count + "_" + index} index={index}>
-                                                //         {(provided) => (
-                                                //             <div 
-                                                //                 id={"content_" + workout.exercices[exercise.index].id} 
-                                                //                 className="exercise-container"
-                                                //                 ref={provided.innerRef} 
-                                                //                 {...provided.draggableProps} 
-                                                //                 {...provided.dragHandleProps}
-                                                //             >
-                                                //                 {workout.exercices[exercise.index].id.type === "Rest" 
-                                                //                     ? <RestTime chosenRest={workout.exercices[exercise.index]} nbRepetition={workout.nbRepetition[index].repetition} onChange={handleChange} deleteExercise={deleteRest} index={index} />                                
-                                                //                     : <ExerciseForm chosenExercise={workout.exercices[exercise.index]} nbRepetition={workout.nbRepetition[index].repetition} onChange={handleChange} deleteExercise={deleteExercise} index={index} />                                
-                                                //                 }
-                                                //             </div>
-                                                //         )}
-                                                //     </Draggable>
-                                                // )
                                                 listExercises.map((exercise, index) =>  
                                                     <Draggable key={exercise.id + "_" + count + "_" + index} draggableId={exercise.id + "_" + count + "_" + index} index={index}>
                                                         {(provided) => (
@@ -538,7 +505,6 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
                                                                     ? <RestTime chosenRest={exercise} nbRepetition={workout.nbRepetition[index]} onChange={handleChange} deleteExercise={deleteRest} index={index} />                                
                                                                     : <ExerciseForm chosenExercise={exercise} nbRepetition={workout.nbRepetition[index]} onChange={handleChange} deleteExercise={deleteExercise} index={index} />                                
                                                                 }
-                                                                {/* <ExerciseForm chosenExercise={exercise} deleteExercise={deleteExercise} /> */}
                                                             </div>
                                                         )}
                                                     </Draggable>

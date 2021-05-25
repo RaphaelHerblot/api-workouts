@@ -69,6 +69,11 @@ nav {
 
       span {
         font-size: 11px;
+
+        &:hover,
+        &:active {
+          color: $theme-color;
+        }
       }
     }
   }

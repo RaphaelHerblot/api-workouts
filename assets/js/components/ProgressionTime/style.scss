@@ -1,0 +1,20 @@
+@import "../../../styles/variable.scss";
+
+.progression-time-container {
+  padding: 0 12px;
+  .progression-time-bar {
+    height: 15px;
+    width: 100%;
+    background-color: #e0e0de;
+    border-radius: 2px;
+    margin-bottom: 10px;
+
+    .progression-time {
+      height: 100%;
+      background-color: $theme-color;
+      border-radius: inherit;
+      text-align: right;
+      transition: width 1s ease-in-out;
+    }
+  }
+}

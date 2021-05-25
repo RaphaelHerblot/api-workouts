@@ -1,0 +1,32 @@
+@import "../../../styles/variable.scss";
+
+.progression-container {
+  position: relative;
+  margin-top: 8px;
+
+  .progression-bar {
+    display: flex;
+    width: 100%;
+    border: 1px solid #7d7d7da8;
+    height: 22px;
+    border-radius: 2px;
+
+    .progression-bloc {
+      width: 100%;
+
+      &.active {
+        background-color: #ff5f16;
+      }
+
+      &:not(:last-child) {
+        border-right: 1px solid #6f6f6f2e;
+      }
+    }
+  }
+
+  .progression-percent {
+    position: absolute;
+    right: 2px;
+    top: -88%;
+  }
+}

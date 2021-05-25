@@ -139,6 +139,11 @@ const WorkoutCard = ({ workout, authenticatedUser, history }) => {
                         : ''
                     }
             </div>
+            <div className="button-launch-workout">
+                <Link to={"/workingout/" + workout.id}>
+                    <button type="button">Commencer</button>
+                </Link>
+            </div>
         </div>
     );
 }

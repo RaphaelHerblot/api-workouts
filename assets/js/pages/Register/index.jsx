@@ -7,7 +7,7 @@ import TrainingPlacesAPI from "../../services/trainingPlacesAPI";
 import Field from '../../components/Form/Field';
 import axios from 'axios';
 
-const Register = (props) => {
+const Register = ({ history }) => {
     const[credentials, setCredentials] = useState({
         firstName: "",
         lastName: "",
@@ -56,6 +56,7 @@ const Register = (props) => {
                 }
             );
             console.log(response.data);
+            history.push("/login");
         } catch(error) {
             console.log(error.response);
         }

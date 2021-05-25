@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import WorkoutCard from '../../components/Workouts/WorkoutShow/WorkoutCard';
 import WorkoutsAPI from "../../services/workoutsAPI";
-import AuthAPI from "../../services/authAPI";
-import ThreeDotsLoader from '../../components/Loader/ThreeDotsLoader';
+import CounterStarting from '../../components/CounterStarting';
+import WorkingOut from '../../components/Workouts/WorkingOut';
+import './style.scss';
 
 const StartWorkout = ({ match, setPageTitle }) => {
     const [workout, setWorkout] = useState([]);
     const [workoutLoaded, setWorkoutLoaded] = useState(false);
-    const [authenticatedUser, setAuthenticatedUser] = useState([]);
-    const [userLoaded, setUserLoaded] = useState(false);
-
-    console.log("IDDDDDDD :", match.params.id); 
+    const [isStarting, setIsStarting] = useState(false);
+    const [startingNumber, setStartingNumber] = useState(5);
 
     // Get the workout by id
     const fetchWorkout = async (idWorkout) => {
@@ -23,34 +21,27 @@ const StartWorkout = ({ match, setPageTitle }) => {
         }
     }
 
-    const fetchUser = async () => {
-        try {
-            const dataUser = await AuthAPI.findConnectedUser();
-            setAuthenticatedUser(dataUser.data);
-            setUserLoaded(true);
-        } catch(error) {
-            console.log("Error : ", error.response)
-        }
-    }
-
     useEffect(() => {
-        setPageTitle("Détail de la séance")
+        setPageTitle("Faites votre séance")
         fetchWorkout(match.params.id);
-        fetchUser();
     }, [])
 
     useEffect(() => {
-        console.log(authenticatedUser);
-    }, [authenticatedUser])
+        if(startingNumber > 0) {
+            const newNumber = startingNumber-1;
+            setTimeout(() => {
+                setStartingNumber(newNumber)
+            }, 1000);
+        } else {
+            setIsStarting(true)
+        }
+    }, [startingNumber])
 
     return ( 
-        <div>
-            {workoutLoaded && userLoaded 
-                ? <WorkoutCard workout={workout} authenticatedUser={authenticatedUser} /> 
-                :        
-                    <div className="workout-loading">
-                        <ThreeDotsLoader />
-                    </div>
+        <div className={isStarting ? "working-out-container active" : "working-out-container" }>
+            {!isStarting 
+                ? <CounterStarting startingNumber={startingNumber} workoutTitle={workout.title} /> 
+                : workoutLoaded ? <WorkingOut workout={workout} /> : ''
             }
         </div>
     );

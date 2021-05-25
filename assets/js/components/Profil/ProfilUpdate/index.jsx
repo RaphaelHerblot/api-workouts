@@ -6,7 +6,7 @@ import TrainingPlacesAPI from "../../../services/trainingPlacesAPI";
 import Field from '../../Form/Field';
 import axios from 'axios';
 
-const ProfilUpdate = ({ authenticatedUser, updatingUser }) => {
+const ProfilUpdate = ({ authenticatedUser, updateProfil }) => {
     const[credentials, setCredentials] = useState({
         firstName: "",
         lastName: "",
@@ -29,7 +29,6 @@ const ProfilUpdate = ({ authenticatedUser, updatingUser }) => {
             setLevels(dataLevels);
             setGoals(dataGoals);
             setTrainingPlaces(dataTrainingPlaces);
-            console.log(levels);
         } catch(error) {
             console.log(error.response)
         }
@@ -54,7 +53,8 @@ const ProfilUpdate = ({ authenticatedUser, updatingUser }) => {
                 }
             );
             console.log(response.data);
-            updatingUser = false;
+            updateProfil();
+
         } catch(error) {
             console.log(error.response);
         }
