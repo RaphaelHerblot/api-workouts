@@ -3,20 +3,22 @@ import WorkoutsAPI from "../../../../services/workoutsAPI";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import ExerciseCard from '../../../Exercises/ExerciseCard';
+import { USERS_API } from '../../../../config'
 import './style.scss';
 
 
-const WorkoutCard = ({ workout, authenticatedUser, history }) => {
+const WorkoutCard = ({ workout, authenticatedUser, fetchWorkout, idWorkout, fetchUser, history }) => {
     const[likedWorkouts, setLikedWorkouts] = useState([]);
     const[alreadyLiked, setAlreadyLiked] = useState(false);
+    const[addLike, setAddLiked] = useState(0);
 
-    console.log("Bonjour a tous", workout)
-    console.log("BJRRR : ", authenticatedUser.likedWorkouts)
- 
     useEffect(() => {
         checkAlreadyLiked();
-        console.log ("Workout : ", workout);
     }, [])
+
+    useEffect(() => {
+        console.log("We changed ", likedWorkouts);
+    }, [likedWorkouts])
 
     // Deleting a workout
     const handleDeleteWorkout = async id => {
@@ -29,43 +31,49 @@ const WorkoutCard = ({ workout, authenticatedUser, history }) => {
     }
 
     const handleLikeWorkout = async () => {
-        console.log("TEMAAAAAAAAAAAAAAAAAAAA : ", likedWorkouts);
         (authenticatedUser.likedWorkouts).map(likeWorkout => 
             setLikedWorkouts(likedWorkouts.push("/api/workouts/" + likeWorkout.id))
         )
-        console.log(typeof likedWorkouts);
-        console.log("YOO HOW IS IT ? : ", likedWorkouts);
-        console.log("YOO HOW IS IT 22222222222? : ", likedWorkouts);
-        console.log("User :", authenticatedUser.likedWorkouts);
+
         const newLikedWorkouts = "/api/workouts/" + workout.id
         setLikedWorkouts(likedWorkouts.push(newLikedWorkouts));
-        console.log(likedWorkouts)
+
         try {
             const response = await axios.put(
-                "http://localhost:8000/api/users/" + authenticatedUser.id, {
+                USERS_API + "/" + authenticatedUser.id, {
                 likedWorkouts: likedWorkouts}
             )
-            console.log(response.data);
             setAlreadyLiked(true);
+            fetchWorkout(idWorkout);
+            fetchUser();
+            setLikedWorkouts([]);
+            setAddLiked(addLike + 1);
         } catch(error) {
             console.log(error.response);
         }
     }
 
     const handleUnlikeWorkout = async () => {
-        console.log("hello");
+        const tempLikedWorkouts = likedWorkouts;
         (authenticatedUser.likedWorkouts).map(likeWorkout => {
             if(likeWorkout.id !== workout.id) {
-                setLikedWorkouts(likedWorkouts.push("/api/workouts/" + likeWorkout.id))
+                tempLikedWorkouts.push("/api/workouts/" + likeWorkout.id);
             }
         })
+
+        setLikedWorkouts(tempLikedWorkouts)
+
         try {
             const response = await axios.put(
-                "http://localhost:8000/api/users/" + authenticatedUser.id, {
+                USERS_API + "/" + authenticatedUser.id, {
                 likedWorkouts: likedWorkouts}
             )
-            console.log(response.data);
+
             setAlreadyLiked(false);
+            fetchUser();
+            fetchWorkout(idWorkout);
+            setLikedWorkouts([]);
+            setAddLiked(addLike - 1);
         } catch(error) {
             console.log(error.response);
         }
@@ -83,7 +91,7 @@ const WorkoutCard = ({ workout, authenticatedUser, history }) => {
         <div className="workoutCard">
             <div key={workout.id}>
                 <div className="workout-likes-container">
-                    <p><b>{workout.likedUsers.length}</b></p>
+                    <p><b>{workout.likedUsers.length + addLike}</b></p>
                     {alreadyLiked 
                         ?  <img src={require('/assets/images/icons/heart-red.svg')} />
                         :  <img src={require('/assets/images/icons/heart-empty.svg')} />

@@ -1,11 +1,3 @@
-self.addEventListener('install', async event => {
-    console.log('install event')
-});
-  
-self.addEventListener('fetch', async event => {
-    console.log('fetch event')
-});
-
 const cacheName = 'pwa-workit';
 const staticAssets = [
   './',
@@ -18,16 +10,11 @@ self.addEventListener('install', async event => {
     console.log("YOOO WHAT")
 });
 
-self.addEventListener('fetch', event => {
-    const req = event.request;
-    event.respondWith(cacheFirst(req));
-    console.log("YOYOYOYOY");
-});
-
-self.addEventListener('fetch', event => {
-    const req = event.request;
-    event.respondWith(cacheFirst(req));
-});
+// self.addEventListener('fetch', event => {
+//     const req = event.request;
+//     event.respondWith(cacheFirst(req));
+//     console.log("YOYOYOYOY");
+// });
 
 async function cacheFirst(req) {
     const cache = await caches.open(cacheName);
@@ -37,24 +24,26 @@ async function cacheFirst(req) {
 
 self.addEventListener('fetch', event => {
     const req = event.request;
-    if(!(req.url.indexOf('http') === 0)){
-        
-    }
-    else if (/.*(json)$/.test(req.url)) {
+    if(!(req.url.match("^(http|https)://"))){
+        return
+    } else if (/.*(json)$/.test(req.url)) {
         event.respondWith(networkFirst(req));
     } else {
         event.respondWith(cacheFirst(req));
     }
+
 });
-
-
 
 async function networkFirst(req) {
     const cache = await caches.open(cacheName);
     try { 
-      const fresh = await fetch(req);
-      cache.put(req, fresh.clone());
-      return fresh;
+        if(!req.url.match("^(http|https)://")) {
+            return null;
+        } else {
+            const fresh = await fetch(req);
+            cache.put(req, fresh.clone());
+            return fresh;
+        }
     } catch (e) { 
         const cachedResponse = await cache.match(req);
         return cachedResponse;

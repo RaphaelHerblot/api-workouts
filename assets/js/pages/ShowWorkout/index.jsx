@@ -10,8 +10,6 @@ const ShowUpdate = ({ match, setPageTitle }) => {
     const [authenticatedUser, setAuthenticatedUser] = useState([]);
     const [userLoaded, setUserLoaded] = useState(false);
 
-    console.log("IDDDDDDD :", match.params.id); 
-
     // Get the workout by id
     const fetchWorkout = async (idWorkout) => {
         try {
@@ -46,7 +44,7 @@ const ShowUpdate = ({ match, setPageTitle }) => {
     return ( 
         <div>
             {workoutLoaded && userLoaded 
-                ? <WorkoutCard workout={workout} authenticatedUser={authenticatedUser} /> 
+                ? <WorkoutCard workout={workout} authenticatedUser={authenticatedUser} fetchWorkout={fetchWorkout} idWorkout={match.params.id} fetchUser={fetchUser} /> 
                 :        
                     <div className="workout-loading">
                         <ThreeDotsLoader />
