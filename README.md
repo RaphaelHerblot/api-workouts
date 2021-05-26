@@ -1,4 +1,4 @@
-# Workit - Go do your workout !
+# Workit - Do and make your workout !
 
 Workit is a fitness app that allows you to create your own workout and to share it with the other users.
 You can see my version of it directly here : https://app-workit.herokuapp.com/
@@ -31,7 +31,7 @@ php bin/console make:migration
 php bin/console doctrine:migrations:migrate
 ```
 
-At this point, you need to import some data in your MySQL database for the app to work
+At this point, you need to import some required data in your MySQL database for the app to work
 You can find a file **workit.sql** in the root of the project.
 It will add the exercises, muscles, levels, goals and training places that needs to be there.
 
