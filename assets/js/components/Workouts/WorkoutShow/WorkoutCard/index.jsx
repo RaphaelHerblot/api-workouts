@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom'
 import WorkoutsAPI from "../../../../services/workoutsAPI";
 import { Link } from "react-router-dom";
 import axios from 'axios';
@@ -7,10 +8,11 @@ import { USERS_API } from '../../../../config'
 import './style.scss';
 
 
-const WorkoutCard = ({ workout, authenticatedUser, fetchWorkout, idWorkout, fetchUser, history }) => {
+const WorkoutCard = ({ workout, authenticatedUser, fetchWorkout, idWorkout, fetchUser }) => {
     const[likedWorkouts, setLikedWorkouts] = useState([]);
     const[alreadyLiked, setAlreadyLiked] = useState(false);
     const[addLike, setAddLiked] = useState(0);
+    let history = useHistory();
 
     useEffect(() => {
         checkAlreadyLiked();
@@ -24,7 +26,7 @@ const WorkoutCard = ({ workout, authenticatedUser, fetchWorkout, idWorkout, fetc
     const handleDeleteWorkout = async id => {
         try {
             await WorkoutsAPI.delete(id)
-            history.push("/");
+            history.push("/profil");
         } catch(error) {
             setWorkouts(originalWorkouts);
         }
@@ -124,12 +126,12 @@ const WorkoutCard = ({ workout, authenticatedUser, fetchWorkout, idWorkout, fetc
                 <div className="workout-exercices">
                     <h3>Exercices</h3>
                     <h4>{workout.series} séries</h4>
-                    <ul>
+                    {/* <ul>
                         {workout.nbRepetition.map((number) =>
                             <ExerciseCard key={workout.exercices[number.index].id} exercice={workout.exercices[number.index]} nbRepetition={number.repetition} />
                             // <ExerciseCard key={exercice.id} exercice={exercice} nbRepetition={workout.nbRepetition[index].repetition} />
                         )}
-                    </ul>
+                    </ul> */}
                 </div>
 
                     {authenticatedUser.id === workout.author.id 

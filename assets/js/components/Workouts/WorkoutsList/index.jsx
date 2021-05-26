@@ -28,16 +28,11 @@ const WorkoutsList = () => {
 
     // Getting all workouts when component loads
     useEffect(() => {
+        setNewWorkouts([]);
+        setMostFavWorkouts([]);
+        setPerfectWorkoutsForUser([]);
         fetchWorkouts();
     }, [])
-
-    useEffect(() => {
-        console.log("newWorkouts : ", mostFavWorkouts)
-    }, [mostFavWorkouts])
-
-    useEffect(() => {
-        console.log("newWorkouts : ", newWorkouts)
-    }, [newWorkouts])
 
     return (
         <div className="workout-list">

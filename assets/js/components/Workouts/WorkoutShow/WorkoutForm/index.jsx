@@ -84,14 +84,9 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
 
     useEffect(() => {
         if(chosenExercise) {
-            addExerciceToWorkout3();
+            addExerciceToWorkout();
         }
     }, [chosenExercise]);
-
-    useEffect(() => {
-        console.log("CHANGINNNNNNNNNNNNNNG");
-        console.log(modSearchExercise)
-    }, [modTypeExercise]);
 
     const fetchWorkoutsData = async () => {
         try {
@@ -162,11 +157,7 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
     }
     
     const deleteExercise = (event, index) => {
-        console.log("Target : ", event.target);
-        console.log("Index : ", index);
-        console.log(exercices)
         const newExercisesList = [...listExercises];
-        
         newExercisesList.splice(index, 1);
         setListExercises(newExercisesList);
         (event.target.parentElement.parentElement.parentElement).remove();
@@ -182,11 +173,10 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
 
     const addRest = () => {
         setChosenExercise(rest);
-        console.log("RESSSSSSSST : ", rest);
         setIsResting(true);
     }
 
-    const addExerciceToWorkout3 = () => {
+    const addExerciceToWorkout = () => {
         console.log("Exercice choisi : ", chosenExercise);
         if(chosenExercise && Object.keys(chosenExercise).length > 0 && chosenExercise.constructor === Object) {
             const tempListExercises = [...listExercises];
@@ -278,6 +268,9 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
                         trainingPlace: `/api/training_places/${workout.trainingPlace}`
                     }
                 );
+                console.log("Data response : ",response.data)
+                history.push(`/workout/${response.data.id}`);
+
             }
 
     
@@ -290,15 +283,10 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
         if (!result.destination) {
             return;
         }
-        console.log("Result : ", result.destination.index);
-        console.log("Result : ", result.destination.index);
-        // console.log("List exo : ", listExercises);
+
         const items = Array.from(listExercises);
-        // console.log("Item list : ", items)
         const [reorderedItem] = items.splice(result.source.index, 1);
-        // console.log("ReorderedItem : ", [reorderedItem])
         items.splice(result.destination.index, 0, reorderedItem);
-        // console.log("Item splice : ", items);
 
         setListExercises(items);
     }
@@ -337,7 +325,7 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
                 />
                 <Field 
                     type="number" 
-                    label="Temps moyen de la séance" 
+                    label="Temps moyen de la séance (minutes)" 
                     name="averageTime" 
                     value={workout.averageTime} 
                     onChange={handleChange} 
@@ -486,7 +474,12 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
                             </DragDropContext> 
                         
                             <div className="form-group">
-                                <button type="submit" className="btn btn-success">{workoutIsUpdated ? "Modifier" : "Création"}</button>
+                                <button type="submit" className="btn btn-success">
+                                    {workoutIsUpdated ? "Modifier" : "Création"}
+                                    <div className="icon-button">
+                                        <img src={require("/assets/images/icons/straight-right-arrow.svg")} />
+                                    </div>
+                                </button>
                             </div>
                         </div>
                     : ''

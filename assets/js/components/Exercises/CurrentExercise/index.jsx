@@ -3,8 +3,6 @@ import ProgressionTime from '../../ProgressionTime';
 import './style.scss';
 
 const CurrentExercise = ({ exercise, currentTime, handleNextStep, time, percentTime, firstTime }) => {
-    console.log("currentTime : ", currentTime);
-
     return ( 
         <div className="current-exercise">
             <div className="current-exercise-image">
@@ -16,7 +14,7 @@ const CurrentExercise = ({ exercise, currentTime, handleNextStep, time, percentT
                     <p>{exercise.title}</p>
                 </div>
             </div>
-            {exercise.type !== "Musculation" 
+            {exercise.type !== "Musculation"
                 ? <ProgressionTime percentTime={percentTime} firstTime={firstTime} />
                 : "" 
             }

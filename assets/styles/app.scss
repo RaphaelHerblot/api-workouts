@@ -1,7 +1,7 @@
 @import "../styles/variable.scss";
 
 * {
-  font-family: Franklin Gothic !important;
+  font-family: Franklin Gothic, "Helvetica Neue", Tahoma, Arial sans-serif !important;
 }
 
 body {
@@ -277,6 +277,20 @@ body {
 
         p {
           text-align: left;
+        }
+      }
+    }
+
+    .workoutForm,
+    .updateForm {
+      form {
+        .form-group {
+          button {
+            .icon-button {
+              right: 0;
+              left: 82%;
+            }
+          }
         }
       }
     }

@@ -2,20 +2,20 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import './style.scss';
 
-const WorkingFinished = (props) => {
+const WorkingFinished = ({ workoutTitle }) => {
 
     return ( 
         <div className="workout-finished">
             <h3>
-                Bien joué ! La séance est terminée, continue comme ça tu es le meilleur
+                Bien joué ! La séance <span>{workoutTitle}</span> est terminée, on se retrouve pour la prochaine très bientôt.
             </h3>
-            <Link to="/profile">
-                <div className="button-container">
-                    <button type="button" className="button-workout-finished">
-                        Enregistrer l'entraînement
-                    </button>
+                <div className="button-finish-workout">
+                    <Link to="/profil">
+                        <button type="button" className="button-workout-finished">
+                            Enregistrer l'entraînement
+                        </button>
+                     </Link>
                 </div>
-            </Link>
         </div>
     );
 }

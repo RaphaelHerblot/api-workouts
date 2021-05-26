@@ -148,7 +148,12 @@ const ProfilUpdate = ({ authenticatedUser, updateProfil }) => {
                     </div>
                 )}
                 <div className="form-group">
-                    <button type="submit" className="btn btn-success">Modifier</button>
+                    <button type="submit" className="btn btn-success">
+                        Modifier
+                        <div className="icon-button">
+                            <img src={require("/assets/images/icons/straight-right-arrow.svg")} />
+                        </div>
+                    </button>
                 </div>
             </form>
         </div>
