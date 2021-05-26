@@ -8,7 +8,7 @@ import WorkoutFinished from '../WorkoutFinished';
 const WorkingOut = ({ workout }) => {
     const [step, setStep] = useState(0);
     const [serie, setSerie] = useState(1);
-    const [nextIndex, setNextIndex] = useState(step+1);
+    const [nextIndex, setNextIndex] = useState(step);
     const [isWorkoutFinished, setIsWorkoutFinished] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [progression, setProgression] = useState(0);
@@ -21,17 +21,25 @@ const WorkingOut = ({ workout }) => {
     const numberTotalOfExercises = numberOfSteps*numberOfSeries;
     let time = null;
 
+  
+    useEffect(() => {
+        if(isFirstStep) {
+            if(numberOfSteps !== 1) {
+                setNextIndex(step+1);
+            }
+        }
+    }, [nextIndex])
     // Setting the currentTime / currentRepetition whenever a new step begin
     useEffect(() => {
+        setCurrentTime([]);
         setCurrentTime(workout.nbRepetition[step].repetition);
     }, [step])
 
     // Handling the currentTime / currentRepetition
     useEffect(() => {
-
         // If it's the first step, we don't execute the algorithm
         if(isFirstStep) {
-            setIsFirstStep(false)
+            setIsFirstStep(false);
         } 
         // If it's a stretch of a rest, a timer is set until it's done and go to the next step
         else {
@@ -79,11 +87,15 @@ const WorkingOut = ({ workout }) => {
                 setIsLastStep(true);
             }
         }
-
         // If the number of steps is equal of the total number of steps in one serie
         else {
             setStep(0);
-            setNextIndex(1);
+
+            if(numberOfSteps !== 1) {
+                setNextIndex(1);
+            } else {
+                setNextIndex(0);
+            }
 
             if(serie < numberOfSeries) {
                 setSerie(nextSerie);
@@ -107,8 +119,8 @@ const WorkingOut = ({ workout }) => {
                         <div className="next-exercise">
                             <p className="next-text">Suivant</p>
                             {!isLastStep 
-                            ? <ExerciseCard exercice={workout.exercices[workout.nbRepetition[nextIndex].index]} nbRepetition={workout.nbRepetition[nextIndex].repetition} />
-                            : <div className="workout-finishing">La séance est terminée, bravo !</div>
+                                ? <ExerciseCard exercice={workout.exercices[workout.nbRepetition[nextIndex].index]} nbRepetition={workout.nbRepetition[nextIndex].repetition} />
+                                : <div className="workout-finishing">La séance est terminée, bravo !</div>
                             }
                             <ProgressionBar percentProgression={percentProgression} numberTotalOfExercises={numberTotalOfExercises} progression={progression} />
                         </div>

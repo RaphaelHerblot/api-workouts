@@ -268,6 +268,12 @@ body {
       form {
         padding-top: 45px;
 
+        input {
+          &.form-control {
+            text-align: center;
+          }
+        }
+
         h2 {
           display: inline-block;
           text-align: center;
@@ -293,6 +299,18 @@ body {
           }
         }
       }
+    }
+
+    .index-number {
+      position: absolute;
+      top: 12px;
+      left: 8px;
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+      z-index: 10;
+      color: $theme-color;
+      font-weight: 700;
+      font-size: 15px;
     }
   }
 }

@@ -434,65 +434,68 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
                                     </button>
                                 }
                             </div>
+
+                            {listExercises.length > 1 
+                                ? 
+                                <div className="drag-message">
+                                    Changez l'ordre des exercices comme bon vous semble en les déplaçant
+                                    <img src={require("/assets/images/icons/hand.svg")} />
+                                </div>
+                                : ""
+                            }
                 
                             <DragDropContext onDragEnd={handleOnDragEnd}>
                                 <Droppable droppableId="listExercices">
                                     {(provided) => (
                                         <div className="listExercices" {...provided.droppableProps} ref={provided.innerRef}>
-                                            {workoutIsUpdated 
-                                                ? 
-                                                listExercises.map((exercise, index) =>  
-                                                    <Draggable key={exercise.id + "_" + count + "_" + index} draggableId={exercise.id + "_" + count + "_" + index} index={index}>
-                                                        {(provided) => (
-                                                            <div 
-                                                                id={"content_" + exercise.id} 
-                                                                className="exercise-container"
-                                                                ref={provided.innerRef} 
-                                                                {...provided.draggableProps} 
-                                                                {...provided.dragHandleProps}
-                                                            >
-                                                                {exercise.type === "Rest" 
-                                                                    ? <RestTime chosenRest={exercise} nbRepetition={workout.nbRepetition[index] ? workout.nbRepetition[index].repetition : null } onChange={handleChange} deleteExercise={deleteRest} index={index} />                                
-                                                                    : <ExerciseForm chosenExercise={exercise} nbRepetition={workout.nbRepetition[index] ? workout.nbRepetition[index].repetition : null } onChange={handleChange} deleteExercise={deleteExercise} index={index} />                                
-                                                                }
-                                                            </div>
-                                                        )}
-                                                    </Draggable>
-                                                )
-                                                : 
-                                                listExercises.map((exercise, index) =>  
-                                                    <Draggable key={exercise.id + "_" + count + "_" + index} draggableId={exercise.id + "_" + count + "_" + index} index={index}>
-                                                        {(provided) => (
-                                                            <div 
-                                                                id={"content_" + exercise.id} 
-                                                                className="exercise-container"
-                                                                ref={provided.innerRef} 
-                                                                {...provided.draggableProps} 
-                                                                {...provided.dragHandleProps}
-                                                            >
-                                                                {exercise.type === "Rest" 
-                                                                    ? <RestTime chosenRest={exercise} nbRepetition={workout.nbRepetition[index]} onChange={handleChange} deleteExercise={deleteRest} index={index} />                                
-                                                                    : <ExerciseForm chosenExercise={exercise} nbRepetition={workout.nbRepetition[index]} onChange={handleChange} deleteExercise={deleteExercise} index={index} />                                
-                                                                }
-                                                            </div>
-                                                        )}
-                                                    </Draggable>
-                                                )
-                                            }
+                                            {listExercises.map((exercise, index) =>  
+                                                <Draggable key={exercise.id + "_" + count + "_" + index} draggableId={exercise.id + "_" + count + "_" + index} index={index}>
+                                                    {(provided) => (
+                                                        <div 
+                                                            id={"content_" + exercise.id} 
+                                                            className="exercise-container"
+                                                            ref={provided.innerRef} 
+                                                            {...provided.draggableProps} 
+                                                            {...provided.dragHandleProps}
+                                                        >
+                                                            {exercise.type === "Rest" 
+                                                                ? <RestTime 
+                                                                    chosenRest={exercise} 
+                                                                    nbRepetition={workout.nbRepetition[index] ? workout.nbRepetition[index].repetition : null } 
+                                                                    onChange={handleChange} 
+                                                                    deleteExercise={deleteRest} 
+                                                                    index={index} 
+                                                                />                                
+                                                                : <ExerciseForm 
+                                                                    chosenExercise={exercise} 
+                                                                    nbRepetition={workout.nbRepetition[index] ? workout.nbRepetition[index].repetition : null } 
+                                                                    onChange={handleChange} 
+                                                                    deleteExercise={deleteExercise} 
+                                                                    index={index} 
+                                                                />                                
+                                                            }
+                                                        </div>
+                                                    )}
+                                                </Draggable>
+                                            )}
                                             {provided.placeholder}
                                         </div>
                                     )}
                                 </Droppable>
                             </DragDropContext> 
                         
-                            <div className="form-group">
-                                <button type="submit" className="btn btn-success">
-                                    {workoutIsUpdated ? "Modifier" : "Création"}
-                                    <div className="icon-button">
-                                        <img src={require("/assets/images/icons/straight-right-arrow.svg")} />
-                                    </div>
-                                </button>
-                            </div>
+                            {listExercises.length > 1 
+                                ? 
+                                <div className="form-group">
+                                    <button type="submit" className="btn btn-success">
+                                        {workoutIsUpdated ? "Modifier" : "Création"}
+                                        <div className="icon-button">
+                                            <img src={require("/assets/images/icons/straight-right-arrow.svg")} />
+                                        </div>
+                                    </button>
+                                </div>
+                                : <div className="exercises-minimum">Il faut ajouter au moins 2 exercices dans votre séance pour pouvoir la créer</div>
+                            }
                         </div>
                     : ''
                 }

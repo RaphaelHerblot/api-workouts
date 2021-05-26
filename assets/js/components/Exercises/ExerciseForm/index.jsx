@@ -16,6 +16,7 @@ const ExerciseForm = ({ chosenExercise, deleteExercise, nbRepetition, onChange, 
                 </button>
             </div>
         </div>
+        <div className="index-number">{index+1}</div>
     </div>
 );
  
