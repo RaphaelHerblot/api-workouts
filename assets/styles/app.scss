@@ -164,6 +164,12 @@ body {
           color: $theme-color;
         }
       }
+
+      .workit-mark {
+        display: flex;
+        justify-content: center;
+        margin: 24px auto;
+      }
     }
 
     .registerForm,

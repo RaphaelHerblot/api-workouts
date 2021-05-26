@@ -7,6 +7,7 @@ import TrainingPlacesAPI from "../../services/trainingPlacesAPI";
 import Field from '../../components/Form/Field';
 import axios from 'axios';
 import { USERS_API } from "../../config";
+import './style.scss';
 
 const Register = ({ history }) => {
     const[credentials, setCredentials] = useState({
@@ -23,6 +24,7 @@ const Register = ({ history }) => {
     const [levels, setLevels] = useState([]);
     const [goals, setGoals] = useState([]);
     const [trainingPlaces, setTrainingPlaces] = useState([]);
+    const [registeredSuccessfully, setRegisteredSuccessfully] = useState(false);
 
     // Fetching the data needed for the user to register
     const fetchUserRequiredData = async () => {
@@ -49,6 +51,7 @@ const Register = ({ history }) => {
     const handleSubmit = async event => {
         event.preventDefault();
         console.log(credentials);
+        setRegisteredSuccessfully(true);
 
         try {
             const response = await axios.post(
@@ -59,6 +62,7 @@ const Register = ({ history }) => {
                     trainingPlace: `/api/training_places/${credentials.trainingPlace}`
                 }
             );
+            setRegisteredSuccessfully(true);
             console.log(response.data);
             history.push("/login");
         } catch(error) {
@@ -71,8 +75,13 @@ const Register = ({ history }) => {
         fetchUserRequiredData();
     }, [])
 
+    const handleClick = () => {
+        setRegisteredSuccessfully(true)
+    }
+
     return ( 
         <div className="registerForm">
+            <img src={require("/assets/images/workit.svg")} className="workit-mark"/>
             <form onSubmit={handleSubmit}>
                 <h2>Informations Personnelles</h2>
 
@@ -164,7 +173,8 @@ const Register = ({ history }) => {
                     </button>
                 </div>
             </form>
-            <p className="login-link">Déjà inscrit ? <Link to="/login">Connexion</Link></p>
+            <p className="login-link" onClick={handleClick}>Déjà inscrit ? <Link to="/login">Connexion</Link></p>
+            <div className={registeredSuccessfully ? "register-success active" : "register-success"}>Vous avez bien été enregistré !</div>
         </div>
     );
 }

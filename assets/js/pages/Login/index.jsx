@@ -37,6 +37,7 @@ const Login = ({ history }) => {
 
     return ( 
         <div className="loginForm">
+            <img src={require("/assets/images/workit.svg")} className="workit-mark"/>
             <form onSubmit={handleSubmit}>
                 <h2>Connexion</h2>
                 <Field 
