@@ -1,8 +1,9 @@
 import React from 'react';
 import './style.scss';
 
+// Card of an exercise
+
 const ExerciseCard = ({ exercice, nbRepetition }) => {
-    
     return (
         <li className="exercise-card">
             <div><img src={require(`/assets/images/exercices/${exercice.id}.svg`)} className="exercise-image"/></div>

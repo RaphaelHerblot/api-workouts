@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import WorkoutsList from '../../components/Workouts/WorkoutsList';
 
+// Homepage
+
 const Home = ({ setPageTitle }) => {
 
     useEffect(() => {

@@ -1,8 +1,9 @@
 import React from 'react';
 import './style.scss';
 
+// Workout Preview Card
+
 const WorkoutPreview = ({ workout }) => {
-    console.log("Workout Preview : ", workout);
     return (
         <div className="workoutPreview" key={workout.id}>
             <div className="workout-image" style={{backgroundImage: 'linear-gradient(to bottom, rgb(245 246 252 / 0%), #1b1c1d), url('+require("/assets/images/workouts/workout1.jpg")+')'}}>

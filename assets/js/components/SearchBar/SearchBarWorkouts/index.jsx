@@ -7,6 +7,7 @@ const SearchBarWorkouts = ({ workouts, search, setSearch, setCurrentPage, placeh
     const [searchBarValue, setSearchBarValue] = useState("");
     const [proposedWorkouts, setProposedWorkouts] = useState([]);
 
+    // For each changes of the search bar value, the exercises result is changed 
     useEffect(() => {
         setProposedWorkouts(
           workouts.filter((workout) => workout.title.toLowerCase().includes(search.toLowerCase()) || workout.description.toLowerCase().includes(search.toLowerCase()))
@@ -18,26 +19,25 @@ const SearchBarWorkouts = ({ workouts, search, setSearch, setCurrentPage, placeh
         
     }, [searchBarValue]);
 
+    // Show list of exercise when user is on the search bar input
     const handleFocus = () => {
         if(showProposedWorkouts === false) {
             setShowProposedWorkouts(true);
         }
     }
 
+    // Hide list of exercise when user is on the search bar input
     const handleBlur = () => {
         if(showProposedWorkouts === true) {
             setShowProposedWorkouts(false);
         }
     }
     
+    // The value of the search is changed for every new or deleted letter
     const handleSearch = ({ currentTarget }) => {
         setSearch(currentTarget.value);
         setSearchBarValue(currentTarget.value)
         setCurrentPage(1);
-    }
-
-    const onClickFunction = () => {
-
     }
 
     return ( 

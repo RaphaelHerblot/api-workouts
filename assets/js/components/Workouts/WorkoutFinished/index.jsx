@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import './style.scss';
 
+// Page shown when workout is over
+
 const WorkingFinished = ({ workoutTitle }) => {
 
     return ( 

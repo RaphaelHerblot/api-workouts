@@ -2,6 +2,7 @@ import React from 'react';
 
 const MenuIcon = ({ icon }) => {
 
+    // Function that give the right svg icon with the prop "icon"
     const iconChosen = () => {
         if(icon === "home") {
             return (

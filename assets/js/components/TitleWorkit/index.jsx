@@ -1,5 +1,8 @@
 import React from 'react';
 import './style.scss';
+
+// Generic title for the app
+
 const TitleWorkit = ({ title, icon }) => {
     return ( 
         <div className="title-workit">

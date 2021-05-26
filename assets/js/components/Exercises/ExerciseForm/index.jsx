@@ -1,5 +1,4 @@
 import React from 'react';
-
 import './style.scss';
 
 const ExerciseForm = ({ chosenExercise, deleteExercise, nbRepetition, onChange, index }) => ( 

@@ -1,12 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { NavLink, withRouter } from "react-router-dom";
-import AuthContext from "../../contexts/AuthContext";
 import './style.scss';
 
 const Header = ({ pageTitle }) => {
-
-    const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
-
     return (
         <header className="header">
             <div className="header-icon">

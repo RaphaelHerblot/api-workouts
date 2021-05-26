@@ -15,6 +15,7 @@ import StartWorkout from '../../pages/StartWorkout';
 const PrivateRoute = ({ path, component, setPageTitle }) => {
     const { isAuthenticated } = useContext(AuthContext);
 
+    // Returning the right component of the Private Route 
     const getComponent = (props) => {
         if(component == "Profile") {
             return <Profil {...props} setPageTitle={setPageTitle} />
@@ -35,6 +36,7 @@ const PrivateRoute = ({ path, component, setPageTitle }) => {
         }
     }
     
+    // If the user is authenticated, he can go on this private route, otherwise he's redirected to the login page
     return isAuthenticated ? (
         <Route
             path={path}
@@ -42,7 +44,6 @@ const PrivateRoute = ({ path, component, setPageTitle }) => {
                 getComponent(props)
             )}
         />
-        // getComponent()
     ) : ( 
         <Redirect to="/login" />
     );

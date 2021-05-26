@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import TitleWorkit from '../../components/TitleWorkit';
 
+// Work in progress
+
 const Calendar = ({ setPageTitle }) => {
     useEffect(() => {
         setPageTitle("Agenda");

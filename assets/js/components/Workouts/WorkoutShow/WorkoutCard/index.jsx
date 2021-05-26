@@ -14,15 +14,12 @@ const WorkoutCard = ({ workout, authenticatedUser, fetchWorkout, idWorkout, fetc
     const[addLike, setAddLiked] = useState(0);
     let history = useHistory();
 
+    // Checking if the user has already like that workout when first rendering the component
     useEffect(() => {
         checkAlreadyLiked();
     }, [])
 
-    useEffect(() => {
-        console.log("We changed ", likedWorkouts);
-    }, [likedWorkouts])
-
-    // Deleting a workout
+    // Deleting the workout
     const handleDeleteWorkout = async id => {
         try {
             await WorkoutsAPI.delete(id)
@@ -32,6 +29,7 @@ const WorkoutCard = ({ workout, authenticatedUser, fetchWorkout, idWorkout, fetc
         }
     }
 
+    // Liking the workout
     const handleLikeWorkout = async () => {
         (authenticatedUser.likedWorkouts).map(likeWorkout => 
             setLikedWorkouts(likedWorkouts.push("/api/workouts/" + likeWorkout.id))
@@ -55,6 +53,7 @@ const WorkoutCard = ({ workout, authenticatedUser, fetchWorkout, idWorkout, fetc
         }
     }
 
+    // Unliking a workout
     const handleUnlikeWorkout = async () => {
         const tempLikedWorkouts = likedWorkouts;
         (authenticatedUser.likedWorkouts).map(likeWorkout => {
@@ -81,6 +80,7 @@ const WorkoutCard = ({ workout, authenticatedUser, fetchWorkout, idWorkout, fetc
         }
     }
 
+    // Function that check if the user have already like the workout
     const checkAlreadyLiked = () => {
         authenticatedUser.likedWorkouts.map(likedWorkout => {
             if(workout.id === likedWorkout.id) {
@@ -126,12 +126,11 @@ const WorkoutCard = ({ workout, authenticatedUser, fetchWorkout, idWorkout, fetc
                 <div className="workout-exercices">
                     <h3>Exercices</h3>
                     <h4>{workout.series} séries</h4>
-                    {/* <ul>
+                    <ul>
                         {workout.nbRepetition.map((number) =>
                             <ExerciseCard key={workout.exercices[number.index].id} exercice={workout.exercices[number.index]} nbRepetition={number.repetition} />
-                            // <ExerciseCard key={exercice.id} exercice={exercice} nbRepetition={workout.nbRepetition[index].repetition} />
                         )}
-                    </ul> */}
+                    </ul> 
                 </div>
 
                     {authenticatedUser.id === workout.author.id 

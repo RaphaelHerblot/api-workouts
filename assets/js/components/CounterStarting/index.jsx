@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import ThreeDotsLoader from '../Loader/ThreeDotsLoader';
 import './style.scss';
 
+// Countdown after launching a certain workout 
+
 const CounterStarting = ({ startingNumber, workoutTitle }) => {
     return ( 
         <div className="counter-start">

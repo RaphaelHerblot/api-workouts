@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import ProgressionTime from '../../ProgressionTime';
 import './style.scss';
 
-const CurrentExercise = ({ exercise, currentTime, handleNextStep, time, percentTime, firstTime }) => {
+// Exercise the user is currently doing in his workout
+
+const CurrentExercise = ({ exercise, currentTime, handleNextStep, percentTime, firstTime }) => {
     return ( 
         <div className="current-exercise">
             <div className="current-exercise-image">

@@ -7,6 +7,7 @@ import WorkoutPreview from '../../components/Workouts/WorkoutsList/WorkoutPrevie
 import WorkoutsAPI from "../../services/workoutsAPI";
 import WorkoutPreviewLoader from '../../components/Loader/WorkoutPreviewLoader';
 
+// Discover page
 
 const Search = ({ setPageTitle }) => {
     const [workouts, setWorkouts] = useState([]);
@@ -14,6 +15,7 @@ const Search = ({ setPageTitle }) => {
     const [search, setSearch] = useState('');
     const [isLoading, setIsLoading] = useState(true);
 
+    // Fetching every workout of the app
     const fetchWorkouts = async () => {
         try {
             const data = await WorkoutsAPI.findAll();
@@ -24,6 +26,7 @@ const Search = ({ setPageTitle }) => {
         }
     }
 
+    // Fetching all the workouts when the component is first rendered
     useEffect(() => {
         setPageTitle("Découvrir");
         fetchWorkouts();
@@ -34,7 +37,8 @@ const Search = ({ setPageTitle }) => {
         setCurrentPage(page);
     }
 
-    const itemsPerPage = 2;
+    // Items per page
+    const itemsPerPage = 4;
 
     // Filtering workouts by search terms
     const filteredWorkouts = workouts.filter(

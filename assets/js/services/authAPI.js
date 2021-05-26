@@ -2,6 +2,7 @@ import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { USERS_API, LOGIN_API } from "../config";
 
+// Login function
 function authentification(credentials) {
     return axios
         .post(LOGIN_API, credentials)
@@ -13,15 +14,18 @@ function authentification(credentials) {
         })
 }
 
+// Logout function
 function logout() {
     window.localStorage.removeItem("authToken");
     delete axios.defaults.headers["Authorization"];
 }
 
+// Setting the token
 function setAxiosToken(token) {
     axios.defaults.headers["Authorization"] = "Bearer " + token;
 }
 
+// Setting up the session
 function setup() {
     const token = window.localStorage.getItem("authToken");
 
@@ -38,6 +42,7 @@ function setup() {
     }
 }
 
+// CHecking if the user is connected
 function isAuthenticated() {
     const token = window.localStorage.getItem("authToken");
     if(token) {
@@ -51,6 +56,7 @@ function isAuthenticated() {
     return false;
 }
 
+// Find the user that is connected
 function findConnectedUser() {
     const token = jwtDecode(window.localStorage.getItem("authToken"));
     return axios

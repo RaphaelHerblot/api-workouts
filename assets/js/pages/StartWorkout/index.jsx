@@ -21,11 +21,13 @@ const StartWorkout = ({ match, setPageTitle }) => {
         }
     }
 
+    // Get the workout by id when the component if first rendering
     useEffect(() => {
         setPageTitle("Faites votre séance")
         fetchWorkout(match.params.id);
     }, [])
 
+    // Setting a timer for the countdown
     useEffect(() => {
         if(startingNumber > 0) {
             const newNumber = startingNumber-1;

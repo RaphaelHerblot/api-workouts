@@ -6,6 +6,7 @@ const Pagination = ({ currentPage, itemsPerPage, length, onPageChanged }) => {
     const pagesCount = Math.ceil(length / itemsPerPage);
     const pages = [];
 
+    // Pushing the number of pages in a array to map around it in the render section
     for(let i = 1; i <= pagesCount; i++) {
         pages.push(i);
     }

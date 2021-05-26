@@ -1,19 +1,26 @@
 import React from 'react';
 
-const FieldTextarea = ({ name, label, value, onChange, placeholder = "", error = "" }) => ( 
+// Input field of a form
+
+const Field = ({ name, label, value, onChange, placeholder = "", type = "text", error = "", min, max}) => ( 
     <div className="form-group">
         {error && <p className="invalid-feedback">{error}</p>}
-        <p className="label-textarea">{label}</p>
-        <textarea 
+        <input 
             value={value} 
             onChange={onChange} 
             placeholder={placeholder}
+            type={type}
             id={name}
             name={name}
             className={"form-control" + (error && " is-invalid")}
+            min={min}
+            max={max}
             required
         />
+        <label htmlFor={name}>{label}</label>
+
+        <div className="border-field"></div>
     </div>
 );
  
-export default FieldTextarea;
+export default Field;

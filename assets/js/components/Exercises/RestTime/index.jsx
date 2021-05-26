@@ -1,6 +1,7 @@
 import React from 'react';
-
 import './style.scss';
+
+// Rest form in the workout form
 
 const RestTime = ({ chosenRest, deleteExercise, nbRepetition, onChange, index }) => {
     return (

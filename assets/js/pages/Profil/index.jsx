@@ -4,10 +4,9 @@ import ProfilUpdate from '../../components/Profil/ProfilUpdate';
 import WorkoutPreview from '../../components/Workouts/WorkoutsList/WorkoutPreview';
 import AuthAPI from "../../services/authAPI";
 import AuthContext from "../../contexts/AuthContext";
-
-import './style.scss';
 import ProfileLoader from '../../components/Loader/ProfileLoader';
 import ThreeDotsLoader from '../../components/Loader/ThreeDotsLoader';
+import './style.scss';
 
 
 const Profil = ({ setPageTitle, history }) => {
@@ -18,12 +17,14 @@ const Profil = ({ setPageTitle, history }) => {
     const [displayMyWorkouts, setDisplayMyWorkouts] = useState(false);
     const [displayFavoriteWorkouts, setDisplayFavoriteWorkouts] = useState(false);
 
+    // Handling the logout and then go to /login route
     const handleLogout = () => {
         AuthAPI.logout();
         setIsAuthenticated(false);
         history.push("/login");
     }
 
+    // Fetching all the data of the current connected user
     const fetchUser = async () => {
         try {
             const dataUser = await AuthAPI.findConnectedUser();
@@ -34,6 +35,7 @@ const Profil = ({ setPageTitle, history }) => {
         }
     }
 
+    // Rendering the right profile
     const profileRendering = () => {
         if(updatingUser) {
             return <ProfilUpdate authenticatedUser={authenticatedUser} updateProfil={updateProfil} />
@@ -102,19 +104,13 @@ const Profil = ({ setPageTitle, history }) => {
         }
     }
 
+    // Fetching user when first rendering
     useEffect(() => {
         setPageTitle("Profil");
         fetchUser();
     }, [])
 
-    useEffect(() => {
-        console.log("Authenticate User : ", authenticatedUser)
-    }, [authenticatedUser])
-
-    useEffect(() => {
-        console.log("Authenticate User : ", authenticatedUser)
-    }, [authenticatedUser])
-
+    // Updating the profil by changing the updatingUser boolean state
     const updateProfil = () => {
         if(updatingUser === false) {
             setUpdatingUser(true);
@@ -125,6 +121,7 @@ const Profil = ({ setPageTitle, history }) => {
         }
     }
 
+    // Display of the user created workouts
     const myWorkouts = ( event ) => {
         if(displayMyWorkouts) {
             setDisplayMyWorkouts(false);
@@ -139,6 +136,7 @@ const Profil = ({ setPageTitle, history }) => {
         }
     }
 
+    // Display of the user favorites workouts
     const myFavoriteWorkouts = ( event ) => {
         if(displayFavoriteWorkouts) {
             setDisplayFavoriteWorkouts(false);

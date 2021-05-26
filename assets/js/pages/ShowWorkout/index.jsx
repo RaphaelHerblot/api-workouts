@@ -21,6 +21,7 @@ const ShowUpdate = ({ match, setPageTitle }) => {
         }
     }
 
+    // Get the connected user
     const fetchUser = async () => {
         try {
             const dataUser = await AuthAPI.findConnectedUser();
@@ -31,15 +32,12 @@ const ShowUpdate = ({ match, setPageTitle }) => {
         }
     }
 
+    // Fetching the workout by its id and the connected user when component is first rendering
     useEffect(() => {
         setPageTitle("Détail de la séance")
         fetchWorkout(match.params.id);
         fetchUser();
     }, [])
-
-    useEffect(() => {
-        console.log(authenticatedUser);
-    }, [authenticatedUser])
 
     return ( 
         <div>

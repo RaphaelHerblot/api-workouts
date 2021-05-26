@@ -21,22 +21,20 @@ const WorkingOut = ({ workout }) => {
     const numberTotalOfExercises = numberOfSteps*numberOfSeries;
     let time = null;
 
+    // Setting the currentTime / currentRepetition whenever a new step begin
     useEffect(() => {
         setCurrentTime(workout.nbRepetition[step].repetition);
     }, [step])
 
-
+    // Handling the currentTime / currentRepetition
     useEffect(() => {
-        console.log("CurrentTime : ", currentTime);
-        console.log("Step : ", step)
-        console.log("Type : ", workout.exercices[workout.nbRepetition[step].index].type);
-        console.log("Workout : ", workout);
-        console.log("Exercise : ", workout.exercices[workout.nbRepetition[step].index]);
-        console.log("Index : ", workout.nbRepetition[step].index);
 
+        // If it's the first step, we don't execute the algorithm
         if(isFirstStep) {
             setIsFirstStep(false)
-        } else {
+        } 
+        // If it's a stretch of a rest, a timer is set until it's done and go to the next step
+        else {
             if(workout.exercices[workout.nbRepetition[step].index].type !== "Musculation") {
                 if(currentTime > 0) {
                     const newCurrentTime = currentTime-1;
@@ -51,12 +49,12 @@ const WorkingOut = ({ workout }) => {
         }
     }, [currentTime])
 
+    // Updating the percent progression whenever there is a progression
     useEffect(() => {
         setPercentProgression(parseInt((progression / numberTotalOfExercises) * 100));
-        console.log("Progression : ", progression);
-        console.log("Percent progression : ", percentProgression);
     }, [progression])
 
+    // Function that handle the next step
     const handleNextStep = () => {
         const nextStep = step+1;
         const nextSerie = serie+1;
@@ -64,6 +62,9 @@ const WorkingOut = ({ workout }) => {
         clearTimeout(time);
         setPercentTime(0);
 
+        /* If the number of steps is inferior of the total number of steps in one serie :
+            The workout go the next step
+        */
         if(step < numberOfSteps-1) {
             setStep(nextStep)
 
@@ -73,10 +74,14 @@ const WorkingOut = ({ workout }) => {
                 setNextIndex(0);
             }
 
+            // If we are at the before last step, isLastStep is set at true to handle correctly the preview of the next step
             if(serie === numberOfSeries && step === numberOfSteps-2) {
                 setIsLastStep(true);
             }
-        } else {
+        }
+
+        // If the number of steps is equal of the total number of steps in one serie
+        else {
             setStep(0);
             setNextIndex(1);
 

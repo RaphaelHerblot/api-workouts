@@ -24,7 +24,8 @@ const Register = ({ history }) => {
     const [goals, setGoals] = useState([]);
     const [trainingPlaces, setTrainingPlaces] = useState([]);
 
-    const fetchWorkouts = async () => {
+    // Fetching the data needed for the user to register
+    const fetchUserRequiredData = async () => {
         try {
             const dataLevels = await LevelsAPI.findAll();
             const dataGoals = await GoalsAPI.findAll();
@@ -38,11 +39,13 @@ const Register = ({ history }) => {
         }
     }
 
+    // Handling every value change of each field
     const handleChange = ({ currentTarget }) => {
         const { name, value } = currentTarget;
         setCredentials({...credentials, [name]: value})
     };
 
+    // Submitting the register form
     const handleSubmit = async event => {
         event.preventDefault();
         console.log(credentials);
@@ -63,8 +66,9 @@ const Register = ({ history }) => {
         }
     }
 
+    // Fetching the user required data when the component is first rendered
     useEffect(() => {
-        fetchWorkouts();
+        fetchUserRequiredData();
     }, [])
 
     return ( 

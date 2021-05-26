@@ -1,17 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
-
+import React, { useState, useEffect} from 'react';
 import '../style.scss';
 
 const SearchBarExercises = ({ exercises, onClickFunction, placeholder, proposedExercises, setProposedExercises }) => {
     const [showProposedExercises, setShowProposedExercises] = useState(false);
     const [searchBarValue, setSearchBarValue] = useState("");
-    // const [proposedExercises, setProposedExercises] = useState([]);
-
-    useEffect(() => {
-        console.log("SEARCH BAR RENDER")
-        console.log(exercises)
-    }, []);
     
+    // For each changes of the search bar value, the exercises result is changed 
     useEffect(() => {
         setProposedExercises(
           exercises.filter((exercise) => exercise.title.toLowerCase().includes(searchBarValue.toLowerCase()))
@@ -23,12 +17,14 @@ const SearchBarExercises = ({ exercises, onClickFunction, placeholder, proposedE
         
     }, [searchBarValue]);
 
+    // Show list of exercise when user is on the search bar input
     const handleFocus = () => {
         if(showProposedExercises === false) {
             setShowProposedExercises(true);
         }
     }
 
+    // Hide list of exercise when user is on the search bar input
     const handleBlur = () => {
         if(showProposedExercises === true) {
             setShowProposedExercises(false);

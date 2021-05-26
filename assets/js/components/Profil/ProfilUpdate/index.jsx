@@ -7,7 +7,10 @@ import Field from '../../Form/Field';
 import axios from 'axios';
 import { USERS_API } from "../../../config";
 
+// Profile update form
+
 const ProfilUpdate = ({ authenticatedUser, updateProfil }) => {
+    // User informations
     const[credentials, setCredentials] = useState({
         firstName: "",
         lastName: "",
@@ -22,6 +25,7 @@ const ProfilUpdate = ({ authenticatedUser, updateProfil }) => {
     const [goals, setGoals] = useState([]);
     const [trainingPlaces, setTrainingPlaces] = useState([]);
 
+    // Fetching the levels, goals and training places for the user to be able to change those
     const fetchWorkouts = async () => {
         try {
             const dataLevels = await LevelsAPI.findAll();
@@ -35,15 +39,15 @@ const ProfilUpdate = ({ authenticatedUser, updateProfil }) => {
         }
     }
 
+    // The user informations are saved for each letter added or deleted in each field
     const handleChange = ({ currentTarget }) => {
         const { name, value } = currentTarget;
         setCredentials({...credentials, [name]: value})
     };
 
+    // Form submited
     const handleSubmit = async event => {
         event.preventDefault();
-        console.log(credentials);
-
         try {
             const response = await axios.put(
                 USERS_API + "/" + credentials.id,
@@ -53,7 +57,6 @@ const ProfilUpdate = ({ authenticatedUser, updateProfil }) => {
                     trainingPlace: `/api/training_places/${credentials.trainingPlace}`
                 }
             );
-            console.log(response.data);
             updateProfil();
 
         } catch(error) {
@@ -61,6 +64,7 @@ const ProfilUpdate = ({ authenticatedUser, updateProfil }) => {
         }
     }
 
+    // Giving the user informations to the update user form when the component if first render
     useEffect(() => {
         fetchWorkouts();
 

@@ -1,5 +1,7 @@
 import React from 'react';
 
+// Exercise selector
+
 const SelectExercise = ({ name, options, onClickFunction, error = "", placeholder }) => {
     return (
         <div className="form-group">

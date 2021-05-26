@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import TitleWorkit from '../../components/TitleWorkit';
 import WorkoutForm from '../../components/Workouts/WorkoutShow/WorkoutForm';
 
+// Creating a workout page
+
 const CreateWorkout = ({ setPageTitle }) => {
     useEffect(() => {
         setPageTitle("Création de ta séance de sport");

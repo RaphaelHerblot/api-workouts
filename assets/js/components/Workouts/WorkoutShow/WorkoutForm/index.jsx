@@ -18,6 +18,8 @@ import './style.scss';
 import SearchBar from '../../../SearchBar/SearchBarExercises';
 
 const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
+
+    // Initializing the workout data
     const[workout, setWorkout] = useState({
         title: "",
         description: "",
@@ -47,6 +49,7 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
     const [proposedExercises, setProposedExercises] = useState([]);
     let history = useHistory();
 
+    // Fetching all the data needed for the workout form or update workout form when first rendering
     useEffect(() => {
         fetchWorkoutsData();
 
@@ -82,12 +85,14 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
         }
     }, [])
 
+    // Adding exercise to workout each time a new exercise is chosen
     useEffect(() => {
         if(chosenExercise) {
             addExerciceToWorkout();
         }
     }, [chosenExercise]);
 
+    // Function that fetch all the needed data for a workout update or submit
     const fetchWorkoutsData = async () => {
         try {
             const dataLevels = await LevelsAPI.findAll();
@@ -108,6 +113,7 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
         }
     }
 
+    // Fetch one exercise to add it to the workout
     const fetchOneExercice = async (event) => {
         try {
             const dataExercice = await ExercicesAPI.findOne(event.target.value);
@@ -117,11 +123,13 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
         }
     }
 
+    // Changing all the field data of the workout whenever a new value is entered
     const handleChange = ({ currentTarget }) => {
         const { name, value } = currentTarget;
         setWorkout({...workout, [name]: value})
     }
 
+    // Handling the type of exercise that is searched (Exercise or Stretches)
     const handleTypeMod = (event) => {
         if(modTypeExercise === "exercises") {
             setModTypeExercise("stretching");
@@ -140,6 +148,7 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
         }
     }
 
+    // Handling the mod of search (Search bar or Select list)
     const handleSearchMod = (event) => {
         if(modSearchExercise === "search") {
             setModSearchExercise("list");
@@ -156,6 +165,7 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
         }
     }
     
+    // Handling the deletion of an exercise currently in the workout
     const deleteExercise = (event, index) => {
         const newExercisesList = [...listExercises];
         newExercisesList.splice(index, 1);
@@ -163,6 +173,7 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
         (event.target.parentElement.parentElement.parentElement).remove();
     }
 
+    // Handling the deleting of a rest in the workout
     const deleteRest = (event, index) => {
         const newExercisesList = [...listExercises]; 
         newExercisesList.splice(index, 1);
@@ -171,13 +182,14 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
         setIsResting(false);
     }
 
+    // Adding a rest to the workout
     const addRest = () => {
         setChosenExercise(rest);
         setIsResting(true);
     }
 
+    // Adding a new exercise to the workout
     const addExerciceToWorkout = () => {
-        console.log("Exercice choisi : ", chosenExercise);
         if(chosenExercise && Object.keys(chosenExercise).length > 0 && chosenExercise.constructor === Object) {
             const tempListExercises = [...listExercises];
             tempListExercises.push(
@@ -209,7 +221,7 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
         return 0;
     }
       
-
+    // Submit of the workout (POST and PUT)
     const handleSubmit = async event => {
         event.preventDefault();
 
@@ -279,11 +291,11 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
         }
     }
 
+    // Function that handle the drag and drop of an exercise
     const handleOnDragEnd = (result) => {
         if (!result.destination) {
             return;
         }
-
         const items = Array.from(listExercises);
         const [reorderedItem] = items.splice(result.source.index, 1);
         items.splice(result.destination.index, 0, reorderedItem);
