@@ -12,12 +12,12 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20210409204051 extends AbstractMigration
 {
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return '';
     }
 
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE user_workouts (user_id INT NOT NULL, workouts_id INT NOT NULL, INDEX IDX_45ECA4E0A76ED395 (user_id), INDEX IDX_45ECA4E056F0BFE (workouts_id), PRIMARY KEY(user_id, workouts_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -25,9 +25,14 @@ final class Version20210409204051 extends AbstractMigration
         $this->addSql('ALTER TABLE user_workouts ADD CONSTRAINT FK_45ECA4E056F0BFE FOREIGN KEY (workouts_id) REFERENCES workouts (id) ON DELETE CASCADE');
     }
 
-    public function down(Schema $schema) : void
+    public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('DROP TABLE user_workouts');
+    }
+
+    public function isTransactional(): bool
+    {
+        return false;
     }
 }

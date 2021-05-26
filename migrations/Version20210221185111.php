@@ -12,12 +12,12 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20210221185111 extends AbstractMigration
 {
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return '';
     }
 
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE goal (id INT AUTO_INCREMENT NOT NULL, title VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -30,7 +30,7 @@ final class Version20210221185111 extends AbstractMigration
         $this->addSql('ALTER TABLE `user` ADD CONSTRAINT FK_8D93D649EAC3B18E FOREIGN KEY (training_place_id) REFERENCES training_places (id)');
     }
 
-    public function down(Schema $schema) : void
+    public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE `user` DROP FOREIGN KEY FK_8D93D649667D1AFE');
@@ -41,5 +41,10 @@ final class Version20210221185111 extends AbstractMigration
         $this->addSql('DROP TABLE muscles');
         $this->addSql('DROP TABLE training_places');
         $this->addSql('DROP TABLE `user`');
+    }
+
+    public function isTransactional(): bool
+    {
+        return false;
     }
 }
