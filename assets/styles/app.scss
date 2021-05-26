@@ -8,9 +8,13 @@ body {
   background-color: $background-color;
   color: #000;
   font-family: Tahoma, sans-serif;
+  width: 100vw;
+  height: 100vh;
 
   .main-content {
     padding: 66px 20px 85px;
+    width: 100vw;
+    height: 100vh;
 
     .loginForm,
     .registerForm,
