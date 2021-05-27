@@ -18,7 +18,7 @@ const RestTime = ({ chosenRest, deleteExercise, nbRepetition, onChange, index })
                     </button>
                 </div>
             </div>
-            <div className="index-number">{index}</div>
+            <div className="index-number">{index+1}</div>
         </div>
     );
 }

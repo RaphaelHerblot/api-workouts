@@ -428,17 +428,18 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
                                                 : <Select name="selectStretches" id="selectExercices" onClickFunction={fetchOneExercice} options={stretches} placeholder="Choisissez vos étirements" />
                                             )
                         
-                                    }                        
-                                    <div className="button-rest-container">
-                                        {isResting 
-                                            ? ""
-                                            : 
-                                            <button type="button" className="button-rest" onClick={addRest}>
-                                                <img src={require("/assets/images/icons/rest1.svg")} />
-                                                Ajouter une pause    
-                                            </button>
-                                        }
-                                    </div>
+                                    }
+                                    {isResting 
+                                        ? ""
+                                        :                         
+                                        <div className="button-rest-container">
+                                            
+                                                <button type="button" className="button-rest" onClick={addRest}>
+                                                    <img src={require("/assets/images/icons/rest1.svg")} />
+                                                    Ajouter une pause    
+                                                </button>
+                                        </div>
+                                    }
 
                                     {listExercises.length > 1 
                                         ? 
