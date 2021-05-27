@@ -128,12 +128,12 @@
 
     .listExercices {
       .exercise-container {
-        display: flex;
         border: 1px solid $theme-color;
         margin: 10px 0;
         padding: 0 10px;
         border-radius: 10px;
         position: relative;
+        height: auto;
       }
     }
 
