@@ -4,7 +4,7 @@ import React from 'react';
 
 const SelectExercise = ({ name, options, onClickFunction, error = "", placeholder }) => {
     return (
-        <div className="form-group">
+        <div className="select-exercise">
             <select 
                 id={name}
                 name={name}
@@ -18,6 +18,7 @@ const SelectExercise = ({ name, options, onClickFunction, error = "", placeholde
                     </option>
                 )}
             </select>
+            <img src={require("/assets/images/icons/triangle.svg")} />
             {error && <p className="invalid-feedback">{error}</p>}
         </div>
     )

@@ -153,7 +153,10 @@ const Profil = ({ setPageTitle, history }) => {
 
     return ( 
         <div className="profile-container">
-          
+                    <div className="profile-loaders">
+
+                        <ProfileLoader />
+</div>            
             {!userLoaded  
                 ? 
                     <div className="profile-loaders">

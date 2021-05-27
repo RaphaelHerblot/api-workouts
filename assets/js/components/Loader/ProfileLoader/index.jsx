@@ -6,7 +6,7 @@ const ProfileLoader = props => (
     speed={2}
     width={250}
     height={130}
-    viewBox="0 0 400 170"
+    viewBox="0 0 420 170"
     backgroundColor="#ffb64a"
     foregroundColor="#ffe5be"
     {...props}

@@ -16,6 +16,7 @@ import { WORKOUTS_API } from "../../../../config";
 
 import './style.scss';
 import SearchBar from '../../../SearchBar/SearchBarExercises';
+import ThreeDotsLoader from '../../../Loader/ThreeDotsLoader';
 
 const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
 
@@ -47,6 +48,7 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
     const [count, setCount] = useState(0);
     const [isResting, setIsResting] = useState(false);
     const [proposedExercises, setProposedExercises] = useState([]);
+    const [contentIsLoaded, setContentIsLoaded] = useState(false);
     let history = useHistory();
 
     // Fetching all the data needed for the workout form or update workout form when first rendering
@@ -108,6 +110,7 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
             setStretches(dataStretches);
             setRest(dataRest.data);
             setExercisesToSearch(dataExercices);
+            setContentIsLoaded(true);
         } catch(error) {
             console.log(error.response)
         }
@@ -343,161 +346,166 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
                     onChange={handleChange} 
                     error={error} 
                 />
-                <h3>Le niveau recommandé est</h3>
-                {levels.map(level =>
-                    <div className="form-check" key={level.id}>
-                        <input 
-                            value={level.id}
-                            onChange={handleChange}
-                            type="radio" 
-                            id={"level_" + level.id}
-                            className="form-check-input"
-                            name="level"
-                            {...(workoutIsUpdated ? (level.id === workoutData.level.id ? {defaultChecked: true} : null ) : null)}
-                        />
-                        <label htmlFor={"level_" + level.id}>{level.title}</label>
-                    </div>
-                )}
-                <h3>Le but de la séance est de</h3>
-                {goals.map(goal => 
-                    <div className="form-check" key={goal.id}>
-                        <input 
-                            value={goal.id} 
-                            onChange={handleChange} 
-                            type="radio" 
-                            id={"goal_" + goal.id}
-                            className="form-check-input"
-                            name="goal"
-                            {...(workoutIsUpdated ? (goal.id === workoutData.goal.id ? {defaultChecked: true} : null ) : null)}
-                        />
-                        <label htmlFor={"goal_" + goal.id} className="form-check-label">{goal.title}</label>
-                    </div>
-                )}
-                <h3>La séance doit s'effectuer à</h3>
-                {trainingPlaces.map(trainingPlace => 
-                    <div className="form-check" key={trainingPlace.id}>
-                        <input 
-                            value={trainingPlace.id}
-                            onChange={handleChange} 
-                            type="radio" 
-                            id={"trainingPlace_" + trainingPlace.id}
-                            className="form-check-input"
-                            name="trainingPlace"
-                            {...(workoutIsUpdated ? (trainingPlace.id === workoutData.trainingPlace.id ? {defaultChecked: true} : null ) : null)}
-                        />
-                        <label htmlFor={"trainingPlace_" + trainingPlace.id}>{trainingPlace.place}</label>
-                    </div>
-                )} 
-                <h2>Exercices</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit , sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                {exercices.length > 0 
-                    ? 
-                        <div>
-                            <div className="button-container">
-                                <div className="button-type-exercises">
-                                    <button type="button" className="button-type-exercise active" onClick={handleTypeMod}>
-                                        Exercices
-                                    </button>
-                                    <button type="button" className="button-type-stretching" onClick={handleTypeMod}>
-                                        Étirements
-                                    </button>
-                                </div>
-                                <div className="button-find-exercises">
-                                    <button type="button" className="button-search active" onClick={handleSearchMod}>
-                                        Rechercher
-                                    </button>
-                                    <button type="button" className="button-list" onClick={handleSearchMod}>
-                                        Liste
-                                    </button>
-                                </div>
+                {exercices.length > 0 ? 
+                    <div>
+                        <h3>Le niveau recommandé est</h3>
+                        {levels.map(level =>
+                            <div className="form-check" key={level.id}>
+                                <input 
+                                    value={level.id}
+                                    onChange={handleChange}
+                                    type="radio" 
+                                    id={"level_" + level.id}
+                                    className="form-check-input"
+                                    name="level"
+                                    {...(workoutIsUpdated ? (level.id === workoutData.level.id ? {defaultChecked: true} : null ) : null)}
+                                />
+                                <label htmlFor={"level_" + level.id}>{level.title}</label>
                             </div>
-                            {modSearchExercise === "search" 
-                                ? 
-                                    ( modTypeExercise === "exercises" 
-                                        ? <SearchBar exercises={exercices} onClickFunction={fetchOneExercice} placeholder="Recherchez un exercice" proposedExercises={proposedExercises} setProposedExercises={setProposedExercises} />
-                                        : <SearchBar exercises={stretches} onClickFunction={fetchOneExercice} placeholder="Recherchez un étirement" proposedExercises={proposedExercises} setProposedExercises={setProposedExercises} />
-                                    )
-                                : 
-                                    ( modTypeExercise === "exercises" 
-                                        ? <Select name="selectExercices" id="selectExercices" onClickFunction={fetchOneExercice} options={exercices} placeholder="Choisissez vos exercices"/>
-                                        : <Select name="selectStretches" id="selectExercices" onClickFunction={fetchOneExercice} options={stretches} placeholder="Choisissez vos étirements" />
-                                    )
-                 
-                            }                        
-                            <div className="button-rest-container">
-                                {isResting 
-                                    ? ""
-                                    : 
-                                    <button type="button" className="button-rest" onClick={addRest}>
-                                        <img src={require("/assets/images/icons/rest1.svg")} />
-                                        Ajouter une pause    
-                                    </button>
-                                }
+                        )}
+                        <h3>Le but de la séance est de</h3>
+                        {goals.map(goal => 
+                            <div className="form-check" key={goal.id}>
+                                <input 
+                                    value={goal.id} 
+                                    onChange={handleChange} 
+                                    type="radio" 
+                                    id={"goal_" + goal.id}
+                                    className="form-check-input"
+                                    name="goal"
+                                    {...(workoutIsUpdated ? (goal.id === workoutData.goal.id ? {defaultChecked: true} : null ) : null)}
+                                />
+                                <label htmlFor={"goal_" + goal.id} className="form-check-label">{goal.title}</label>
                             </div>
-
-                            {listExercises.length > 1 
-                                ? 
-                                <div className="drag-message">
-                                    Changez l'ordre des exercices comme bon vous semble en les déplaçant
-                                    <img src={require("/assets/images/icons/hand.svg")} />
-                                </div>
-                                : ""
-                            }
-                
-                            <DragDropContext onDragEnd={handleOnDragEnd}>
-                                <Droppable droppableId="listExercices">
-                                    {(provided) => (
-                                        <div className="listExercices" {...provided.droppableProps} ref={provided.innerRef}>
-                                            {listExercises.map((exercise, index) =>  
-                                                <Draggable key={exercise.id + "_" + count + "_" + index} draggableId={exercise.id + "_" + count + "_" + index} index={index}>
-                                                    {(provided) => (
-                                                        <div 
-                                                            id={"content_" + exercise.id} 
-                                                            className="exercise-container"
-                                                            ref={provided.innerRef} 
-                                                            {...provided.draggableProps} 
-                                                            {...provided.dragHandleProps}
-                                                        >
-                                                            {exercise.type === "Rest" 
-                                                                ? <RestTime 
-                                                                    chosenRest={exercise} 
-                                                                    nbRepetition={workout.nbRepetition[index] ? workout.nbRepetition[index].repetition : null } 
-                                                                    onChange={handleChange} 
-                                                                    deleteExercise={deleteRest} 
-                                                                    index={index} 
-                                                                />                                
-                                                                : <ExerciseForm 
-                                                                    chosenExercise={exercise} 
-                                                                    nbRepetition={workout.nbRepetition[index] ? workout.nbRepetition[index].repetition : null } 
-                                                                    onChange={handleChange} 
-                                                                    deleteExercise={deleteExercise} 
-                                                                    index={index} 
-                                                                />                                
-                                                            }
-                                                        </div>
-                                                    )}
-                                                </Draggable>
-                                            )}
-                                            {provided.placeholder}
+                        )}
+                        <h3>La séance doit s'effectuer à</h3>
+                        {trainingPlaces.map(trainingPlace => 
+                            <div className="form-check" key={trainingPlace.id}>
+                                <input 
+                                    value={trainingPlace.id}
+                                    onChange={handleChange} 
+                                    type="radio" 
+                                    id={"trainingPlace_" + trainingPlace.id}
+                                    className="form-check-input"
+                                    name="trainingPlace"
+                                    {...(workoutIsUpdated ? (trainingPlace.id === workoutData.trainingPlace.id ? {defaultChecked: true} : null ) : null)}
+                                />
+                                <label htmlFor={"trainingPlace_" + trainingPlace.id}>{trainingPlace.place}</label>
+                            </div>
+                        )} 
+                        <h2>Exercices</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit , sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        {exercices.length > 0 
+                            ? 
+                                <div>
+                                    <div className="button-container">
+                                        <div className="button-type-exercises">
+                                            <button type="button" className="button-type-exercise active" onClick={handleTypeMod}>
+                                                Exercices
+                                            </button>
+                                            <button type="button" className="button-type-stretching" onClick={handleTypeMod}>
+                                                Étirements
+                                            </button>
                                         </div>
-                                    )}
-                                </Droppable>
-                            </DragDropContext> 
+                                        <div className="button-find-exercises">
+                                            <button type="button" className="button-search active" onClick={handleSearchMod}>
+                                                Rechercher
+                                            </button>
+                                            <button type="button" className="button-list" onClick={handleSearchMod}>
+                                                Liste
+                                            </button>
+                                        </div>
+                                    </div>
+                                    {modSearchExercise === "search" 
+                                        ? 
+                                            ( modTypeExercise === "exercises" 
+                                                ? <SearchBar exercises={exercices} onClickFunction={fetchOneExercice} placeholder="Recherchez un exercice" proposedExercises={proposedExercises} setProposedExercises={setProposedExercises} />
+                                                : <SearchBar exercises={stretches} onClickFunction={fetchOneExercice} placeholder="Recherchez un étirement" proposedExercises={proposedExercises} setProposedExercises={setProposedExercises} />
+                                            )
+                                        : 
+                                            ( modTypeExercise === "exercises" 
+                                                ? <Select name="selectExercices" id="selectExercices" onClickFunction={fetchOneExercice} options={exercices} placeholder="Choisissez vos exercices"/>
+                                                : <Select name="selectStretches" id="selectExercices" onClickFunction={fetchOneExercice} options={stretches} placeholder="Choisissez vos étirements" />
+                                            )
                         
-                            {listExercises.length > 1 
-                                ? 
-                                <div className="form-group">
-                                    <button type="submit" className="btn btn-success">
-                                        {workoutIsUpdated ? "Modifier" : "Création"}
-                                        <div className="icon-button">
-                                            <img src={require("/assets/images/icons/straight-right-arrow.svg")} />
+                                    }                        
+                                    <div className="button-rest-container">
+                                        {isResting 
+                                            ? ""
+                                            : 
+                                            <button type="button" className="button-rest" onClick={addRest}>
+                                                <img src={require("/assets/images/icons/rest1.svg")} />
+                                                Ajouter une pause    
+                                            </button>
+                                        }
+                                    </div>
+
+                                    {listExercises.length > 1 
+                                        ? 
+                                        <div className="drag-message">
+                                            Changez l'ordre des exercices comme bon vous semble en les déplaçant
+                                            <img src={require("/assets/images/icons/hand.svg")} />
                                         </div>
-                                    </button>
+                                        : ""
+                                    }
+                        
+                                    <DragDropContext onDragEnd={handleOnDragEnd}>
+                                        <Droppable droppableId="listExercices">
+                                            {(provided) => (
+                                                <div className="listExercices" {...provided.droppableProps} ref={provided.innerRef}>
+                                                    {listExercises.map((exercise, index) =>  
+                                                        <Draggable key={exercise.id + "_" + count + "_" + index} draggableId={exercise.id + "_" + count + "_" + index} index={index}>
+                                                            {(provided) => (
+                                                                <div 
+                                                                    id={"content_" + exercise.id} 
+                                                                    className="exercise-container"
+                                                                    ref={provided.innerRef} 
+                                                                    {...provided.draggableProps} 
+                                                                    {...provided.dragHandleProps}
+                                                                >
+                                                                    {exercise.type === "Rest" 
+                                                                        ? <RestTime 
+                                                                            chosenRest={exercise} 
+                                                                            nbRepetition={workout.nbRepetition[index] ? workout.nbRepetition[index].repetition : null } 
+                                                                            onChange={handleChange} 
+                                                                            deleteExercise={deleteRest} 
+                                                                            index={index} 
+                                                                        />                                
+                                                                        : <ExerciseForm 
+                                                                            chosenExercise={exercise} 
+                                                                            nbRepetition={workout.nbRepetition[index] ? workout.nbRepetition[index].repetition : null } 
+                                                                            onChange={handleChange} 
+                                                                            deleteExercise={deleteExercise} 
+                                                                            index={index} 
+                                                                        />                                
+                                                                    }
+                                                                </div>
+                                                            )}
+                                                        </Draggable>
+                                                    )}
+                                                    {provided.placeholder}
+                                                </div>
+                                            )}
+                                        </Droppable>
+                                    </DragDropContext> 
+                                
+                                    {listExercises.length > 1 
+                                        ? 
+                                        <div className="form-group">
+                                            <button type="submit" className="btn btn-success">
+                                                {workoutIsUpdated ? "Modifier" : "Création"}
+                                                <div className="icon-button">
+                                                    <img src={require("/assets/images/icons/straight-right-arrow.svg")} />
+                                                </div>
+                                            </button>
+                                        </div>
+                                        : <div className="exercises-minimum">Il faut ajouter au moins 2 exercices dans votre séance pour pouvoir la créer</div>
+                                    }
                                 </div>
-                                : <div className="exercises-minimum">Il faut ajouter au moins 2 exercices dans votre séance pour pouvoir la créer</div>
-                            }
-                        </div>
-                    : ''
+                            : ''
+                        }
+                    </div>
+                    : <ThreeDotsLoader />
                 }
             </form>
         </div>

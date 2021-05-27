@@ -11,7 +11,7 @@ const Calendar = ({ setPageTitle }) => {
     return ( 
         <div>
             <TitleWorkit title="Calendrier" icon="calendar-orange2" />
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit , sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+            <img src={require("/assets/images/under-construction.svg")} />
         </div>
     );
 }

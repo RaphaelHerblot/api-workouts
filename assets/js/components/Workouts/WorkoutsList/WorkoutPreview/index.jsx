@@ -46,7 +46,7 @@ const WorkoutPreview = ({ workout }) => {
         <div className="workoutPreview" key={workout.id}>
             <div 
                 className="workout-image" 
-                style={{backgroundImage: 'linear-gradient(to bottom, rgb(245 246 252 / 0%), #1b1c1d), url('+require("/assets/images/workouts/workout" + getRightBackground() + ".jpg")+')'}}
+                style={{backgroundImage: 'linear-gradient(to bottom, rgb(0 0 0 / 4%), #1b1c1d), url('+require("/assets/images/workouts/workout" + getRightBackground() + ".jpg")+')'}}
             >
                 <h2>{workout.title}</h2>
                 <div>
