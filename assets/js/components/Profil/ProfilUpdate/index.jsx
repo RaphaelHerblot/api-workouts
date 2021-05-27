@@ -118,7 +118,7 @@ const ProfilUpdate = ({ authenticatedUser, updateProfil }) => {
                             name="level"
                             {...(level.id === credentials.level ? {defaultChecked: true} : null )}
                         />
-                        <label htmlFor="level">{level.title}</label>
+                        <label htmlFor={"level_" + level.id}>{level.title}</label>
                     </div>
                 )}
                 <label>Votre but</label>
@@ -133,7 +133,7 @@ const ProfilUpdate = ({ authenticatedUser, updateProfil }) => {
                             name="goal"
                             {...(goal.id === credentials.goal ? {defaultChecked: true} : null )}
                         />
-                        <label htmlFor="goal" className="form-check-label">{goal.title}</label>
+                        <label htmlFor={"goal_" + goal.id} className="form-check-label">{goal.title}</label>
                     </div>
                 )}
                 <label>Votre endroit d'entraînement principal</label>
@@ -148,7 +148,7 @@ const ProfilUpdate = ({ authenticatedUser, updateProfil }) => {
                             name="trainingPlace"
                             {...(trainingPlace.id === credentials.trainingPlace ? {defaultChecked: true} : null )}
                         />
-                        <label htmlFor="trainingPlace">{trainingPlace.place}</label>
+                        <label htmlFor={"trainingPlace_" + trainingPlace.id}>{trainingPlace.place}</label>
                     </div>
                 )}
                 <div className="form-group">
