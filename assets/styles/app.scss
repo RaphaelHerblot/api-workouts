@@ -5,16 +5,16 @@
 }
 
 body {
-  background-color: $background-color;
+  background-color: #efefef;
   color: #000;
   font-family: Tahoma, sans-serif;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
 
   .main-content {
     padding: 66px 20px 85px;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
 
     .loginForm,
     .registerForm,
@@ -162,6 +162,7 @@ body {
         text-align: center;
         margin-top: 10px;
         color: #404040;
+        font-size: 15px;
 
         a {
           font-weight: 700;

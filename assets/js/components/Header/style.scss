@@ -6,7 +6,8 @@ header {
   align-items: center;
   background-color: $black-theme;
   color: #fff;
-  padding: 18px;
+  min-height: 65px;
+  padding: 0 65px;
   position: fixed;
   width: 100%;
   z-index: 1000;
@@ -17,12 +18,12 @@ header {
     &.header-icon {
       position: absolute;
       top: 50%;
-      left: 7%;
+      left: 11%;
       transform: translate(-50%, -50%);
     }
 
     h2 {
-      font-size: 16px;
+      font-size: 15px;
     }
 
     a {
