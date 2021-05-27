@@ -3,11 +3,12 @@
 .exerciseForm {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin: 20px 0;
 
   .creationImage {
     width: 105px;
-    height: auto;
+    max-height: 105px;
   }
 
   label {
