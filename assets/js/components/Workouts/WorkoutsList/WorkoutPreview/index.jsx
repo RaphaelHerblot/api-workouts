@@ -6,7 +6,7 @@ import './style.scss';
 const WorkoutPreview = ({ workout }) => {
     // Giving the right background for the workout preview (Function that is gonna disappear soon enough)
     const getRightBackground = () => {
-        let backgroundImage;
+        let backgroundImage = 1;
 
         if(workout.level.id === 1) {
             if(workout.goal.id === 1) {
@@ -28,7 +28,7 @@ const WorkoutPreview = ({ workout }) => {
             } else {
                 backgroundImage = "8";
             }
-        } if(workout.goal.id === 3) {
+        } if(workout.level.id === 3) {
             if(workout.goal.id === 1) {
                 backgroundImage = "9";
             } else if(workout.goal.id === 2) {
@@ -64,7 +64,7 @@ const WorkoutPreview = ({ workout }) => {
             </div>
             <div className="workout-exercises">
                 {workout.exercices.map((exercice, index) =>
-                    <div className={"workout-exercise-"+index} key={exercice.id}>
+                    <div className={"workout-exercise-"+index} key={exercice.id + "_" + workout.id}>
                         {index < 2 ? 
                             <div className="workout-exercise-detail">
                                 <div><img src={require(`/assets/images/exercices/${exercice.id}_white.svg`)}></img></div>

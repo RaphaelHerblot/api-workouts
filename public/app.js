@@ -1,7 +1,6 @@
 window.addEventListener('load', e => {
     // new WorkitApp();
     registerSW(); 
-    console.log("BJRRRRRRRRRRRRRRRRRRRR")
 });
 
 async function registerSW() { 

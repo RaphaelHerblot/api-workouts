@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import ReactDOM from "react-dom";
 import { useHistory } from 'react-router-dom'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import LevelsAPI from "../../../../services/levelsAPI";
@@ -48,7 +47,7 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
     const [count, setCount] = useState(0);
     const [isResting, setIsResting] = useState(false);
     const [proposedExercises, setProposedExercises] = useState([]);
-    const [contentIsLoaded, setContentIsLoaded] = useState(false);
+    
     let history = useHistory();
 
     // Fetching all the data needed for the workout form or update workout form when first rendering
@@ -110,7 +109,6 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
             setStretches(dataStretches);
             setRest(dataRest.data);
             setExercisesToSearch(dataExercices);
-            setContentIsLoaded(true);
         } catch(error) {
             console.log(error.response)
         }

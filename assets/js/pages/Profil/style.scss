@@ -53,7 +53,7 @@
     flex-direction: column;
     margin-bottom: 15px;
 
-    h2 {
+    > h2 {
       border-bottom: 4px solid $theme-color;
       width: fit-content;
     }

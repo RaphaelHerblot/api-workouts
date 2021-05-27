@@ -43,7 +43,6 @@ const App = () => {
                         </Switch>
                     </div>
                     {isAuthenticated ?  <FooterNavBar /> : "" }
-                   
                 </div>
             </HashRouter>
         </AuthContext.Provider>

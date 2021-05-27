@@ -30,18 +30,14 @@ function findAllByIdDesc() {
 // Find all the favorite workouts of a user
 function findAllByMostFav() {
     return axios
-    .get(WORKOUTS_API + "?order[likedUsers]=desc",{
-        params: {
-            _limit: 2
-        }
-    })
+    .get(WORKOUTS_API + "?order[likedUsers]=desc")
     .then(response => response.data['hydra:member'])
 }
 
 // Find all the perfect workouts of a user
-function findPerfectForUser(levelId, goalId, trainingPlaceId) {
+function findPerfectForUser(levelId, goalId) {
     return axios
-    .get(WORKOUTS_API + "?level=" + levelId + "&goal=" + goalId + "&trainingPlace=" + trainingPlaceId)
+    .get(WORKOUTS_API + "?level=" + levelId + "&goal=" + goalId)
     .then(response => response.data['hydra:member'])
 }
 
