@@ -21,7 +21,6 @@ const WorkingOut = ({ workout }) => {
     const numberTotalOfExercises = numberOfSteps*numberOfSeries;
     let time = null;
 
-  
     useEffect(() => {
         if(isFirstStep) {
             if(numberOfSteps !== 1) {
@@ -29,9 +28,10 @@ const WorkingOut = ({ workout }) => {
             }
         }
     }, [nextIndex])
+
     // Setting the currentTime / currentRepetition whenever a new step begin
     useEffect(() => {
-        setCurrentTime([]);
+        setCurrentTime(0);
         setCurrentTime(workout.nbRepetition[step].repetition);
     }, [step])
 
@@ -40,7 +40,8 @@ const WorkingOut = ({ workout }) => {
         // If it's the first step, we don't execute the algorithm
         if(isFirstStep) {
             setIsFirstStep(false);
-        } 
+        }
+
         // If it's a stretch of a rest, a timer is set until it's done and go to the next step
         else {
             if(workout.exercices[workout.nbRepetition[step].index].type !== "Musculation") {
@@ -70,8 +71,9 @@ const WorkingOut = ({ workout }) => {
         clearTimeout(time);
         setPercentTime(0);
 
-        /* If the number of steps is inferior of the total number of steps in one serie :
-            The workout go the next step
+        /* 
+        If the number of steps is inferior of the total number of steps in one serie :
+        The workout go the next step
         */
         if(step < numberOfSteps-1) {
             setStep(nextStep)

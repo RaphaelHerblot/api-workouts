@@ -35,6 +35,10 @@ const Profil = ({ setPageTitle, history }) => {
         }
     }
 
+    useEffect(() => {
+        console.log("User : ", authenticatedUser);
+    }, [authenticatedUser]);
+
     // Rendering the right profile
     const profileRendering = () => {
         if(updatingUser) {
