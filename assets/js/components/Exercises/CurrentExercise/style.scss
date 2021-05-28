@@ -30,7 +30,11 @@
     left: 50%;
     top: 64%;
     transform: translate(-50%, -50%);
-    min-height: 95px;
+    min-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
     @media screen and (max-height: 675px) {
       top: 77%;
@@ -41,6 +45,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      min-height: 100px;
 
       h3 {
         font-size: 80px;
