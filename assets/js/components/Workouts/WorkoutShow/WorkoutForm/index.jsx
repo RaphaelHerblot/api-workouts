@@ -392,7 +392,6 @@ const WorkoutForm = ({ workoutData, workoutIsUpdated }) => {
                             </div>
                         )} 
                         <h2>Exercices</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit , sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                         {exercices.length > 0 
                             ? 
                                 <div>

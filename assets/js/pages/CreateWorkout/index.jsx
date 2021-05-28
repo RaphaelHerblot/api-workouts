@@ -12,7 +12,7 @@ const CreateWorkout = ({ setPageTitle }) => {
     return ( 
         <div>
             <TitleWorkit title="Créé ta séance" icon="add-orange" />
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit , sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+            <p>C'est ici que tu vas pouvoir créer ta séance comme bon te semble. Libre à toi de choisir les caractéristiques et les exercices que tu souhaites jusqu'à construire la séance de tes rêves !</p>
             <WorkoutForm workoutIsUpdated={false} />
         </div>
     );
