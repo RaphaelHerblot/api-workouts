@@ -13,6 +13,8 @@ const CurrentExercise = ({ exercise, currentTime, handleNextStep, percentTime, f
             <div className="current-exercise-informations">
                 <div>
                     <h3>{currentTime}<span>{exercise.type === "Musculation" ? "x" : "s" }</span></h3>
+                </div>
+                <div>
                     <p>{exercise.title}</p>
                 </div>
             </div>
