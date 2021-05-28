@@ -26,15 +26,15 @@
     text-align: center;
     margin-top: 20px;
     width: 100%;
-    // position: absolute;
-    // left: 50%;
-    // top: 64%;
-    // transform: translate(-50%, -50%);
-    // min-height: 100px;
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
-    // flex-direction: column;
+    position: absolute;
+    left: 50%;
+    top: 64%;
+    transform: translate(-50%, -50%);
+    min-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     margin-bottom: 55px;
 
     @media screen and (max-height: 675px) {
